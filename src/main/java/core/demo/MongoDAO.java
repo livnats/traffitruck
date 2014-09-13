@@ -16,11 +16,25 @@ public class MongoDAO {
         this.mongoTemplate = mongoTemplate;
     }
     
+    
+    //Trucker
     public void storeTrucker( Trucker trucker ) {
     	mongoTemplate.insert(trucker);
     }
-    
+     
     public List<Trucker> getTruckers() {
     	return mongoTemplate.findAll(Trucker.class);
     }
+    
+    
+    //Load
+    public void storeLoad( Load load ) {
+    	mongoTemplate.insert(load);
+    }
+    
+    public List<Load> getLoads() {
+    	return mongoTemplate.findAll(Load.class);
+    }
+    
+    
 }
