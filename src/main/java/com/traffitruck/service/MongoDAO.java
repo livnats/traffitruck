@@ -1,10 +1,13 @@
-package core.demo;
+package com.traffitruck.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
+
+import com.traffitruck.domain.Load;
+import com.traffitruck.domain.Trucker;
 
 @Component
 public class MongoDAO {

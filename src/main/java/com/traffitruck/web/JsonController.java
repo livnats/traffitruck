@@ -1,9 +1,8 @@
-package core.demo;
+package com.traffitruck.web;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,19 +12,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.traffitruck.domain.Trucker;
+import com.traffitruck.service.MongoDAO;
+
 @RestController
-@EnableAutoConfiguration
-@ComponentScan
-public class Example {
+public class JsonController {
 
 	@Autowired
 	private MongoDAO dao;
 	
-    @RequestMapping("/")
-    String home() {
-        return dao.getTruckers().toString();
+    @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<Trucker> home() {
+        return dao.getTruckers();//.toString();
     }
-
+    
     @RequestMapping("/greetings")
     ModelAndView greetings(@RequestParam(value="name", required=false) String name) {
         return new ModelAndView("oded", "mdl", name);
@@ -38,8 +38,5 @@ public class Example {
         return trucker;
     }
     
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Example.class, args);
-    }
 
 }

@@ -1,4 +1,4 @@
-package core.demo;
+package com.traffitruck.domain;
 
 import java.util.Date;
 
