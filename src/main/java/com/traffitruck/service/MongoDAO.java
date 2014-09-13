@@ -3,7 +3,9 @@ package com.traffitruck.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.traffitruck.domain.Load;
@@ -26,7 +28,8 @@ public class MongoDAO {
     }
      
     public List<Trucker> getTruckers() {
-    	return mongoTemplate.findAll(Trucker.class);
+    	Query sortByName = new Query().with(new Sort("name"));
+    	return mongoTemplate.find(sortByName,Trucker.class);
     }
     
     
@@ -36,7 +39,8 @@ public class MongoDAO {
     }
     
     public List<Load> getLoads() {
-    	return mongoTemplate.findAll(Load.class);
+    	Query sortBySource = new Query().with(new Sort("source"));
+    	return mongoTemplate.find(sortBySource,Load.class);
     }
     
     
