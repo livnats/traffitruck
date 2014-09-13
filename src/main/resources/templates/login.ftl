@@ -2,7 +2,6 @@
 	<head>
 	    <title>TraffiTruck</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="/style/traffitruck.css">
 	</head>
 	<body>
 		<#if RequestParameters.error??>
