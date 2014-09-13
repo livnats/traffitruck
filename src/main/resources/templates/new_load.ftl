@@ -7,13 +7,15 @@
 <body>
 <div id="main">
 	<div id="title">
-		<h2>הוסף מטען</h2>
+		<img src="/images/truck-blue.jpg" width="15%"/>
+		<img src="/images/logo.jpg" width="20%"/>
 	</div>
 	<div id="body">
 		<div id="sidebar">
-			<img src="/images/truck.jpg" width="100%"/>
+			<p>&nbsp;</p>
 		</div>
 		<div id="content">
+			<h2>הוסף מטען</h2>
 			<form method="post" action="newload">
 			 
 			    <table>
