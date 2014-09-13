@@ -2,7 +2,7 @@
 <head>
     <title>TraffiTruck</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="/style/traffitruck.css">
+	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
 </head>
 <body>
 <div id="main">
