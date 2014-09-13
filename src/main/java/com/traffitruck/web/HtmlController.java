@@ -25,7 +25,7 @@ public class HtmlController {
         return new ModelAndView("login");
     }
 
-    @RequestMapping("/loads")
+    @RequestMapping({"/","/loads"})
     ModelAndView showLoads() {
     	List<Load> loads = dao.getLoads();
         return new ModelAndView("show_loads", "loads", loads);

@@ -21,11 +21,6 @@ public class JsonController {
 	@Autowired
 	private MongoDAO dao;
 	
-    @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<Trucker> home() {
-        return dao.getTruckers();//.toString();
-    }
-    
     @RequestMapping("/greetings")
     ModelAndView greetings(@RequestParam(value="name", required=false) String name) {
         return new ModelAndView("oded", "mdl", name);
