@@ -40,8 +40,9 @@
 			            <input type="submit" value="הוסף מטען"/>
 			        </td>
 			    </tr>
-			</table>  
-			     
+			</table>
+			<!-- inlcude csrf token -->
+		    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			</form>
 		</div>
 	</div>
