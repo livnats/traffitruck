@@ -15,12 +15,12 @@
 					<td>${load.destination}</td>
 					<td>${load.weight!'לא נמסר'}</td>
 					<td>${load.suggestedQuote!'לא נמסר'}</td>
-					<td>${load.creationDate!''}</td>
+					<td>${load.creationDate?string("HH:mm dd-MM-yyyy")!''}</td>
 				</tr>
 			</#list>
 		</table>
 	<#else>
-		No loads to show
+		אין מטענים להציג :(
 	</#if>
 	</body>
 </html>
