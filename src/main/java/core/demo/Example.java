@@ -8,15 +8,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @RestController
 @EnableAutoConfiguration
 @ComponentScan
-@EnableWebMvc
 public class Example {
 
 	@Autowired
@@ -28,7 +27,7 @@ public class Example {
     }
 
     @RequestMapping("/greetings")
-    ModelAndView greetings(String name) {
+    ModelAndView greetings(@RequestParam(value="name", required=false) String name) {
         return new ModelAndView("oded", "mdl", name);
     }
 

@@ -1,1 +1,1 @@
-Greetings ${mdl}
+Greetings ${mdl!'world'}
