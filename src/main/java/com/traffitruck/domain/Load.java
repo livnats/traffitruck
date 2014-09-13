@@ -7,8 +7,8 @@ public class Load {
 	private String source;
 	private String destination;
 	private Date creationDate;
-	private double suggestedQuote;
-	private double weight;
+	private Double suggestedQuote;
+	private Double weight;
 
 	public String getDestination() {
 		return destination;
@@ -26,7 +26,7 @@ public class Load {
 		this.creationDate = creationDate;
 	}
 
-	public double getSuggestedQuote() {
+	public Double getSuggestedQuote() {
 		return suggestedQuote;
 	}
 
@@ -42,7 +42,7 @@ public class Load {
 		this.source = source;
 	}
 
-	public double getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
 
