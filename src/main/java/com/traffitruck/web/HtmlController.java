@@ -20,6 +20,11 @@ public class HtmlController {
 	@Autowired
 	private MongoDAO dao;
 	
+    @RequestMapping("/login")
+    ModelAndView login() {
+        return new ModelAndView("login");
+    }
+
     @RequestMapping("/loads")
     ModelAndView showLoads() {
     	List<Load> loads = dao.getLoads();
