@@ -25,6 +25,12 @@ $(document).ready(function() {
 			$.getJSON( "/load_details/" + loadId, function( load ) {
 
 			    table_html = "<table border='1'>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>בעל המטען:</td>";
+			    table_html += "    <td>" + ((load.username != null) ? load.username : "") + "</td>";
+			    table_html += "</tr>";
+
 			    table_html += "<tr>";
 			    table_html += "    <td>שם המטען:</td>";
 			    table_html += "    <td>" + ((load.name != null) ? load.name : "") + "</td>";
@@ -114,7 +120,7 @@ $(document).ready(function() {
 										</tr>
 										<#list loads as load>
 										<tr id="${load.id}" class="clickableRow">
-											<td><a href="#">${load.username!'---'}</td>
+											<td><a href="#">${load.name!'---'}</td>
 											<td>${load.source}</td>
 											<td>${load.destination}</td>
 											<td>${load.suggestedQuote!'לא נמסר'}</td>
