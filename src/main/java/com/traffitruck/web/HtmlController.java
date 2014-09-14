@@ -52,7 +52,7 @@ public class HtmlController {
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") User user) {
         dao.storeUser(user);
-        return new ModelAndView("redirect:/loads");
+        return new ModelAndView("redirect:/registrationConfirmation");
     }
     
     @RequestMapping("/newload")
@@ -60,4 +60,8 @@ public class HtmlController {
         return new ModelAndView("new_load");
     }
 
+    @RequestMapping("/registrationConfirmation")
+    ModelAndView registrationConfirmation() {
+        return new ModelAndView("registration_confirmation");
+    }
 }
