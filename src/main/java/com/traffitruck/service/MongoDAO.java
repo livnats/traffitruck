@@ -54,5 +54,8 @@ public class MongoDAO {
     	return mongoTemplate.find(sortByName,User.class);
     }
     
+    public Load getLoad( String loadId ) {
+    	return mongoTemplate.findById(loadId, Load.class);
+    }
     
 }
