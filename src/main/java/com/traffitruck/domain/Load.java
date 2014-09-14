@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Load {
 
-	
+	private String username;
 	private String source;
 	private String destination;
 	private Date creationDate;
@@ -15,7 +15,23 @@ public class Load {
 	private String type;
 	private String loadingType;
 	private String downloadingType;
+	private String name;
 	
+	public String getUsername() {
+		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getDestination() {
 		return destination;

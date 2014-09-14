@@ -26,6 +26,10 @@
 				</datalist>
 			    <table>
 			    <tr>
+			        <td><label for="name">שם המטען:</label></td>
+			        <td><input name="name" /></td>
+			    </tr>
+			    <tr>
 			        <td><label for="type">סוג המטען:</label></td> 
 			        <td>
 				        <input list="types" name="type"/>
