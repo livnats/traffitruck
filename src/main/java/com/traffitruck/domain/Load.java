@@ -4,11 +4,15 @@ import java.util.Date;
 
 public class Load {
 
+	
 	private String source;
 	private String destination;
 	private Date creationDate;
 	private Double suggestedQuote;
 	private Double weight;
+	private Double volume;
+	private String comments;
+	
 
 	public String getDestination() {
 		return destination;
@@ -50,11 +54,38 @@ public class Load {
 		this.weight = weight;
 	}
 
+	public Double getVolume() {
+		return volume;
+	}
+
+	public void setVolume(Double volume) {
+		this.volume = volume;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public void setSuggestedQuote(Double suggestedQuote) {
+		this.suggestedQuote = suggestedQuote;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+
 	@Override
 	public String toString() {
 		return "Load [source=" + source + ", destination=" + destination
 				+ ", creationDate=" + creationDate + ", suggestedQuote="
-				+ suggestedQuote + ", weight=" + weight + "]";
+				+ suggestedQuote + ", weight=" + weight + ", volume=" + volume
+				+ ", comments=" + comments + "]";
 	}
+	
+	
 
 }

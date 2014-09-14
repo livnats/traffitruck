@@ -20,20 +20,37 @@
 			 
 			    <table>
 			    <tr>
-			        <td><label for="source">מוצא</label></td>
-			        <td><input name="source" /></td> 
+			        <td><label>סוג המטען:</label></td> 
 			    </tr>
 			    <tr>
-			        <td><label for="destination">יעד</label></td>
-			        <td><input name="destination" /></td>
-			    </tr>
-			    <tr>
-			        <td><label for="weight">משקל</label></td>
+			        <td><label for="weight">משקל:</label></td>
 			        <td><input name="weight" /></td>
 			    </tr>
 			    <tr>
-			        <td><label for="suggestedQuote">מחיר</label></td>
+			        <td><label for="volume">נפח:</label></td>
+			        <td><input name="volume" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>מוצא:</label></td>
+			        <td><input name="source" /></td> 
+			    </tr>
+			    <tr>
+			        <td><label for="source">סוג טעינה:</label></td> 
+			    </tr>
+			    <tr>
+			        <td><label for="destination">יעד:</label></td>
+			        <td><input name="destination" /></td>
+			    </tr>
+			    <tr>
+			        <td><label>סוג פריקה:</label></td> 
+			    </tr>
+			    <tr>
+			        <td><label for="suggestedQuote">מחיר:</label></td>
 			        <td><input name="suggestedQuote" /></td>
+			    </tr>
+			    <tr>
+			        <td><label for="comments">הערות:</label></td> 
+			        <td><input name="comments" /></td>
 			    </tr>
 			    <tr>
 			        <td colspan="2">
