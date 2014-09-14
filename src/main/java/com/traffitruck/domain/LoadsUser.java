@@ -1,21 +1,15 @@
 package com.traffitruck.domain;
 
-public class User {
+
+public class LoadsUser{
 	
-	private String name;
 	private String address;
 	private String contactPerson;
 	private String phoneNumber;
 	private String cellNumber;
-	private	String password;
+	private String username;
+	private String password;
 	
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getAddress() {
 		return address;
 	}
@@ -40,20 +34,24 @@ public class User {
 	public void setCellNumber(String cellNumber) {
 		this.cellNumber = cellNumber;
 	}
-	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", address=" + address
-				+ ", contactPerson=" + contactPerson + ", phoneNumber="
-				+ phoneNumber + ", cellNumber=" + cellNumber + ", password="
-				+ password + "]";
+		return "LoadsUser [address=" + address + ", contactPerson="
+				+ contactPerson + ", phoneNumber=" + phoneNumber
+				+ ", cellNumber=" + cellNumber + ", username=" + username
+				+ ", password=" + password + "]";
 	}
 	
 }

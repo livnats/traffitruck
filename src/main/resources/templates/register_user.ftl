@@ -19,8 +19,8 @@
 			<form method="post" action="registerUser">
 			    <table>
 			    <tr>
-			        <td><label for="name">שם הלקוח:</label></td>
-			        <td><input name="name" /></td>
+			        <td><label for="username">שם הלקוח:</label></td>
+			        <td><input name="username" /></td>
 			    </tr>
 	            <tr>
 	            	<td><label for="password">בחר סיסמה:</label></td>

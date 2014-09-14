@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.traffitruck.domain.Load;
+import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Trucker;
-import com.traffitruck.domain.User;
 
 @Component
 public class MongoDAO {
@@ -45,13 +45,13 @@ public class MongoDAO {
     }
     
     //User
-    public void storeUser( User user ) {
+    public void storeUser( LoadsUser user ) {
     	mongoTemplate.insert(user);
     }
     
-    public List<User> getUsers() {
+    public List<LoadsUser> getUsers() {
     	Query sortByName = new Query().with(new Sort("name"));
-    	return mongoTemplate.find(sortByName,User.class);
+    	return mongoTemplate.find(sortByName,LoadsUser.class);
     }
     
     public Load getLoad( String loadId ) {
