@@ -3,6 +3,22 @@
 	    <title>TraffiTruck</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+		var selectedRow = null;
+      $(".clickableRow").click(function() {
+			if ( selectedRow != null ) {
+				selectedRow.css('background-color', 'initial');
+			}
+			$(this).css('background-color', 'lightblue');
+			selectedRow = $(this);
+      });
+});
+</script>
+		
 	</head>
 	<body>
 	<div id="main">
@@ -23,17 +39,17 @@
 						
 									<table border="1">
 										<tr>
+											<th>שם</th>
 											<th>מוצא</th>
 											<th>יעד</th>
-											<th>משקל</th>
 											<th>מחיר</th>
 											<th>תאריך</th>
 										</tr>
 										<#list loads as load>
-										<tr>
+										<tr class="clickableRow">
+											<td><a href="#">${load.username!'---'}</td>
 											<td>${load.source}</td>
 											<td>${load.destination}</td>
-											<td>${load.weight!'לא נמסר'}</td>
 											<td>${load.suggestedQuote!'לא נמסר'}</td>
 											<td>${load.creationDate?string("HH:mm dd-MM-yyyy")!''}</td>
 										</tr>
