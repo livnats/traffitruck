@@ -10,11 +10,78 @@ $(document).ready(function() {
 
 		var selectedRow = null;
       $(".clickableRow").click(function() {
+      		
+      		// revert the background color of the previously selected row
 			if ( selectedRow != null ) {
 				selectedRow.css('background-color', 'initial');
 			}
+			
+			// change the background color of the newly selected row
 			$(this).css('background-color', 'lightblue');
 			selectedRow = $(this);
+			
+			// get the load details
+			loadId = $(this).attr('id');
+			$.getJSON( "/load_details/" + loadId, function( load ) {
+
+			    table_html = "<table border='1'>";
+			    table_html += "<tr>";
+			    table_html += "    <td>שם המטען:</td>";
+			    table_html += "    <td>" + ((load.name != null) ? load.name : "") + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>סוג המטען:</td>";
+			    table_html += "    <td>" + ((load.type != null) ? load.type : "") + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>משקל (ק\"ג):</td>";
+			    table_html += "    <td>" + ((load.weight != null) ? load.weight : "") + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>נפח (ליטרים):</td>";
+			    table_html += "    <td>" + ((load.volume) ? load.volume : "") + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>מוצא:</td>";
+			    table_html += "    <td>" + load.source + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>סוג טעינה:</td>";
+			    table_html += "    <td>" + ((load.loadingType != null) ? load.loadingType : "") + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>יעד:</td>";
+			    table_html += "    <td>" + load.destination + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>סוג פריקה:</td>";
+			    table_html += "    <td>" + ((load.downloadingType != null) ? load.downloadingType : "") + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>מחיר:</td>";
+			    table_html += "    <td>" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
+			    table_html += "</tr>";
+
+			    table_html += "<tr>";
+			    table_html += "    <td>הערות:</td>";
+			    table_html += "    <td>" + ((load.comments != null) ? load.comments : "") + "</td>";
+			    table_html += "</tr>";
+			    
+			    table_html += "</table>";
+
+     		   $('#load_details').html(table_html);
+  			});
+
+			// return false so the location won't change
+			return false;
       });
 });
 </script>
@@ -46,7 +113,7 @@ $(document).ready(function() {
 											<th>תאריך</th>
 										</tr>
 										<#list loads as load>
-										<tr class="clickableRow">
+										<tr id="${load.id}" class="clickableRow">
 											<td><a href="#">${load.username!'---'}</td>
 											<td>${load.source}</td>
 											<td>${load.destination}</td>
@@ -70,6 +137,8 @@ $(document).ready(function() {
 						</td>
 					</tr>
 				</table>
+			</div>
+			<div id="load_details">
 			</div>
 		</div>
 	</div>

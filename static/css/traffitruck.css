@@ -10,6 +10,14 @@
  }
  
 #content {
+ float:right;
  right:0;
  top:0;
+}
+
+#load_details {
+ float:right;
+ right:0;
+ top:0;
+ margin: 100px 100px 0px 0px;
 }
