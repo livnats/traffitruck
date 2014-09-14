@@ -43,10 +43,12 @@
 			    <tr>
 			        <td><label for="weight">משקל:</label></td>
 			        <td><input name="weight" /></td>
+			        <td><label>קילוגרם</label></td>
 			    </tr>
 			    <tr>
 			        <td><label for="volume">נפח:</label></td>
 			        <td><input name="volume" /></td>
+			        <td><label>ליטרים</label></td>
 			    </tr>
 			    <tr>
 			        <td><label>מוצא:</label></td>
@@ -67,6 +69,7 @@
 			    <tr>
 			        <td><label for="suggestedQuote">מחיר:</label></td>
 			        <td><input name="suggestedQuote" /></td>
+			        <td><label>שקלים</label></td>
 			    </tr>
 			    <tr>
 			        <td><label for="comments">הערות:</label></td> 
