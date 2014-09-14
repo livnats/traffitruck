@@ -13,6 +13,8 @@ public class Load {
 	private Double volume;
 	private String comments;
 	private String type;
+	private String loadingType;
+	private String downloadingType;
 	
 
 	public String getDestination() {
@@ -87,12 +89,30 @@ public class Load {
 		this.type = type;
 	}
 
+	public String getLoadingType() {
+		return loadingType;
+	}
+
+	public void setLoadingType(String loadingType) {
+		this.loadingType = loadingType;
+	}
+
+	public String getDownloadingType() {
+		return downloadingType;
+	}
+
+	public void setDownloadingType(String downloadingType) {
+		this.downloadingType = downloadingType;
+	}
+
 	@Override
 	public String toString() {
 		return "Load [source=" + source + ", destination=" + destination
 				+ ", creationDate=" + creationDate + ", suggestedQuote="
 				+ suggestedQuote + ", weight=" + weight + ", volume=" + volume
-				+ ", comments=" + comments + ", type=" + type + "]";
+				+ ", comments=" + comments + ", type=" + type
+				+ ", loadingType=" + loadingType + ", downloadingType="
+				+ downloadingType + "]";
 	}
 	
 

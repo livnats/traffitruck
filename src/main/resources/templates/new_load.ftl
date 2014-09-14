@@ -17,7 +17,13 @@
 		<div id="content">
 			<h2>הוסף מטען</h2>
 			<form method="post" action="newload">
-			 
+				<datalist id="loadingTypes">
+				  <option value="ידני">
+				  <option value="מלגזה">
+				  <option value="מנוף">
+				  <option value="רמפה">
+				  <option value="עגלה">
+				</datalist>
 			    <table>
 			    <tr>
 			        <td><label for="type">סוג המטען:</label></td> 
@@ -47,14 +53,16 @@
 			        <td><input name="source" /></td> 
 			    </tr>
 			    <tr>
-			        <td><label for="source">סוג טעינה:</label></td> 
+			        <td><label for="loadingType">סוג טעינה:</label></td> 
+			        <td><input list="loadingTypes" name="loadingType"/></td>
 			    </tr>
 			    <tr>
 			        <td><label for="destination">יעד:</label></td>
 			        <td><input name="destination" /></td>
 			    </tr>
 			    <tr>
-			        <td><label>סוג פריקה:</label></td> 
+			        <td><label for="downloadingType">סוג פריקה:</label></td>
+			        <td><input list="loadingTypes" name="downloadingType"/></td> 
 			    </tr>
 			    <tr>
 			        <td><label for="suggestedQuote">מחיר:</label></td>
