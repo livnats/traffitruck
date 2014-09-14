@@ -12,6 +12,7 @@ public class Load {
 	private Double weight;
 	private Double volume;
 	private String comments;
+	private String type;
 	
 
 	public String getDestination() {
@@ -78,14 +79,21 @@ public class Load {
 		this.weight = weight;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public String toString() {
 		return "Load [source=" + source + ", destination=" + destination
 				+ ", creationDate=" + creationDate + ", suggestedQuote="
 				+ suggestedQuote + ", weight=" + weight + ", volume=" + volume
-				+ ", comments=" + comments + "]";
+				+ ", comments=" + comments + ", type=" + type + "]";
 	}
-	
 	
 
 }

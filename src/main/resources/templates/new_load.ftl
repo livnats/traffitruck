@@ -20,7 +20,19 @@
 			 
 			    <table>
 			    <tr>
-			        <td><label>סוג המטען:</label></td> 
+			        <td><label for="type">סוג המטען:</label></td> 
+			        <td>
+				        <input list="types" name="type"/>
+						<datalist id="types">
+						  <option value="מכולה 20'">
+						  <option value="מכולה 40'">
+						  <option value="משטחים">
+						  <option value="שקים (באלות)">
+						  <option value="בעלי חיים">
+						  <option value="תפזורת">
+						  <option value="חומ''ס">
+						</datalist>
+					</td>
 			    </tr>
 			    <tr>
 			        <td><label for="weight">משקל:</label></td>
