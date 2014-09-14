@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.traffitruck.domain.Load;
+import com.traffitruck.domain.User;
 import com.traffitruck.service.MongoDAO;
 
 @RestController
@@ -43,6 +44,17 @@ public class HtmlController {
         return new ModelAndView("redirect:/loads");
     }
 
+    @RequestMapping(value = "/registerUser", method = RequestMethod.GET)
+    ModelAndView registerUser() {
+        return new ModelAndView("register_user");
+    }
+
+    @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    ModelAndView registerUser(@ModelAttribute("user") User user) {
+        dao.storeUser(user);
+        return new ModelAndView("redirect:/loads");
+    }
+    
     @RequestMapping("/newload")
     ModelAndView newLoad() {
         return new ModelAndView("new_load");

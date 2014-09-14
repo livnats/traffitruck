@@ -28,11 +28,11 @@
 		        <form action="/login" method="post">
 		        <table>
 		        	<tr>
-		        		<td><label for="username">שם משתמש</label></td>
+		        		<td><label for="username">שם משתמש:</label></td>
 			        	<td><input name="username" /></td> 
 		            </tr>
 		            <tr>
-		            	<td><label for="password">סיסמה</label></td>
+		            	<td><label for="password">סיסמה:</label></td>
 			        	<td><input name="password" type="password"/></td> 
 		            </tr>
 		            <tr>
@@ -40,6 +40,14 @@
 		            	<input type="submit" value="כניסה"/>
 		            </td>
 		            </tr>
+		            <tr>
+		            <td>&nbsp;</td>
+		            </tr> 
+		            <tr> 
+						<td>
+							<a href="/registerUser">רישום משתמש חדש</a>
+						</td>
+					</tr>
             	</table>
 				    <!-- inlcude csrf token -->
 				    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -55,7 +55,7 @@
 			        <td><label>ליטרים</label></td>
 			    </tr>
 			    <tr>
-			        <td><label>מוצא:</label></td>
+			        <td><label for="source">מוצא:</label></td>
 			        <td><input name="source" /></td> 
 			    </tr>
 			    <tr>
