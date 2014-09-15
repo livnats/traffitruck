@@ -21,7 +21,7 @@ $(document).ready(function() {
 				},
 				confirm_password: {
 					required: true,
-					minlength: 5,
+					minlength: 1,
 					equalTo: "#password"
 				},
 				phoneNumber: {
