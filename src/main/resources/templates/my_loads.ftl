@@ -24,6 +24,7 @@ $(document).ready(function() {
 			loadId = $(this).attr('id');
 			$.getJSON( "/load_details/" + loadId, function( load ) {
 
+
 			    table_html = "<table border='1'>";
 
 			    table_html += "<tr>";
@@ -82,6 +83,12 @@ $(document).ready(function() {
 			    table_html += "</tr>";
 			    
 			    table_html += "</table>";
+			    
+			    table_html += "<form action='deleteLoad' method='post'>";
+				table_html += "	   <button name='loadId' type='submit' value="+load.id +">הסר</button>";
+				table_html += "    <input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/>";
+				table_html += "</form>"
+				
 
      		   $('#load_details').html(table_html);
   			});

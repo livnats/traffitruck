@@ -55,6 +55,10 @@ public class MongoDAO {
     	return mongoTemplate.find(findByUsername,Load.class);
     }
     
+    public void deleteLoadById(String id){
+    	mongoTemplate.remove(new Query().addCriteria(Criteria.where("_id").is(id)),Load.class);
+    }
+    
     //User
     public void storeUser( LoadsUser user ) {
     	mongoTemplate.insert(user);

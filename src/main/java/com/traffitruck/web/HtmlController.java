@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +62,12 @@ public class HtmlController {
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
         dao.storeUser(user);
         return new ModelAndView("redirect:/registrationConfirmation");
+    }
+    
+    @RequestMapping(value = "/deleteLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    ModelAndView deleteLoad(String loadId) {
+        dao.deleteLoadById(loadId);
+        return new ModelAndView("redirect:/myLoads");
     }
     
     @RequestMapping("/newload")
