@@ -52,7 +52,7 @@
 			    <tr>
 			        <td><label for="volume">נפח:</label></td>
 			        <td><input name="volume" /></td>
-			        <td><label>קו''ב</label></td>
+			        <td><label>קוב</label></td>
 			    </tr>
 			    <tr>
 			        <td><label for="source">מוצא:</label></td>

@@ -47,7 +47,7 @@ $(document).ready(function() {
 			    table_html += "</tr>";
 
 			    table_html += "<tr>";
-			    table_html += "    <td>נפח (קו''ב):</td>";
+			    table_html += "    <td>נפח (קוב):</td>";
 			    table_html += "    <td>" + ((load.volume) ? load.volume : "") + "</td>";
 			    table_html += "</tr>";
 
