@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,16 @@ public class MongoDAO {
     	return mongoTemplate.find(sortBySource,Load.class);
     }
     
+    public Load getLoad( String loadId ) {
+    	return mongoTemplate.findById(loadId, Load.class);
+    }
+    
+    public List<Load> getLoadsForUser(String username) {
+    	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
+    	findByUsername.with(new Sort("name"));
+    	return mongoTemplate.find(findByUsername,Load.class);
+    }
+    
     //User
     public void storeUser( LoadsUser user ) {
     	mongoTemplate.insert(user);
@@ -54,8 +65,6 @@ public class MongoDAO {
     	return mongoTemplate.find(sortByName,LoadsUser.class);
     }
     
-    public Load getLoad( String loadId ) {
-    	return mongoTemplate.findById(loadId, Load.class);
-    }
+
     
 }

@@ -41,9 +41,17 @@ public class HtmlController {
     	String username = authentication.getName();
     	load.setUsername(username);
         dao.storeLoad(load);
-        return new ModelAndView("redirect:/loads");
+        return new ModelAndView("redirect:/myLoads");
     }
 
+    @RequestMapping(value = "/myLoads")
+    ModelAndView myLoads() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();    	
+    	List<Load> loads = dao.getLoadsForUser(username);
+        return new ModelAndView("my_loads", "loads", loads);      
+    }
+    
     @RequestMapping(value = "/registerUser", method = RequestMethod.GET)
     ModelAndView registerUser() {
         return new ModelAndView("register_user");

@@ -139,7 +139,12 @@ $(document).ready(function() {
 					</tr>
 					<tr> 
 						<td>
-							<a href="/myLoads">המטענים שלי</a>
+							<a href="/newload">הוספת מטען חדש</a>
+						</td>
+					</tr>
+					<tr> 
+						<td>
+							<a href="/loads">מטענים לשילוח</a>
 						</td>
 					</tr>
 				</table>
