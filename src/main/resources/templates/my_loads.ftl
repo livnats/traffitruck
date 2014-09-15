@@ -104,7 +104,7 @@ $(document).ready(function() {
 				<p>&nbsp;</p>
 			</div>
 			<div id="content">
-				<h2>מטענים לשילוח:</h2>
+				<h2>המטענים שלי</h2>
 				<table border="0">
 					<tr> 
 						<td>
