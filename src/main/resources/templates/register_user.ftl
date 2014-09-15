@@ -79,11 +79,11 @@ $(document).ready(function() {
 			    </tr>
 	            <tr>
 	            	<td><label for="password">בחר סיסמה:</label></td>
-		        	<td><input name="password" type="password"/></td> 
+		        	<td><input id="password" name="password" type="password"/></td> 
 	            </tr>
 	            <tr>
-	            	<td><label for="password">וידוא סיסמה:</label></td>
-		        	<td><input name="confirm_password" type="password"/></td> 
+	            	<td><label for="confirm_password">וידוא סיסמה:</label></td>
+		        	<td><input id="confirm_password" name="confirm_password" type="password"/></td> 
 	            </tr>
 			    <tr>
 			        <td><label for="address">כתובת:</label></td>
