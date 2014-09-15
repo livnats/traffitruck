@@ -33,6 +33,10 @@ $(document).ready(function() {
 				volume: {
 					required: false,
 					number: true
+				},
+				waitingTime: {
+					required: false,
+					number: true
 				}
 			},
 			messages: {
@@ -56,6 +60,9 @@ $(document).ready(function() {
 				},
 				volume: {
 					number: "הנפח חייב להכיל רק ספרות"
+				},
+				waitingTime: {
+					number: "זמן ההמתנה חייב להיות מספר"
 				}
 			}
 	});
@@ -130,6 +137,10 @@ $(document).ready(function() {
 			    <tr>
 			        <td><label for="suggestedQuote">מחיר (שקלים):</label></td>
 			        <td><input name="suggestedQuote" /></td>
+			    </tr>
+			    <tr>
+			        <td><label for="waitingTime">זמן המתנה (שעות):</label></td> 
+			        <td><input name="waitingTime" /></td>
 			    </tr>
 			    <tr>
 			        <td><label for="comments">הערות:</label></td> 

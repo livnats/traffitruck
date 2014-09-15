@@ -21,6 +21,7 @@ public class Load {
 	private String loadingType;
 	private String downloadingType;
 	private String name;
+	private Double waitingTime;
 	
 	
 	public String getId() {
@@ -135,14 +136,24 @@ public class Load {
 		this.downloadingType = downloadingType;
 	}
 
+	
+	public Double getWaitingTime() {
+		return waitingTime;
+	}
+
+	public void setWaitingTime(Double waitingTime) {
+		this.waitingTime = waitingTime;
+	}
+
 	@Override
 	public String toString() {
-		return "Load [source=" + source + ", destination=" + destination
-				+ ", creationDate=" + creationDate + ", suggestedQuote="
-				+ suggestedQuote + ", weight=" + weight + ", volume=" + volume
-				+ ", comments=" + comments + ", type=" + type
-				+ ", loadingType=" + loadingType + ", downloadingType="
-				+ downloadingType + "]";
+		return "Load [id=" + id + ", username=" + username + ", source="
+				+ source + ", destination=" + destination + ", creationDate="
+				+ creationDate + ", suggestedQuote=" + suggestedQuote
+				+ ", weight=" + weight + ", volume=" + volume + ", comments="
+				+ comments + ", type=" + type + ", loadingType=" + loadingType
+				+ ", downloadingType=" + downloadingType + ", name=" + name
+				+ ", waitingTime=" + waitingTime + "]";
 	}
 	
 

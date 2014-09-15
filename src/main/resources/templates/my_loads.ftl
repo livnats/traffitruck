@@ -78,6 +78,11 @@ $(document).ready(function() {
 			    table_html += "</tr>";
 
 			    table_html += "<tr>";
+			    table_html += "    <td>זמן המתנה (שעות):</td>";
+			    table_html += "    <td>" + ((load.waitingTime != null) ? load.waitingTime : "") + "</td>";
+			    table_html += "</tr>";
+			    
+			    table_html += "<tr>";
 			    table_html += "    <td>הערות:</td>";
 			    table_html += "    <td>" + ((load.comments != null) ? load.comments : "") + "</td>";
 			    table_html += "</tr>";
