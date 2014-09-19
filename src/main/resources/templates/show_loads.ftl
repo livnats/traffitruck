@@ -113,6 +113,11 @@ $(document).ready(function() {
 				<table border="0">
 					<tr> 
 						<td>
+							<a href="/myLoads">המטענים שלי</a>
+						</td>
+					</tr>
+					<tr> 
+						<td>
 							<#if loads?has_content>
 						
 									<table border="1">
@@ -143,11 +148,6 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 					<td>&nbsp;</td>
-					</tr>
-					<tr> 
-						<td>
-							<a href="/myLoads">המטענים שלי</a>
-						</td>
 					</tr>
 				</table>
 			</div>
