@@ -21,8 +21,14 @@
 			<table>
 				<tr> 
 					<td>
+						<a href="/newTruck">חזור לעמוד הראשי</a>
+					</td>
+				</tr>
+				<tr> 
+					<td>
 						<a href="/newTruck">הוספת משאית חדשה</a>
 					</td>
+
 				</tr>
 				<tr> 
 					<td>

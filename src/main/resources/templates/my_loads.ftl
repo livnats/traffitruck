@@ -145,6 +145,16 @@ $(document).ready(function() {
 				<table border="0">
 					<tr> 
 						<td>
+							<a href="/loads">חזור לעמוד הראשי</a>
+						</td>
+					</tr>
+					<tr> 	
+						<td>
+							<a href="/newload">הוספת מטען חדש</a>
+						</td>
+					</tr>
+					<tr> 
+						<td>
 							<#if loads?has_content>
 						
 									<table border="1">
@@ -176,16 +186,7 @@ $(document).ready(function() {
 					<tr>
 					<td>&nbsp;</td>
 					</tr>
-					<tr> 
-						<td>
-							<a href="/newload">הוספת מטען חדש</a>
-						</td>
-					</tr>
-					<tr> 
-						<td>
-							<a href="/loads">מטענים לשילוח</a>
-						</td>
-					</tr>
+
 				</table>
 			</div>
 			<div id="load_details">
