@@ -31,6 +31,12 @@
 					</td>
 			    </tr>
 			    <tr>
+			        <td><label for="truckPhoto">צילום המשאית:</label></td> 
+			        <td>
+				        <input type="file" accept="image/*" name="truckPhoto"/>
+					</td>
+			    </tr>
+			    <tr>
 			        <td colspan="2">
 			            <input type="submit" value="הוסף משאית"/>
 			        </td>

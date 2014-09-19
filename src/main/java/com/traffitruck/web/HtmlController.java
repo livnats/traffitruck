@@ -112,11 +112,13 @@ public class HtmlController {
     
     @RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newTruck(@RequestParam("licensePlateNumber") String licensePlateNumber,
+    					  @RequestParam("truckPhoto") MultipartFile truckPhoto,
     		              @RequestParam("licensePlatePhoto") MultipartFile licensePlatePhoto) throws IOException{
         
     	Truck truck = new Truck();
     	truck.setLicensePlateNumber(licensePlateNumber);
     	truck.setLicensePlatePhoto(new Binary(licensePlatePhoto.getBytes()));
+    	truck.setTruckPhoto(new Binary(truckPhoto.getBytes()));
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	String username = authentication.getName();
     	truck.setUsername(username);
