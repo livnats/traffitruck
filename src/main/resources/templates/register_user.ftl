@@ -24,6 +24,10 @@ $(document).ready(function() {
 					minlength: 1,
 					equalTo: "#password"
 				},
+				email: {
+					required: true,
+					email: true
+				},
 				phoneNumber: {
 					required: false,
 					number: true
@@ -46,6 +50,10 @@ $(document).ready(function() {
 					required: "אנא הכנס סיסמה",
 					minlength: "הסיסמה חייבת להכיל לפחות תו אחד",
 					equalTo: "הסיסמה חייבת להתאים לסיסמה מעל"
+				},
+				email: {
+					required: "אנא הכנס דוא\"ל",
+					email: "כתובת הדוא\"ל אינה תקנית"
 				},
 				phoneNumber: {
 					number: "מספר הטלפון חייב להכיל רק ספרות"
@@ -85,6 +93,10 @@ $(document).ready(function() {
 	            	<td><label for="confirm_password">וידוא סיסמה:</label></td>
 		        	<td><input id="confirm_password" name="confirm_password" type="password"/></td> 
 	            </tr>
+			    <tr>
+			        <td><label for="email">דוא"ל:</label></td>
+			        <td><input name="email" /></td>
+			    </tr>
 			    <tr>
 			        <td><label for="address">כתובת:</label></td>
 			        <td><input name="address" /></td>

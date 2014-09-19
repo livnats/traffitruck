@@ -3,6 +3,7 @@ package com.traffitruck.domain;
 
 public class LoadsUser{
 	
+	private String email;
 	private String address;
 	private String contactPerson;
 	private String phoneNumber;
@@ -43,15 +44,21 @@ public class LoadsUser{
 	public String getPassword() {
 		return password;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	@Override
 	public String toString() {
-		return "LoadsUser [address=" + address + ", contactPerson="
-				+ contactPerson + ", phoneNumber=" + phoneNumber
-				+ ", cellNumber=" + cellNumber + ", username=" + username
-				+ ", password=" + password + "]";
+		return "LoadsUser [email=" + email + ", address=" + address
+				+ ", contactPerson=" + contactPerson + ", phoneNumber="
+				+ phoneNumber + ", cellNumber=" + cellNumber + ", username="
+				+ username + "]";
 	}
 	
 }
