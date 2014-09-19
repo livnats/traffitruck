@@ -93,11 +93,17 @@ public class HtmlController {
         return new ModelAndView("registration_confirmation");
     }
     
-    @RequestMapping("/myTrucks")
-    ModelAndView myTruck() {
-        return new ModelAndView("my_trucks");
+    @RequestMapping(value = "/myTrucks")
+    ModelAndView myTrucks() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+        Map<String, Object> model = new HashMap<>();
+        //model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("trucks", dao.getTrucksForUser(username));
+        return new ModelAndView("my_trucks", model);
     }
     
+   
     @RequestMapping("/newTruck")
     ModelAndView newTruck() {
         return new ModelAndView("new_truck");

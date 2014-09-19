@@ -24,6 +24,29 @@
 						<a href="/newTruck">הוספת משאית חדשה</a>
 					</td>
 				</tr>
+				<tr> 
+					<td>
+						<#if trucks?has_content>
+					
+								<table border="1">
+									<tr>
+										<th>מספר לוחית זיהוי</th>
+									</tr>
+									<#list trucks as truck>
+									<tr id="${truck.id}">
+										<td>${truck.licensePlateNumber}</td>
+									</tr>
+									</#list>
+								</table>
+					
+						<#else>
+							אין משאיות רשומות
+						</#if>
+					</td>
+				</tr>
+				<tr>
+				<td>&nbsp;</td>
+				</tr>
 			</table>
 		</div>
 	</div>
