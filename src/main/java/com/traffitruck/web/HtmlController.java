@@ -1,9 +1,11 @@
 package com.traffitruck.web;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -11,11 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
+import com.traffitruck.domain.Truck;
 import com.traffitruck.service.MongoDAO;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -87,4 +92,25 @@ public class HtmlController {
     ModelAndView registrationConfirmation() {
         return new ModelAndView("registration_confirmation");
     }
+    
+    @RequestMapping("/newTruck")
+    ModelAndView newTruck() {
+        return new ModelAndView("new_truck");
+    }
+    
+    @RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ModelAndView newTruck(@RequestParam("licensePlateNumber") String licensePlateNumber,
+    		              @RequestParam("licensePlatePhoto") MultipartFile licensePlatePhoto) throws IOException{
+        
+    	Truck truck = new Truck();
+    	truck.setLicensePlateNumber(licensePlateNumber);
+    	truck.setLicensePlatePhoto(new Binary(licensePlatePhoto.getBytes()));
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+    	truck.setUsername(username);
+    	truck.setCreationDate(new Date());
+    	dao.storeTruck(truck);
+        return new ModelAndView("redirect:/registrationConfirmation");
+    }
+    
 }

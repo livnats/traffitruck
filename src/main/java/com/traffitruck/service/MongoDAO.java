@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
-import com.traffitruck.domain.Trucker;
+import com.traffitruck.domain.Truck;
 
 @Component
 public class MongoDAO {
@@ -22,19 +22,7 @@ public class MongoDAO {
     public MongoDAO(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
-    
-    
-    //Trucker
-    public void storeTrucker( Trucker trucker ) {
-    	mongoTemplate.insert(trucker);
-    }
-     
-    public List<Trucker> getTruckers() {
-    	Query sortByName = new Query().with(new Sort("name"));
-    	return mongoTemplate.find(sortByName,Trucker.class);
-    }
-    
-    
+       
     //Load
     public void storeLoad( Load load ) {
     	mongoTemplate.insert(load);
@@ -69,6 +57,12 @@ public class MongoDAO {
     	return mongoTemplate.find(sortByName,LoadsUser.class);
     }
     
+    ///Truck
+    public void storeTruck( Truck truck ) {
+    	mongoTemplate.insert(truck);
+    }
 
-    
+    public Load getTruck( String truckId ) {
+    	return mongoTemplate.findById(truckId, Load.class);
+    }
 }
