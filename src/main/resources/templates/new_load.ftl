@@ -11,7 +11,7 @@ $(document).ready(function() {
     $("#other_type_tr").hide();
 
 	$("#type").change(function () {
-        if ( this.value == "other" ) {
+        if ( this.value == "OTHER" ) {
         	$("#other_type_tr").show();
         }
         else {
