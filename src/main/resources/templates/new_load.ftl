@@ -7,6 +7,18 @@
 		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+
+    $("#other_type_tr").hide();
+
+	$("#type").change(function () {
+        if ( this.value == "other" ) {
+        	$("#other_type_tr").show();
+        }
+        else {
+        	$("#other_type_tr").hide();
+        }
+    });
+    
 	// validate the comment form when it is submitted
 	$("#newloadForm").validate({
 			rules: {
@@ -98,17 +110,22 @@ $(document).ready(function() {
 			    <tr>
 			        <td><label for="type">סוג המטען:</label></td> 
 			        <td>
-				        <input list="types" name="type"/>
-						<datalist id="types">
-						  <option value="מכולה 20'">
-						  <option value="מכולה 40'">
-						  <option value="משטחים">
-						  <option value="שקים (באלות)">
-						  <option value="בעלי חיים">
-						  <option value="תפזורת">
-						  <option value="חומ''ס">
-						</datalist>
+			        	<select name="type" id="type">
+						  <option value="">-- בחר --</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].CONTAINER_20}">מכולה 20'</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].CONTAINER_40}">מכולה 40'</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].LIFTS}">משטחים</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].BAGS}">שקים (באלות)</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].ANIMALS}">בעלי חיים</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].SCATTERED}">תפזורת</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].HAZMAT}">חומ"ס</option>
+						  <option value="${enums["com.traffitruck.domain.LoadType"].OTHER}">אחר</option>
+						</select>
 					</td>
+			    </tr>
+			    <tr id="other_type_tr">
+			        <td></td>
+			        <td><label for="other_type">פרטי סוג מטען:</label><input name="other_type" id="other_type"/></td>
 			    </tr>
 			    <tr>
 			        <td><label for="weight">משקל (קילוגרם):</label></td>

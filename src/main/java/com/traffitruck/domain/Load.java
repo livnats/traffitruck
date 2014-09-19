@@ -17,7 +17,7 @@ public class Load {
 	private Double weight;
 	private Double volume;
 	private String comments;
-	private String type;
+	private LoadType type;
 	private String loadingType;
 	private String downloadingType;
 	private String name;
@@ -112,11 +112,11 @@ public class Load {
 		this.weight = weight;
 	}
 
-	public String getType() {
+	public LoadType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(LoadType type) {
 		this.type = type;
 	}
 

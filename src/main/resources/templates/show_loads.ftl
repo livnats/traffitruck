@@ -8,6 +8,31 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	function convertType(type) {
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].CONTAINER_20}" )
+			return "מכולה 20'";
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].CONTAINER_40}" )
+			return "מכולה 40'";
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].LIFTS}" )
+			return "משטחים";
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].BAGS}" )
+			return "שקים (באלות)";
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].ANIMALS}" )
+			return "בעלי חיים";
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].SCATTERED}" )
+			return "תפזורת";
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].HAZMAT}" )
+			return 'חומ"ס';
+		if ( type == "${enums["com.traffitruck.domain.LoadType"].OTHER}" )
+			return "אחר";
+		return type;
+	}
+
+	$( ".typeConversion" ).each(function() {
+	  $(this).html(convertType($(this).html()));
+	});
+
+
 		var selectedRow = null;
       $(".clickableRow").click(function() {
       		
@@ -38,7 +63,7 @@ $(document).ready(function() {
 
 			    table_html += "<tr>";
 			    table_html += "    <td>סוג המטען:</td>";
-			    table_html += "    <td>" + ((load.type != null) ? load.type : "") + "</td>";
+			    table_html += "    <td>" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
 			    table_html += "</tr>";
 
 			    table_html += "<tr>";
@@ -134,7 +159,7 @@ $(document).ready(function() {
 											<td><a href="#">${load.name!'---'}</td>
 											<td>${load.source}</td>
 											<td>${load.destination}</td>
-											<td>${load.type!'לא נמסר'}</td>
+											<td class="typeConversion">${load.type!'לא נמסר'}</td>
 											<td>${load.suggestedQuote!'לא נמסר'}</td>
 											<td>${load.creationDate?string("HH:mm dd-MM-yyyy")!''}</td>
 										</tr>

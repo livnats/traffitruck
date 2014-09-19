@@ -82,19 +82,19 @@ $(document).ready(function() {
 			<form id="registerForm" method="post" action="registerUser">
 			    <table>
 			    <tr>
-			        <td><label for="username">שם הלקוח:</label></td>
+			        <td><label for="username">* שם הלקוח:</label></td>
 			        <td><input name="username" /></td>
 			    </tr>
 	            <tr>
-	            	<td><label for="password">בחר סיסמה:</label></td>
+	            	<td><label for="password">* בחר סיסמה:</label></td>
 		        	<td><input id="password" name="password" type="password"/></td> 
 	            </tr>
 	            <tr>
-	            	<td><label for="confirm_password">וידוא סיסמה:</label></td>
+	            	<td><label for="confirm_password">* וידוא סיסמה:</label></td>
 		        	<td><input id="confirm_password" name="confirm_password" type="password"/></td> 
 	            </tr>
 			    <tr>
-			        <td><label for="email">דוא"ל:</label></td>
+			        <td><label for="email">* דוא"ל:</label></td>
 			        <td><input name="email" /></td>
 			    </tr>
 			    <tr>

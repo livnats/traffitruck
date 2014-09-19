@@ -1,14 +1,14 @@
 package com.traffitruck.web;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.service.MongoDAO;
+
+import freemarker.ext.beans.BeansWrapper;
 
 @RestController
 public class HtmlController {
@@ -31,8 +33,10 @@ public class HtmlController {
 
     @RequestMapping({"/","/loads"})
     ModelAndView showLoads() {
-    	List<Load> loads = dao.getLoads();
-        return new ModelAndView("show_loads", "loads", loads);
+        Map<String, Object> model = new HashMap<>();
+        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("loads", dao.getLoads());
+        return new ModelAndView("show_loads", model);
     }
 
     @RequestMapping(value = "/newload", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -48,9 +52,11 @@ public class HtmlController {
     @RequestMapping(value = "/myLoads")
     ModelAndView myLoads() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();    	
-    	List<Load> loads = dao.getLoadsForUser(username);
-        return new ModelAndView("my_loads", "loads", loads);      
+    	String username = authentication.getName();
+        Map<String, Object> model = new HashMap<>();
+        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("loads", dao.getLoadsForUser(username));
+        return new ModelAndView("my_loads", model);
     }
     
     @RequestMapping(value = "/registerUser", method = RequestMethod.GET)
@@ -72,7 +78,9 @@ public class HtmlController {
     
     @RequestMapping("/newload")
     ModelAndView newLoad() {
-        return new ModelAndView("new_load");
+        Map<String, Object> model = new HashMap<>();
+        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+		return new ModelAndView("new_load", model );
     }
 
     @RequestMapping("/registrationConfirmation")
