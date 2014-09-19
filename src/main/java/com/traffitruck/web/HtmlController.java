@@ -93,6 +93,11 @@ public class HtmlController {
         return new ModelAndView("registration_confirmation");
     }
     
+    @RequestMapping("/myTrucks")
+    ModelAndView myTruck() {
+        return new ModelAndView("my_trucks");
+    }
+    
     @RequestMapping("/newTruck")
     ModelAndView newTruck() {
         return new ModelAndView("new_truck");
@@ -110,7 +115,7 @@ public class HtmlController {
     	truck.setUsername(username);
     	truck.setCreationDate(new Date());
     	dao.storeTruck(truck);
-        return new ModelAndView("redirect:/registrationConfirmation");
+        return new ModelAndView("redirect:/myTrucks");
     }
     
 }

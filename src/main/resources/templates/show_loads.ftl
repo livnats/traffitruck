@@ -143,6 +143,11 @@ $(document).ready(function() {
 					</tr>
 					<tr> 
 						<td>
+							<a href="/myTrucks">המשאיות שלי</a>
+						</td>
+					</tr>
+					<tr> 
+						<td>
 							<#if loads?has_content>
 						
 									<table border="1">
