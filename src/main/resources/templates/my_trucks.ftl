@@ -4,7 +4,26 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+		
+<script type="text/javascript">
+	
+$(document).ready(function() {
+
+	function convertType(type) {
+		if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].Registered}" )
+			return "ממתין לאישור";
+		if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].Approved}" )
+			return "מאושר";
+		return type;
+	}
+	
+	$( ".typeConversion" ).each(function() {
+	  $(this).html(convertType($(this).html()));
+	});
+
+});
+</script>
+
 </head>
 <body>
 <div id="main">
@@ -37,10 +56,12 @@
 								<table border="1">
 									<tr>
 										<th>מספר לוחית זיהוי</th>
+										<th>סטטוס</th>
 									</tr>
 									<#list trucks as truck>
 									<tr id="${truck.id}">
 										<td>${truck.licensePlateNumber}</td>
+										<td class="typeConversion">${truck.registrationStatus!'שגיאה'}</td>
 									</tr>
 									</#list>
 								</table>

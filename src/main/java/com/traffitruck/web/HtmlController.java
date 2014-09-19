@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Truck;
+import com.traffitruck.domain.TruckRegistrationStatus;
 import com.traffitruck.service.MongoDAO;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -98,7 +99,7 @@ public class HtmlController {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	String username = authentication.getName();
         Map<String, Object> model = new HashMap<>();
-        //model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
         model.put("trucks", dao.getTrucksForUser(username));
         return new ModelAndView("my_trucks", model);
     }
@@ -120,6 +121,7 @@ public class HtmlController {
     	String username = authentication.getName();
     	truck.setUsername(username);
     	truck.setCreationDate(new Date());
+    	truck.setRegistrationStatus(TruckRegistrationStatus.Registered);
     	dao.storeTruck(truck);
         return new ModelAndView("redirect:/myTrucks");
     }

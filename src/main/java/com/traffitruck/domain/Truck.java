@@ -24,6 +24,7 @@ public class Truck {
 	private Binary licensePlatePhoto;
 	private Binary truckPhoto;
 	private Date creationDate;
+	private TruckRegistrationStatus registrationStatus;
 
 	public String getId() {
 		return id;
@@ -84,13 +85,23 @@ public class Truck {
 		this.creationDate = creationDate;
 	}
 
+	public TruckRegistrationStatus getRegistrationStatus() {
+		return registrationStatus;
+	}
+
+
+	public void setRegistrationStatus(TruckRegistrationStatus registrationStatus) {
+		this.registrationStatus = registrationStatus;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Truck [id=" + id + ", username=" + username
 				+ ", licensePlateNumber=" + licensePlateNumber
 				+ ", licensePlatePhoto=" + licensePlatePhoto + ", truckPhoto="
-				+ truckPhoto + ", creationDate=" + creationDate + "]";
+				+ truckPhoto + ", creationDate=" + creationDate
+				+ ", registrationStatus=" + registrationStatus + "]";
 	}
 
 
