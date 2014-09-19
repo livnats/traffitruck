@@ -120,6 +120,7 @@ $(document).ready(function() {
 											<th>שם</th>
 											<th>מוצא</th>
 											<th>יעד</th>
+											<th>סוג מטען</th>
 											<th>מחיר</th>
 											<th>תאריך</th>
 										</tr>
@@ -128,6 +129,7 @@ $(document).ready(function() {
 											<td><a href="#">${load.name!'---'}</td>
 											<td>${load.source}</td>
 											<td>${load.destination}</td>
+											<td>${load.type!'לא נמסר'}</td>
 											<td>${load.suggestedQuote!'לא נמסר'}</td>
 											<td>${load.creationDate?string("HH:mm dd-MM-yyyy")!''}</td>
 										</tr>
