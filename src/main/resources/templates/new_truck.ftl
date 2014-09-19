@@ -5,6 +5,44 @@
 	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#other_type_tr").hide();
+
+	$("#type").change(function () {
+        if ( this.value == "other" ) {
+        	$("#other_type_tr").show();
+        }
+        else {
+        	$("#other_type_tr").hide();
+        }
+    });
+    
+	// validate the comment form when it is submitted
+	$("#newTruckForm").validate({
+			rules: {
+				licensePlateNumber: {
+					required: true,
+					minlength: 1
+				},
+				licensePlatePhoto: {
+					required: true
+				}
+			},
+			messages: {
+				licensePlateNumber: {
+					required:"אנה הכנס מספר לוחית רישוי",
+					minlength: "לוחית רישוי צריכה להכיל לפחות תו אחד"
+				},
+				licensePlatePhoto: {
+					required: "עליך להעלות צילום של לוחית רישוי"
+				}
+			}
+	});
+
+});
+</script>
 </head>
 <body>
 <div id="main">
@@ -21,11 +59,11 @@
 			<form id="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data">
 			    <table>
 			    <tr>
-			        <td><label for="licensePlateNumber">מספר לוחית זיהוי:</label></td>
+			        <td><label for="licensePlateNumber">* מספר לוחית זיהוי:</label></td>
 			        <td><input name="licensePlateNumber" /></td>
 			    </tr>
 			    <tr>
-			        <td><label for="licensePlatePhoto">צילום רשיון רכב:</label></td> 
+			        <td><label for="licensePlatePhoto">* צילום רשיון רכב:</label></td> 
 			        <td>
 				        <input type="file" accept="image/*" name="licensePlatePhoto"/>
 					</td>
