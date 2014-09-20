@@ -22,3 +22,7 @@
  margin: 100px 100px 0px 0px;
  width:30%;
 }
+
+.error {
+  color: red;
+}
