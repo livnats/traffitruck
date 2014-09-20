@@ -70,8 +70,8 @@ public class MongoDAO {
     	mongoTemplate.insert(truck);
     }
 
-    public Truck getTruck( String truckId ) {
-    	return mongoTemplate.findById(truckId, Truck.class);
+    public Truck getTruckById( String id ) {
+    	return mongoTemplate.findById(id, Truck.class);
     }
     
     public List<Truck> getNonApprovedTrucks() {

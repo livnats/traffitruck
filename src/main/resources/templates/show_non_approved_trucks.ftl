@@ -36,7 +36,7 @@
 										</tr>
 										<#list trucks as truck>
 										<tr>
-											<td><a href="/truckApproval?truck=${truck.id}">אשר</a></td>
+											<td><a href="/truckApproval?truckId=${truck.id}">אשר</a></td>
 											<td>${truck.licensePlateNumber}</td>
 											<td>${truck.username}</td>
 											<td>${truck.creationDate?string("dd-MM-yyyy")!''}</td>

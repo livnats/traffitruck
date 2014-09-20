@@ -40,7 +40,7 @@ $(document).ready(function() {
 			<table>
 				<tr> 
 					<td>
-						<a href="/loads">חזור לעמוד הראשי</a>
+						<a href="/">חזור לעמוד הראשי</a>
 					</td>
 				</tr>
 				<tr> 
