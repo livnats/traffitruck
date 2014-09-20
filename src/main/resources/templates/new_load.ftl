@@ -95,13 +95,6 @@ $(document).ready(function() {
 		<div id="content">
 			<h2>הוסף מטען</h2>
 			<form id="newloadForm" method="post" action="newload">
-				<datalist id="loadingTypes">
-				  <option value="ידני">
-				  <option value="מלגזה">
-				  <option value="מנוף">
-				  <option value="רמפה">
-				  <option value="עגלה">
-				</datalist>
 			    <table>
 			    <tr>
 			        <td><label for="name">שם המטען:</label></td>
@@ -141,7 +134,16 @@ $(document).ready(function() {
 			    </tr>
 			    <tr>
 			        <td><label for="loadingType">סוג טעינה:</label></td> 
-			        <td><input list="loadingTypes" name="loadingType"/></td>
+			        <td>
+			        	<select name="loadingType" id="loadingType">
+						  	<option value="">-- בחר --</option>
+							<option value="${enums["com.traffitruck.domain.LiftType"].MANUAL}">ידני</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].FORKLIFT}">מלגזה</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].CRANE}">מנוף</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].RAMP}">רמפה</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].TROLLY}">עגלה</option>
+			        	</select>
+			        </td>
 			    </tr>
 			    <tr>
 			        <td><label for="destination">יעד:</label></td>
@@ -149,7 +151,16 @@ $(document).ready(function() {
 			    </tr>
 			    <tr>
 			        <td><label for="downloadingType">סוג פריקה:</label></td>
-			        <td><input list="loadingTypes" name="downloadingType"/></td> 
+			        <td>
+			        	<select name="downloadingType" id="downloadingType">
+						  	<option value="">-- בחר --</option>
+							<option value="${enums["com.traffitruck.domain.LiftType"].MANUAL}">ידני</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].FORKLIFT}">מלגזה</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].CRANE}">מנוף</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].RAMP}">רמפה</option>
+					  		<option value="${enums["com.traffitruck.domain.LiftType"].TROLLY}">עגלה</option>
+			        	</select>
+			        </td>
 			    </tr>
 			    <tr>
 			        <td><label for="suggestedQuote">מחיר (שקלים):</label></td>

@@ -28,6 +28,20 @@ $(document).ready(function() {
 		return type;
 	}
 
+	function convertLiftType(type) {
+		if ( type == "${enums["com.traffitruck.domain.LiftType"].MANUAL}" )
+			return "ידני";
+		if ( type == "${enums["com.traffitruck.domain.LiftType"].FORKLIFT}" )
+			return "מלגזה";
+		if ( type == "${enums["com.traffitruck.domain.LiftType"].CRANE}" )
+			return "מנוף";
+		if ( type == "${enums["com.traffitruck.domain.LiftType"].RAMP}" )
+			return "רמפה";
+		if ( type == "${enums["com.traffitruck.domain.LiftType"].TROLLY}" )
+			return "עגלה";
+		return type;
+	}
+
 	$( ".typeConversion" ).each(function() {
 	  $(this).html(convertType($(this).html()));
 	});
@@ -83,7 +97,7 @@ $(document).ready(function() {
 
 			    table_html += "<tr>";
 			    table_html += "    <td>סוג טעינה:</td>";
-			    table_html += "    <td>" + ((load.loadingType != null) ? load.loadingType : "") + "</td>";
+			    table_html += "    <td>" + ((load.loadingType != null) ? convertLiftType(load.loadingType) : "") + "</td>";
 			    table_html += "</tr>";
 
 			    table_html += "<tr>";
@@ -93,7 +107,7 @@ $(document).ready(function() {
 
 			    table_html += "<tr>";
 			    table_html += "    <td>סוג פריקה:</td>";
-			    table_html += "    <td>" + ((load.downloadingType != null) ? load.downloadingType : "") + "</td>";
+			    table_html += "    <td>" + ((load.downloadingType != null) ? convertLiftType(load.downloadingType) : "") + "</td>";
 			    table_html += "</tr>";
 
 			    table_html += "<tr>";
