@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,11 +119,16 @@ public class HtmlController {
         return new ModelAndView("show_non_approved_trucks", model);
     }
     
+	@RequestMapping(value = "/approval/licenseimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] getUser(@PathVariable String truckId) {
+		return dao.getTruckById(truckId).getLicensePlatePhoto().getData();
+	}
+
     @RequestMapping("/truckApproval")
     ModelAndView approveTruck(@RequestParam("truckId") String id) {
     	Map<String, Object> model = new HashMap<>();
     	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("truck", dao.getTruckById(id));
+        model.put("truck", dao.getTruckByIdWithoutImages(id));
         return new ModelAndView("truck_approval", model);
     }
     

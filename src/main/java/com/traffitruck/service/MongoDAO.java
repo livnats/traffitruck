@@ -70,6 +70,14 @@ public class MongoDAO {
     	mongoTemplate.insert(truck);
     }
 
+    public Truck getTruckByIdWithoutImages( String id ) {
+    	Query findTruckByIdQuery = new Query().addCriteria(Criteria.where("_id").is(id));
+    	findTruckByIdQuery.fields().exclude("licensePlatePhoto");
+    	findTruckByIdQuery.fields().exclude("truckPhoto");
+    	findTruckByIdQuery.with(new Sort("creationDate"));
+    	return mongoTemplate.findOne(findTruckByIdQuery, Truck.class);
+    }
+    
     public Truck getTruckById( String id ) {
     	return mongoTemplate.findById(id, Truck.class);
     }
