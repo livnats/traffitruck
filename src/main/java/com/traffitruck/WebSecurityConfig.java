@@ -1,6 +1,10 @@
 package com.traffitruck;
 
+import javax.servlet.MultipartConfigElement;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
@@ -15,8 +19,14 @@ import com.traffitruck.service.UserDetailsServiceImpl;
 @Configuration
 @EnableWebMvcSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
 
+	@Bean
+	MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		factory.setMaxFileSize("5MB");
+		factory.setMaxRequestSize("10MB");
+		return factory.createMultipartConfig();
+	}
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
