@@ -127,6 +127,9 @@
 		    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			</form>
 		</div>
+		<div id="load_details">
+			<img src="/approval/licenseimage/${truck.id}">
+		</div>
 	</div>
 </div>
 </body>
