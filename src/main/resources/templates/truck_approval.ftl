@@ -43,7 +43,8 @@ $(document).ready(function() {
 				    </tr>
 				    <tr>
 				        <td colspan='2'>
-				        	<input type="checkbox" name="licensePlateNumberApproved"/> אני מאשר כי מספר לוחית הזיהוי תואם למספר המופיע ברשיון הרכב
+				        	<input type="checkbox" name="licensePlateNumberApproved"/>
+				        	<laebl id="licensePlateNumberApprovedLabel" for="licensePlateNumberApproved"> אני מאשר כי מספר לוחית הזיהוי תואם למספר המופיע ברשיון הרכב</label>
 			        	</td>
 				    </tr>
 				    <tr>

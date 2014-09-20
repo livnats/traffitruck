@@ -1,23 +1,24 @@
   req = {
 	required: true
-  }
+  };
 
   reqNum = {
 	required: true,
 	number: true
-  }
+  };
 
   msg = {
 	required: "שדה חובה"
-  }
+  };
 
   msgNum = {
 	required: "שדה חובה",
 	number: "השדה חייב להיות מספר"
-  }
+  };
 
   approveTruckValidationOptions = {
 			rules: {
+				licensePlateNumberApproved: req,
 				type: req,
 				ownerName: req,
 				ownerId: req,
@@ -34,6 +35,7 @@
 				fuelType: req
 			},
 			messages: {
+				licensePlateNumberApproved: 'חובה לאשר',
 				type: msg,
 				ownerName: msg,
 				ownerId: msg,
@@ -48,6 +50,13 @@
 				engineOutput: msg,
 				color: msg,
 				fuelType: msg
-			}
+			},
+			errorPlacement: function(error, element) {
+				if (element.attr("name") == "licensePlateNumberApproved" ) {
+					error.insertAfter("#licensePlateNumberApprovedLabel");
+				} else {
+				error.insertAfter(element);
+ 			}
+ 		}
 	};
 	
