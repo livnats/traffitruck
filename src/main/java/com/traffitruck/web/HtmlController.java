@@ -110,6 +110,14 @@ public class HtmlController {
         return new ModelAndView("new_truck");
     }
     
+    @RequestMapping("/nonApprovedTrucks")
+    ModelAndView showNonApprovedTrucks() {
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("trucks", dao.getNonApprovedTrucks());
+        return new ModelAndView("show_non_approved_trucks", model);
+    }
+    
     @RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newTruck(@RequestParam("licensePlateNumber") String licensePlateNumber,
     					  @RequestParam("truckPhoto") MultipartFile truckPhoto,

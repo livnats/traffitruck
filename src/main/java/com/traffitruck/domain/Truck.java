@@ -16,15 +16,38 @@ public class Truck {
 
 	@Id
 	private String id;
+	private Date creationDate;
+	private TruckRegistrationStatus registrationStatus;
 	
 	
 	//The truck owner
 	private String username;
+	
+	//Information filled by the driver
 	private String licensePlateNumber;
 	private Binary licensePlatePhoto;
 	private Binary truckPhoto;
-	private Date creationDate;
-	private TruckRegistrationStatus registrationStatus;
+	
+	//information added for validation
+	private boolean licensePlateNumberApproved;
+	private TruckType type;
+	private FuelType fuelType;
+	private String engineOutput;
+	private String color;
+	private int overallweight;
+	private int selfweight;
+	private int permittedweight;
+	private String tires;
+	private int manufactureYear;
+	private String engineCapacity;
+	private PropulsionType propulsion;
+	private boolean hasHitch;
+	//owner as registered on the vehicle license
+	private String ownerName;
+	private String ownerId;
+	private String ownerAddress;
+	
+	
 
 	public String getId() {
 		return id;
@@ -95,13 +118,184 @@ public class Truck {
 	}
 
 
+	public boolean isLicensePlateNumberApproved() {
+		return licensePlateNumberApproved;
+	}
+
+
+	public void setLicensePlateNumberApproved(boolean licensePlateNumberApproved) {
+		this.licensePlateNumberApproved = licensePlateNumberApproved;
+	}
+
+
+	public TruckType getType() {
+		return type;
+	}
+
+
+	public void setType(TruckType type) {
+		this.type = type;
+	}
+
+
+	public FuelType getFuelType() {
+		return fuelType;
+	}
+
+
+	public void setFuelType(FuelType fuelType) {
+		this.fuelType = fuelType;
+	}
+
+
+	public String getEngineOutput() {
+		return engineOutput;
+	}
+
+
+	public void setEngineOutput(String engineOutput) {
+		this.engineOutput = engineOutput;
+	}
+
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+
+	public int getOverallweight() {
+		return overallweight;
+	}
+
+
+	public void setOverallweight(int overallweight) {
+		this.overallweight = overallweight;
+	}
+
+
+	public int getSelfweight() {
+		return selfweight;
+	}
+
+
+	public void setSelfweight(int selfweight) {
+		this.selfweight = selfweight;
+	}
+
+
+	public int getPermittedweight() {
+		return permittedweight;
+	}
+
+
+	public void setPermittedweight(int permittedweight) {
+		this.permittedweight = permittedweight;
+	}
+
+
+	public String getTires() {
+		return tires;
+	}
+
+
+	public void setTires(String tires) {
+		this.tires = tires;
+	}
+
+
+	public int getManufactureYear() {
+		return manufactureYear;
+	}
+
+
+	public void setManufactureYear(int manufactureYear) {
+		this.manufactureYear = manufactureYear;
+	}
+
+
+	public String getEngineCapacity() {
+		return engineCapacity;
+	}
+
+
+	public void setEngineCapacity(String engineCapacity) {
+		this.engineCapacity = engineCapacity;
+	}
+
+
+	public PropulsionType getPropulsion() {
+		return propulsion;
+	}
+
+
+	public void setPropulsion(PropulsionType propulsion) {
+		this.propulsion = propulsion;
+	}
+
+
+	public boolean isHasHitch() {
+		return hasHitch;
+	}
+
+
+	public void setHasHitch(boolean hasHitch) {
+		this.hasHitch = hasHitch;
+	}
+
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+
+	public String getOwnerId() {
+		return ownerId;
+	}
+
+
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
+	}
+
+
+	public String getOwnerAddress() {
+		return ownerAddress;
+	}
+
+
+	public void setOwnerAddress(String ownerAddress) {
+		this.ownerAddress = ownerAddress;
+	}
+
+
+	
+	
 	@Override
 	public String toString() {
-		return "Truck [id=" + id + ", username=" + username
-				+ ", licensePlateNumber=" + licensePlateNumber
+		return "Truck [id=" + id + ", creationDate=" + creationDate
+				+ ", registrationStatus=" + registrationStatus + ", username="
+				+ username + ", licensePlateNumber=" + licensePlateNumber
 				+ ", licensePlatePhoto=" + licensePlatePhoto + ", truckPhoto="
-				+ truckPhoto + ", creationDate=" + creationDate
-				+ ", registrationStatus=" + registrationStatus + "]";
+				+ truckPhoto + ", licensePlateNumberApproved="
+				+ licensePlateNumberApproved + ", type=" + type + ", fuelType="
+				+ fuelType + ", engineOutput=" + engineOutput + ", color="
+				+ color + ", overallweight=" + overallweight + ", selfweight="
+				+ selfweight + ", permittedweight=" + permittedweight
+				+ ", tires=" + tires + ", manufactureYear=" + manufactureYear
+				+ ", engineCapacity=" + engineCapacity + ", propulsion="
+				+ propulsion + ", hasHitch=" + hasHitch + ", ownerName="
+				+ ownerName + ", ownerId=" + ownerId + ", ownerAddress="
+				+ ownerAddress + "]";
 	}
 
 

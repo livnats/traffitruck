@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Truck;
+import com.traffitruck.domain.TruckRegistrationStatus;
 
 @Component
 public class MongoDAO {
@@ -50,7 +51,7 @@ public class MongoDAO {
     	return mongoTemplate.find(findByUsername,Truck.class);
     }
     
-    public void deleteLoadById(String id){
+    public void deleteLoadById( String id ){
     	mongoTemplate.remove(new Query().addCriteria(Criteria.where("_id").is(id)),Load.class);
     }
     
@@ -69,7 +70,16 @@ public class MongoDAO {
     	mongoTemplate.insert(truck);
     }
 
-    public Load getTruck( String truckId ) {
-    	return mongoTemplate.findById(truckId, Load.class);
+    public Truck getTruck( String truckId ) {
+    	return mongoTemplate.findById(truckId, Truck.class);
     }
+    
+    public List<Truck> getNonApprovedTrucks() {
+    	Query findNonApprovedTrucks = new Query().addCriteria(Criteria.where("registrationStatus").is(TruckRegistrationStatus.Registered));
+    	findNonApprovedTrucks.fields().exclude("licensePlatePhoto");
+    	findNonApprovedTrucks.fields().exclude("truckPhoto");
+    	findNonApprovedTrucks.with(new Sort("creationDate"));
+    	return mongoTemplate.find(findNonApprovedTrucks, Truck.class);
+    }
+    
 }

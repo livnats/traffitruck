@@ -2,8 +2,7 @@ package com.traffitruck.domain;
 
 public enum TruckType {
 
-	B, // small truck
-	C, // less than 12 ton
-	D, // over 12 ton
-	E  // Full trailer 
+	N1, // small truck, less than 3500 Kg
+	N2, // Medium, 3500-12000 Kg
+	N3  // Large, over 12,000 Kg 
 }

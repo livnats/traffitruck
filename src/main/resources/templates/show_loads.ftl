@@ -148,6 +148,11 @@ $(document).ready(function() {
 					</tr>
 					<tr> 
 						<td>
+							<a href="/nonApprovedTrucks">אשר משאיות</a>
+						</td>
+					</tr>
+					<tr> 
+						<td>
 							<#if loads?has_content>
 						
 									<table border="1">
