@@ -5,7 +5,17 @@
 	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="js/truck_approval.js"></script>
 		
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// validate the comment form when it is submitted
+	$("#approveTruck").validate( approveTruckValidationOptions );
+
+});
+</script>
+
 </head>
 <body>
 <div id="main">
