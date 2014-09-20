@@ -34,11 +34,11 @@ public class Truck {
 	private FuelType fuelType;
 	private String engineOutput;
 	private String color;
-	private int overallweight;
-	private int selfweight;
-	private int permittedweight;
+	private Integer overallweight;
+	private Integer selfweight;
+	private Integer permittedweight;
 	private String tires;
-	private int manufactureYear;
+	private Integer manufactureYear;
 	private String engineCapacity;
 	private PropulsionType propulsion;
 	private boolean hasHitch;
@@ -168,32 +168,32 @@ public class Truck {
 	}
 
 
-	public int getOverallweight() {
+	public Integer getOverallweight() {
 		return overallweight;
 	}
 
 
-	public void setOverallweight(int overallweight) {
+	public void setOverallweight(Integer overallweight) {
 		this.overallweight = overallweight;
 	}
 
 
-	public int getSelfweight() {
+	public Integer getSelfweight() {
 		return selfweight;
 	}
 
 
-	public void setSelfweight(int selfweight) {
+	public void setSelfweight(Integer selfweight) {
 		this.selfweight = selfweight;
 	}
 
 
-	public int getPermittedweight() {
+	public Integer getPermittedweight() {
 		return permittedweight;
 	}
 
 
-	public void setPermittedweight(int permittedweight) {
+	public void setPermittedweight(Integer permittedweight) {
 		this.permittedweight = permittedweight;
 	}
 
@@ -208,12 +208,12 @@ public class Truck {
 	}
 
 
-	public int getManufactureYear() {
+	public Integer getManufactureYear() {
 		return manufactureYear;
 	}
 
 
-	public void setManufactureYear(int manufactureYear) {
+	public void setManufactureYear(Integer manufactureYear) {
 		this.manufactureYear = manufactureYear;
 	}
 
