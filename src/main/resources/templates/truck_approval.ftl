@@ -29,7 +29,7 @@ $(document).ready(function() {
 		</div>
 		<div id="content">
 			<h2>עדכן פרטי משאית</h2>
-			<form id="approveTruck" method="post" action="approveTruck">
+			<form id="approveTruck" method="post" action="truckApproval">
 			    <table>
 			    	<tr> 
 						<td  colspan='2'>

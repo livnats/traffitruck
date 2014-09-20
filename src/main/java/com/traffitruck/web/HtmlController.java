@@ -83,6 +83,12 @@ public class HtmlController {
         return new ModelAndView("redirect:/myLoads");
     }
     
+    @RequestMapping(value = "/truckApproval", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    ModelAndView approveTruck(@ModelAttribute("truck") Truck truck) {
+        dao.updateTruck(truck);
+        return new ModelAndView("redirect:/");
+    }
+    
     @RequestMapping("/newload")
     ModelAndView newLoad() {
         Map<String, Object> model = new HashMap<>();
@@ -131,6 +137,8 @@ public class HtmlController {
         model.put("truck", dao.getTruckByIdWithoutImages(id));
         return new ModelAndView("truck_approval", model);
     }
+    
+
     
     @RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newTruck(@RequestParam("licensePlateNumber") String licensePlateNumber,

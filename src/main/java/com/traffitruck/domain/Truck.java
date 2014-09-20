@@ -29,7 +29,6 @@ public class Truck {
 	private Binary truckPhoto;
 	
 	//information added for validation
-	private boolean licensePlateNumberApproved;
 	private TruckType type;
 	private FuelType fuelType;
 	private String engineOutput;
@@ -116,17 +115,6 @@ public class Truck {
 	public void setRegistrationStatus(TruckRegistrationStatus registrationStatus) {
 		this.registrationStatus = registrationStatus;
 	}
-
-
-	public boolean isLicensePlateNumberApproved() {
-		return licensePlateNumberApproved;
-	}
-
-
-	public void setLicensePlateNumberApproved(boolean licensePlateNumberApproved) {
-		this.licensePlateNumberApproved = licensePlateNumberApproved;
-	}
-
 
 	public TruckType getType() {
 		return type;
@@ -286,8 +274,7 @@ public class Truck {
 				+ ", registrationStatus=" + registrationStatus + ", username="
 				+ username + ", licensePlateNumber=" + licensePlateNumber
 				+ ", licensePlatePhoto=" + licensePlatePhoto + ", truckPhoto="
-				+ truckPhoto + ", licensePlateNumberApproved="
-				+ licensePlateNumberApproved + ", type=" + type + ", fuelType="
+				+ truckPhoto + ", type=" + type + ", fuelType="
 				+ fuelType + ", engineOutput=" + engineOutput + ", color="
 				+ color + ", overallweight=" + overallweight + ", selfweight="
 				+ selfweight + ", permittedweight=" + permittedweight
