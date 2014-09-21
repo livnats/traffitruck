@@ -121,7 +121,7 @@ $(document).ready(function() {
 				    <tr>
 				    	<td><label for="propulsion">הנעה:</label></td>
 			        	<td>
-			        		<select name="fuelType">
+			        		<select name="propulsion">
 							  <option value="">-- בחר --</option>
 							  <option value="${enums["com.traffitruck.domain.PropulsionType"]._4X2}">4X2</option>
 							  <option value="${enums["com.traffitruck.domain.PropulsionType"]._4X4}">4X4</option>
@@ -136,6 +136,7 @@ $(document).ready(function() {
 			    </table>
 			<!-- inlcude csrf token -->
 		    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		    <input type="hidden" name="id" value="${truck.id}"/>
 			</form>
 		</div>
 		<div id="load_details">
