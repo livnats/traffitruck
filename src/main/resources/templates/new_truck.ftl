@@ -26,7 +26,7 @@ $(document).ready(function() {
 					required: true,
 					minlength: 1
 				},
-				licensePlatePhoto: {
+				vehicleLicensePhoto: {
 					required: true
 				}
 			},
@@ -35,7 +35,7 @@ $(document).ready(function() {
 					required:"אנה הכנס מספר לוחית רישוי",
 					minlength: "לוחית רישוי צריכה להכיל לפחות תו אחד"
 				},
-				licensePlatePhoto: {
+				vehicleLicensePhoto: {
 					required: "עליך להעלות צילום של לוחית רישוי"
 				}
 			}
@@ -63,9 +63,9 @@ $(document).ready(function() {
 			        <td><input name="licensePlateNumber" /></td>
 			    </tr>
 			    <tr>
-			        <td><label for="licensePlatePhoto">* צילום רשיון רכב:</label></td> 
+			        <td><label for="vehicleLicensePhoto">* צילום רשיון רכב:</label></td> 
 			        <td>
-				        <input type="file" accept="image/*" name="licensePlatePhoto"/>
+				        <input type="file" accept="image/*" name="vehicleLicensePhoto"/>
 					</td>
 			    </tr>
 			    <tr>

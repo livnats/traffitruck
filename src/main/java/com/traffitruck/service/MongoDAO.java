@@ -46,7 +46,7 @@ public class MongoDAO {
     }
     public List<Truck> getTrucksForUser(String username) {
     	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
-    	findByUsername.fields().exclude("licensePlatePhoto");
+    	findByUsername.fields().exclude("vehicleLicensePhoto");
     	findByUsername.fields().exclude("truckPhoto");
     	findByUsername.with(new Sort("creationDate"));
     	return mongoTemplate.find(findByUsername,Truck.class);
@@ -95,7 +95,7 @@ public class MongoDAO {
     
     public Truck getTruckByIdWithoutImages( String id ) {
     	Query findTruckByIdQuery = new Query().addCriteria(Criteria.where("_id").is(id));
-    	findTruckByIdQuery.fields().exclude("licensePlatePhoto");
+    	findTruckByIdQuery.fields().exclude("vehicleLicensePhoto");
     	findTruckByIdQuery.fields().exclude("truckPhoto");
     	findTruckByIdQuery.with(new Sort("creationDate"));
     	return mongoTemplate.findOne(findTruckByIdQuery, Truck.class);
@@ -107,7 +107,7 @@ public class MongoDAO {
     
     public List<Truck> getNonApprovedTrucks() {
     	Query findNonApprovedTrucks = new Query().addCriteria(Criteria.where("registrationStatus").is(TruckRegistrationStatus.Registered));
-    	findNonApprovedTrucks.fields().exclude("licensePlatePhoto");
+    	findNonApprovedTrucks.fields().exclude("vehicleLicensePhoto");
     	findNonApprovedTrucks.fields().exclude("truckPhoto");
     	findNonApprovedTrucks.with(new Sort("creationDate"));
     	return mongoTemplate.find(findNonApprovedTrucks, Truck.class);

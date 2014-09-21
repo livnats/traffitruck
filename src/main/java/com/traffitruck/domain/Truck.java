@@ -25,7 +25,7 @@ public class Truck {
 	
 	//Information filled by the driver
 	private String licensePlateNumber;
-	private Binary licensePlatePhoto;
+	private Binary vehicleLicensePhoto;
 	private Binary truckPhoto;
 	
 	//information added for validation
@@ -68,13 +68,13 @@ public class Truck {
 	}
 
 
-	public Binary getLicensePlatePhoto() {
-		return licensePlatePhoto;
+	public Binary getVehicleLicensePhoto() {
+		return vehicleLicensePhoto;
 	}
 
 
-	public void setLicensePlatePhoto(Binary licensePlatePhoto) {
-		this.licensePlatePhoto = licensePlatePhoto;
+	public void setVehicleLicensePhoto(Binary vehicleLicensePhoto) {
+		this.vehicleLicensePhoto = vehicleLicensePhoto;
 	}
 
 
@@ -265,24 +265,21 @@ public class Truck {
 		this.ownerAddress = ownerAddress;
 	}
 
-
-	
-	
 	@Override
 	public String toString() {
 		return "Truck [id=" + id + ", creationDate=" + creationDate
 				+ ", registrationStatus=" + registrationStatus + ", username="
 				+ username + ", licensePlateNumber=" + licensePlateNumber
-				+ ", licensePlatePhoto=" + licensePlatePhoto + ", truckPhoto="
-				+ truckPhoto + ", type=" + type + ", fuelType="
-				+ fuelType + ", engineOutput=" + engineOutput + ", color="
-				+ color + ", overallweight=" + overallweight + ", selfweight="
-				+ selfweight + ", permittedweight=" + permittedweight
-				+ ", tires=" + tires + ", manufactureYear=" + manufactureYear
-				+ ", engineCapacity=" + engineCapacity + ", propulsion="
-				+ propulsion + ", hasHitch=" + hasHitch + ", ownerName="
-				+ ownerName + ", ownerId=" + ownerId + ", ownerAddress="
-				+ ownerAddress + "]";
+				+ ", vehicleLicensePhoto=" + vehicleLicensePhoto
+				+ ", truckPhoto=" + truckPhoto + ", type=" + type
+				+ ", fuelType=" + fuelType + ", engineOutput=" + engineOutput
+				+ ", color=" + color + ", overallweight=" + overallweight
+				+ ", selfweight=" + selfweight + ", permittedweight="
+				+ permittedweight + ", tires=" + tires + ", manufactureYear="
+				+ manufactureYear + ", engineCapacity=" + engineCapacity
+				+ ", propulsion=" + propulsion + ", hasHitch=" + hasHitch
+				+ ", ownerName=" + ownerName + ", ownerId=" + ownerId
+				+ ", ownerAddress=" + ownerAddress + "]";
 	}
 
 
@@ -296,7 +293,7 @@ public class Truck {
 			f.read(b);
 			Binary data = new Binary(b);
 			Truck t = new Truck();
-			t.setLicensePlatePhoto(data);
+			t.setVehicleLicensePhoto(data);
 			 
 			//adding to DB
 			 @SuppressWarnings("deprecation")
@@ -313,5 +310,8 @@ public class Truck {
 			System.out.println(e);
 		}
 	}
+
+
+
 	
 }
