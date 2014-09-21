@@ -10,9 +10,9 @@
 $(document).ready(function() {
 
 	function convertType(type) {
-		if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].Registered}" )
+		if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].REGISTERED}" )
 			return "ממתין לאישור";
-		if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].Approved}" )
+		if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].APPROVED}" )
 			return "מאושר";
 		return type;
 	}
