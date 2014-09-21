@@ -85,6 +85,7 @@ public class HtmlController {
     
     @RequestMapping(value = "/truckApproval", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView approveTruck(@ModelAttribute("truck") Truck truck) {
+    	truck.setRegistrationStatus(TruckRegistrationStatus.APPROVED);
         dao.updateTruck(truck);
         return new ModelAndView("redirect:/");
     }
@@ -153,7 +154,7 @@ public class HtmlController {
     	String username = authentication.getName();
     	truck.setUsername(username);
     	truck.setCreationDate(new Date());
-    	truck.setRegistrationStatus(TruckRegistrationStatus.Registered);
+    	truck.setRegistrationStatus(TruckRegistrationStatus.REGISTERED);
     	dao.storeTruck(truck);
         return new ModelAndView("redirect:/myTrucks");
     }

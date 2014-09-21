@@ -71,10 +71,11 @@ public class MongoDAO {
     	mongoTemplate.insert(truck);
     }
 
+    
     public void updateTruck( Truck truck ) {
     	Query findtruckToUpdate = new Query().addCriteria(Criteria.where("_id").is(truck.getId()));
     	Update update = new Update();
-    	update.set("registrationStatus", TruckRegistrationStatus.Approved);
+    	update.set("registrationStatus", truck.getRegistrationStatus());
     	update.set("type",truck.getType());
     	update.set("fuelType", truck.getFuelType());
     	update.set("engineOutput", truck.getEngineOutput());
@@ -106,7 +107,7 @@ public class MongoDAO {
     }
     
     public List<Truck> getNonApprovedTrucks() {
-    	Query findNonApprovedTrucks = new Query().addCriteria(Criteria.where("registrationStatus").is(TruckRegistrationStatus.Registered));
+    	Query findNonApprovedTrucks = new Query().addCriteria(Criteria.where("registrationStatus").is(TruckRegistrationStatus.REGISTERED));
     	findNonApprovedTrucks.fields().exclude("vehicleLicensePhoto");
     	findNonApprovedTrucks.fields().exclude("truckPhoto");
     	findNonApprovedTrucks.with(new Sort("creationDate"));
