@@ -46,6 +46,14 @@ public class HtmlController {
         return new ModelAndView("show_loads", model);
     }
 
+    @RequestMapping({"/trucks"})
+    ModelAndView showTrucks() {
+        Map<String, Object> model = new HashMap<>();
+        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("trucks", dao.getTrucksWithoutImages());
+        return new ModelAndView("show_trucks", model);
+    }
+    
     @RequestMapping({"/"})
     ModelAndView showMain() {
         return new ModelAndView("main");

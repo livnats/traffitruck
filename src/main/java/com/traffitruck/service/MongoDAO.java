@@ -52,6 +52,14 @@ public class MongoDAO {
     	return mongoTemplate.find(findByUsername,Truck.class);
     }
     
+    public List<Truck> getTrucksWithoutImages() {
+    	Query findByUsername = new Query();
+    	findByUsername.fields().exclude("vehicleLicensePhoto");
+    	findByUsername.fields().exclude("truckPhoto");
+    	findByUsername.with(new Sort("creationDate"));
+    	return mongoTemplate.find(findByUsername,Truck.class);
+    }
+    
     public void deleteLoadById( String id ){
     	mongoTemplate.remove(new Query().addCriteria(Criteria.where("_id").is(id)),Load.class);
     }

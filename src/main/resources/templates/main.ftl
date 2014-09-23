@@ -38,6 +38,11 @@
 							<a href="/loads">כל המטענים</a>
 						</td>
 					</tr>
+					<tr> 
+						<td>
+							<a href="/trucks">כל המשאיות</a>
+						</td>
+					</tr>
 				</table>
 			</div>
 			<div id="load_details">
