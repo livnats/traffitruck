@@ -148,21 +148,11 @@ $(document).ready(function() {
 				<p>&nbsp;</p>
 			</div>
 			<div id="content">
-				<h2>עמוד ראשי</h2>
+				<h2>מטענים במערכת</h2>
 				<table border="0">
 					<tr> 
 						<td>
-							<a href="/myLoads">המטענים שלי</a>
-						</td>
-					</tr>
-					<tr> 
-						<td>
-							<a href="/myTrucks">המשאיות שלי</a>
-						</td>
-					</tr>
-					<tr> 
-						<td>
-							<a href="/nonApprovedTrucks">אשר משאיות</a>
+							<a href="/">חזור לעמוד הראשי</a>
 						</td>
 					</tr>
 					<tr> 

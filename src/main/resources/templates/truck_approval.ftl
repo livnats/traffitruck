@@ -33,7 +33,7 @@ $(document).ready(function() {
 			    <table>
 			    	<tr> 
 						<td  colspan='2'>
-							<a href="/">חזור לעמוד הראשי</a>
+							<a href="/nonApprovedTrucks">משאיות לאישור</a>
 						</td>
 					</tr>
 				 	<tr>

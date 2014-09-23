@@ -96,6 +96,11 @@ $(document).ready(function() {
 			<h2>הוסף מטען</h2>
 			<form id="newloadForm" method="post" action="newload">
 			    <table>
+			    <tr> 
+					<td>
+						<a href="/myLoads">המטענים שלי</a>
+					</td>
+				</tr>
 			    <tr>
 			        <td><label for="name">שם המטען:</label></td>
 			        <td><input name="name" /></td>

@@ -58,6 +58,11 @@ $(document).ready(function() {
 			<h2>הוסף משאית</h2>
 			<form id="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data">
 			    <table>
+			    <tr> 
+					<td>
+						<a href="/myTrucks">המשאיות שלי</a>
+					</td>
+				</tr>
 			    <tr>
 			        <td><label for="licensePlateNumber">* מספר לוחית זיהוי:</label></td>
 			        <td><input name="licensePlateNumber" /></td>

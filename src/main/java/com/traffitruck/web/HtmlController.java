@@ -38,7 +38,7 @@ public class HtmlController {
         return new ModelAndView("login");
     }
 
-    @RequestMapping({"/","/loads"})
+    @RequestMapping({"/loads"})
     ModelAndView showLoads() {
         Map<String, Object> model = new HashMap<>();
         model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
@@ -46,6 +46,11 @@ public class HtmlController {
         return new ModelAndView("show_loads", model);
     }
 
+    @RequestMapping({"/"})
+    ModelAndView showMain() {
+        return new ModelAndView("main");
+    }
+    
     @RequestMapping(value = "/newload", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView newLoad(@ModelAttribute("load") Load load) {
     	load.setCreationDate(new Date());

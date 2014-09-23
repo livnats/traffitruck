@@ -20,7 +20,7 @@
 					<table border="0">
 						<tr> 
 							<td>
-								<a href="/loads">חזור לעמוד ראשי </a>
+								<a href="/">חזור לעמוד ראשי </a>
 							</td>
 						</tr>
 						<tr> 
