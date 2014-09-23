@@ -3,7 +3,27 @@
 	    <title>TraffiTruck</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>	
+		
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+	
+		function convertType(type) {
+			if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].REGISTERED}" )
+				return "ממתין לאישור";
+			if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].APPROVED}" )
+				return "מאושר";
+			return type;
+		}
+		
+		$( ".typeConversion" ).each(function() {
+		  $(this).html(convertType($(this).html()));
+		});
+	
+	});
+</script>
+
 	</head>
 		<body>
 		<div id="main">
@@ -40,7 +60,7 @@
 											<td>${truck.licensePlateNumber}</td>
 											<td>${truck.username}</td>
 											<td>${truck.creationDate?string("dd-MM-yyyy")!''}</td>
-											<td>${truck.registrationStatus}</td>
+											<td class="typeConversion">${truck.registrationStatus}</td>
 										</tr>
 										</#list>
 									</table>
