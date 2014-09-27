@@ -182,7 +182,7 @@ $(document).ready(function() {
 										</tr>
 										<#list loads as load>
 										<tr id="${load.id}" class="clickableRow">
-											<td><a href="#">${load.name!'---'}</td>
+											<td><a href="#">${load.name!'---'}</a></td>
 											<td>${load.source}</td>
 											<td>${load.destination}</td>
 											<td class="typeConversion">${load.type!'לא נמסר'}</td>
