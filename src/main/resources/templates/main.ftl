@@ -48,6 +48,11 @@
 							<a href="/addAvailability">עדכן פנוי</a>
 						</td>
 					</tr>
+					<tr> 
+						<td>
+							<a href="/findTrucksForLoad">חפש מטענים להובלה</a>
+						</td>
+					</tr>
 				</table>
 			</div>
 			<div id="load_details">

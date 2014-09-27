@@ -45,14 +45,22 @@ public class MongoDAO {
     	findByUsername.with(new Sort("name"));
     	return mongoTemplate.find(findByUsername,Load.class);
     }
+
     public List<Truck> getTrucksForUser(String username) {
-    	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
-    	findByUsername.fields().exclude("vehicleLicensePhoto");
-    	findByUsername.fields().exclude("truckPhoto");
-    	findByUsername.with(new Sort("creationDate"));
-    	return mongoTemplate.find(findByUsername,Truck.class);
+    	return getTrucksForUserAndRegistration(username, null);
     }
-    
+
+    public List<Truck> getTrucksForUserAndRegistration(String username, TruckRegistrationStatus registrationStatus) {
+    	Query query = new Query().addCriteria(Criteria.where("username").is(username));
+    	if (registrationStatus != null) {
+    		query.addCriteria(Criteria.where("registrationStatus").is(registrationStatus));
+    	}
+    	query.fields().exclude("vehicleLicensePhoto");
+    	query.fields().exclude("truckPhoto");
+    	query.with(new Sort("creationDate"));
+    	return mongoTemplate.find(query,Truck.class);
+    }
+
     public List<Truck> getTrucksWithoutImages() {
     	Query findByUsername = new Query();
     	findByUsername.fields().exclude("vehicleLicensePhoto");
@@ -130,6 +138,35 @@ public class MongoDAO {
     	findNonApprovedTrucks.with(new Sort("creationDate"));
     	return mongoTemplate.find(findNonApprovedTrucks, Truck.class);
     }
+
+	public Truck getTruckByUserAndLicensePlate(String username, String licensePlateNumber) {
+    	Query truckBelongsToUserQuery = new Query()
+    		.addCriteria(Criteria.where("licensePlateNumber").is(licensePlateNumber))
+			.addCriteria(Criteria.where("username").is(username));
+    	return mongoTemplate.findOne(truckBelongsToUserQuery, Truck.class);
+	}
+
+	public List<Load> getLoadsForTruck(Truck truck) {
+    	Query loadsForTruckQuery = new Query();
+    	// match weight
+    	if (truck.getPermittedweight() != null) {
+    		loadsForTruckQuery.addCriteria(Criteria.where("weight").exists(true).lte(truck.getPermittedweight()));
+    	}
+		// TODO match load type
+    	
+    	// TODO match loading type
+
+    	// sort results
+    	loadsForTruckQuery.with(new Sort("source"));
+
+    	return mongoTemplate.find(loadsForTruckQuery, Load.class);
+	}
+
+	public LoadsUser getUser(String username) {
+    	Query query = new Query().addCriteria(Criteria.where("username").is(username));
+    	query.fields().exclude("password");
+    	return mongoTemplate.findOne(query, LoadsUser.class);
+	}
     
     
     //TruckAvailability

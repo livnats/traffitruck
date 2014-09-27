@@ -55,6 +55,16 @@ public class HtmlController {
         return new ModelAndView("show_trucks", model);
     }
     
+    @RequestMapping({"/findTrucksForLoad"})
+    ModelAndView findTrucksForLoad() {
+        Map<String, Object> model = new HashMap<>();
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
+        return new ModelAndView("find_load_for_trucks", model);
+    }
+    
     @RequestMapping({"/"})
     ModelAndView showMain() {
         return new ModelAndView("main");
