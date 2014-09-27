@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Truck;
+import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
 import com.traffitruck.service.MongoDAO;
 
@@ -84,6 +85,33 @@ public class HtmlController {
         return new ModelAndView("register_user");
     }
 
+    @RequestMapping(value = "/addAvailability", method = RequestMethod.GET)
+    ModelAndView addAvailability() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+        model.put("trucks", dao.getMyApprovedTrucksId(username));
+        return new ModelAndView("add_availability", model);
+    }
+    
+    @RequestMapping(value = "/addAvailability", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    ModelAndView addAvailability(@RequestParam("truckId") String truckId,
+    					  		 @RequestParam("source") String source,
+    					  		 @RequestParam("destination") String destination,
+    					  		 @RequestParam("availTime") String availTime) throws IOException{
+        
+    	TruckAvailability truckAvail = new TruckAvailability();
+    	truckAvail.setTruckId(truckId);
+    	truckAvail.setSource(source);
+    	truckAvail.setDestination(destination);
+    	Date now = new Date();
+    	truckAvail.setCreationDate(now);
+    	truckAvail.setAvailableStart(now);
+    	dao.storeTruckAvailability(truckAvail);
+        return new ModelAndView("redirect:/addAvailability");
+    }
+    
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
         dao.storeUser(user);

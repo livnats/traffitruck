@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Truck;
+import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
 
 @Component
@@ -79,6 +80,14 @@ public class MongoDAO {
     	mongoTemplate.insert(truck);
     }
 
+    public List<Truck> getMyApprovedTrucksId(String username){
+    	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
+    	findByUsername.addCriteria(Criteria.where("registrationStatus").is(TruckRegistrationStatus.APPROVED));
+    	findByUsername.fields().include("id");
+    	findByUsername.fields().include("licensePlateNumber");
+    	findByUsername.with(new Sort("creationDate"));
+    	return mongoTemplate.find(findByUsername,Truck.class);
+    }
     
     public void updateTruck( Truck truck ) {
     	Query findtruckToUpdate = new Query().addCriteria(Criteria.where("_id").is(truck.getId()));
@@ -122,4 +131,9 @@ public class MongoDAO {
     	return mongoTemplate.find(findNonApprovedTrucks, Truck.class);
     }
     
+    
+    //TruckAvailability
+    public void storeTruckAvailability(TruckAvailability truckAvail){
+    	mongoTemplate.insert(truckAvail);
+    }
 }

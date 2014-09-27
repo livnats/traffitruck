@@ -43,6 +43,11 @@
 							<a href="/trucks">כל המשאיות</a>
 						</td>
 					</tr>
+					<tr> 
+						<td>
+							<a href="/addAvailability">עדכן פנוי</a>
+						</td>
+					</tr>
 				</table>
 			</div>
 			<div id="load_details">
