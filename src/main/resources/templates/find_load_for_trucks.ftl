@@ -196,7 +196,7 @@ $(document).ready(function() {
 				<tr> 
 					<td>
 						<#if trucks?has_content>
-					
+							<label for="truckSelection">לוחית זיהוי משאית:</label>
 				        	<select name="truckSelection" id="truckSelection">
 							  <#list trucks as truck>
 								  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
