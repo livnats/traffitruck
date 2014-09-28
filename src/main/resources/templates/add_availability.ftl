@@ -22,6 +22,31 @@ $(document).ready(function() {
             $(".date_picker_ui").hide();
         }
     });
+    
+    // validate the comment form when it is submitted
+	$("#addAvailabilityForm").validate({
+			rules: {
+				source: {
+					required: true,
+					minlength: 1
+				},
+				destination: {
+					required: true,
+					minlength: 1
+				}
+			},
+			messages: {
+				source: {
+					required: "אנא הכנס מוצא",
+					minlength: "היעד חייבת להכיל לפחות תו אחד"
+				},
+				destination: {
+					required: "אנא הכנס יעד",
+					minlength: "המוצא חייבת להכיל לפחות תו אחד"
+				}
+			}
+	});
+	
 });
 
 </script>
