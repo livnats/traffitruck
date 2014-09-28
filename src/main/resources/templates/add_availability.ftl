@@ -6,11 +6,25 @@
 	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-  <script>
+<script>
   $(function() {
     $( "#datepicker" ).datepicker();
   });
-  </script>
+
+$(document).ready(function() {
+	$(".date_picker_ui").hide();
+
+    $('input[type=radio][name=availTime]').change(function() {
+        if (this.value == 'custom') {
+            $(".date_picker_ui").show();
+        }
+        else if (this.value == 'now') {
+            $(".date_picker_ui").hide();
+        }
+    });
+});
+
+</script>
 </head>
 <body>
 <div id="main">
@@ -50,7 +64,7 @@
 					        <td><input name="destination" /></td>
 					    </tr>
 					    <tr>
-					        <td><label for="availTime">תזמון:</label></td>
+					        <td valign="top"><label for="availTime">תזמון:</label></td>
 					        <td>
 					        <table border='0'>
 						        <tr>
@@ -64,13 +78,13 @@
 								        			<input type="radio" name="availTime" VALUE="custom" selected>בחר זמן עתידי
 								        		</td>
 							        		</tr>
-							        		<tr>
+							        		<tr class="date_picker_ui">
 								        		<td>
 								        			<label for="dateAvail">תאריך:</label>
 									        		<input name="dateAvail" type="text" id="datepicker">
 									        	</td>
 									        </tr>
-									        <tr>
+									        <tr class="date_picker_ui">
 									        	<td>
 								        			<label for="hourAvail">שעה:</label>
 								        			<select name="hour" id="hour">
