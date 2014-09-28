@@ -156,7 +156,7 @@ $(document).ready(function() {
 				    load = loads[i];
 
 				    table_html += "<tr id='" + load.id + "' onclick=\"return clickRowFunction('" + load.id + "')\">";
-				    table_html += "    <td>" + load.source + "</td>";
+				    table_html += "    <td><a href='#'>" + load.source + "</a></td>";
 				    table_html += "    <td>" + load.destination + "</td>";
 				    table_html += "    <td>" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
 				    table_html += "    <td>" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
