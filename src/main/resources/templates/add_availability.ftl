@@ -4,11 +4,13 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
 	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-	});
-	</script>
+  <script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
 </head>
 <body>
 <div id="main">
@@ -50,12 +52,56 @@
 					    <tr>
 					        <td><label for="availTime">תזמון:</label></td>
 					        <td>
-					        <table>
+					        <table border='0'>
 						        <tr>
 						        	<td><input type="radio" name="availTime" VALUE="now" checked>עכשיו</td>
 						        </tr>
 						        <tr>
-						        	<td><input type="radio" name="availTime" VALUE="custom" selected>הכנס זמן</td>	
+						        	<td>
+							        	<table border='0'>
+							        		<tr>
+								        		<td>
+								        			<input type="radio" name="availTime" VALUE="custom" selected>בחר זמן עתידי
+								        		</td>
+							        		</tr>
+							        		<tr>
+								        		<td>
+								        			<label for="dateAvail">תאריך:</label>
+									        		<input name="dateAvail" type="text" id="datepicker">
+									        	</td>
+									        </tr>
+									        <tr>
+									        	<td>
+								        			<label for="hourAvail">שעה:</label>
+								        			<select name="hour" id="hour">
+				        								<option value="0600">06:00</option>
+				        								<option value="0700">07:00</option>
+				        								<option value="0800">08:00</option>
+				        								<option value="0900">09:00</option>
+				        								<option value="1000">10:00</option>
+				        								<option value="1100">11:00</option>
+				        								<option value="1200">12:00</option>
+				        								<option value="1300">13:00</option>
+				        								<option value="1400">14:00</option>
+				        								<option value="1500">15:00</option>
+				        								<option value="1600">16:00</option>
+				        								<option value="1700">17:00</option>
+				        								<option value="1800">18:00</option>
+				        								<option value="1900">19:00</option>
+				        								<option value="2000">20:00</option>
+				        								<option value="2100">21:00</option>
+				        								<option value="2200">22:00</option>
+				        								<option value="2300">23:00</option>
+				        								<option value="2400">24:00</option>
+				        								<option value="0100">01:00</option>
+				        								<option value="0200">02:00</option>
+				        								<option value="0300">03:00</option>
+				        								<option value="0400">04:00</option>
+				        								<option value="0500">05:00</option>
+				        						</td>
+								        	</tr>
+							        	</table>	
+						        	</td>
 						        </tr>
 					         </table>
 					        </td>
