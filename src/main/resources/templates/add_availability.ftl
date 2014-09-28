@@ -3,8 +3,9 @@
     <title>TraffiTruck</title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
+	<link rel="stylesheet" href="css/jquery-ui-1.11.1.css">
 	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<script src="js/jquery-ui-1.11.1.js"></script>
 	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 <script>
   $(function() {
