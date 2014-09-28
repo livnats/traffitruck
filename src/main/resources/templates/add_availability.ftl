@@ -8,8 +8,19 @@
 	<script src="js/jquery-ui-1.11.1.js"></script>
 	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 <script>
+  var dateToday = new Date();
   $(function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({
+    	changeYear: true,
+    	changeMonth: true,
+    	minDate: dateToday,
+    	beforeShow: function (textbox, instance) {
+            instance.dpDiv.css({
+                    marginTop: (-textbox.offsetHeight) + 'px',
+                    marginLeft: (-2 * textbox.offsetWidth) + 'px'
+            });
+    	}
+	});
   });
 
 $(document).ready(function() {
