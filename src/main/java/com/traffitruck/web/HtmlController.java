@@ -1,6 +1,8 @@
 package com.traffitruck.web;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +10,9 @@ import java.util.Map;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -122,10 +126,12 @@ public class HtmlController {
         return new ModelAndView("redirect:/addAvailability");
     }
     
-    @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
         dao.storeUser(user);
-        return new ModelAndView("redirect:/registrationConfirmation");
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), (Collection<? extends GrantedAuthority>) Collections.emptyList()));
+        return new ModelAndView("redirect:/");
     }
     
     @RequestMapping(value = "/deleteLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -148,11 +154,6 @@ public class HtmlController {
 		return new ModelAndView("new_load", model );
     }
 
-    @RequestMapping("/registrationConfirmation")
-    ModelAndView registrationConfirmation() {
-        return new ModelAndView("registration_confirmation");
-    }
-    
     @RequestMapping(value = "/myTrucks")
     ModelAndView myTrucks() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
