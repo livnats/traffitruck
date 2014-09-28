@@ -3,8 +3,8 @@ package com.traffitruck.web;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,11 +139,11 @@ public class HtmlController {
         return new ModelAndView("redirect:/addAvailability");
     }
     
-    @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
         dao.storeUser(user);
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), (Collection<? extends GrantedAuthority>) Collections.emptyList()));
+        Collection<? extends GrantedAuthority> m = new ArrayList<>();
+		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), m ));
         return new ModelAndView("redirect:/");
     }
     
