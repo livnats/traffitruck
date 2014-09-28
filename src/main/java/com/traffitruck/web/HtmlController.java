@@ -1,11 +1,14 @@
 package com.traffitruck.web;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,7 +116,9 @@ public class HtmlController {
     ModelAndView addAvailability(@RequestParam("truckId") String truckId,
     					  		 @RequestParam("source") String source,
     					  		 @RequestParam("destination") String destination,
-    					  		 @RequestParam("availTime") String availTime) throws IOException{
+    					  		 @RequestParam("availTime") String availTime,
+    					  		 @RequestParam("dateAvail") String dateAvail,
+    					  		 @RequestParam("hourAvail") String hourAvail) throws IOException, ParseException{
         
     	TruckAvailability truckAvail = new TruckAvailability();
     	truckAvail.setTruckId(truckId);
@@ -121,7 +126,15 @@ public class HtmlController {
     	truckAvail.setDestination(destination);
     	Date now = new Date();
     	truckAvail.setCreationDate(now);
-    	truckAvail.setAvailableStart(now);
+    	if("now".equals(availTime)){
+    		truckAvail.setAvailableStart(now);
+    	}
+    	else{
+    		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyyHHmm");
+    		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
+    		Date requestedTime = sdf.parse(dateAvail+hourAvail);
+    		truckAvail.setAvailableStart(requestedTime);
+    	}
     	dao.storeTruckAvailability(truckAvail);
         return new ModelAndView("redirect:/addAvailability");
     }

@@ -87,7 +87,7 @@ $(document).ready(function() {
 									        <tr class="date_picker_ui">
 									        	<td>
 								        			<label for="hourAvail">שעה:</label>
-								        			<select name="hour" id="hour">
+								        			<select name="hourAvail" id="hourAvail">
 				        								<option value="0600">06:00</option>
 				        								<option value="0700">07:00</option>
 				        								<option value="0800">08:00</option>
