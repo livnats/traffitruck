@@ -101,7 +101,7 @@ $(document).ready(function() {
 					        <td><input name="destination" /></td>
 					    </tr>
 					    <tr>
-					        <td valign="top"><label for="availTime">תזמון:</label></td>
+					        <td align="top"><label for="availTime">תזמון:</label></td>
 					        <td>
 					        <table border='0'>
 						        <tr>

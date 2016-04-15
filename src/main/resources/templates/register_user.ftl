@@ -115,6 +115,16 @@ $(document).ready(function() {
 			    </tr>
 			    <tr>
 			        <td colspan="2">
+			            <table border='0'>
+			            	<tr>
+						    	<td><input type="radio" name="userRole" VALUE="truckOwner" checked>בעל משאית</td>
+						    	<td><input type="radio" name="userRole" VALUE="loadOwner" checked>בעל מטען</td>
+					    	</tr>
+			            </table>
+			        </td>
+			    </tr>		        
+			    <tr>
+			        <td colspan="2">
 			            <input type="submit" value="הרשם"/>
 			        </td>
 			    </tr>
