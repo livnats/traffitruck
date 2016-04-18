@@ -66,7 +66,7 @@ function ValidateForm1(theForm)
 </div>
 <div class="ui-content" role="main">
 <div id="wb_Form1" style="">
-<form name="Form1" method="post" action="newTruck" enctype="text/plain" data-ajax="false" data-transition="pop" id="Form1" style="display:inline;" onsubmit="return ValidateForm1(this)">
+<form name="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newTruckForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <label for="licensePlateNumber">מספר לוחית רישוי</label>
 <input type="number" id="licensePlateNumber" style="" name="licensePlateNumber" value="" maxlength="7">
@@ -75,7 +75,6 @@ function ValidateForm1(theForm)
 <label for="truckPhoto">צילום משאית</label>
 <input type="file" id="truckPhoto" style="" name="truckPhoto">
 <input type="submit" id="Button1" name="" value="הוסף משאית">
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 </div>
 </div>
