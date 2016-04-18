@@ -77,7 +77,7 @@ public class HtmlController {
         return new ModelAndView("main");
     }
     
-    @RequestMapping(value = "/newload", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping(value = "/newload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newLoad(@ModelAttribute("load") Load load) {
     	load.setCreationDate(new Date());
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
