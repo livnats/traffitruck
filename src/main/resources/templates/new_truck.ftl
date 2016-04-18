@@ -1,95 +1,83 @@
 <html dir="rtl">
 <head>
-    <title>TraffiTruck</title>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-
-    $("#other_type_tr").hide();
-
-	$("#type").change(function () {
-        if ( this.value == "other" ) {
-        	$("#other_type_tr").show();
-        }
-        else {
-        	$("#other_type_tr").hide();
-        }
-    });
-    
-	// validate the comment form when it is submitted
-	$("#newTruckForm").validate({
-			rules: {
-				licensePlateNumber: {
-					required: true,
-					minlength: 1
-				},
-				vehicleLicensePhoto: {
-					required: true
-				}
-			},
-			messages: {
-				licensePlateNumber: {
-					required:"אנה הכנס מספר לוחית רישוי",
-					minlength: "לוחית רישוי צריכה להכיל לפחות תו אחד"
-				},
-				vehicleLicensePhoto: {
-					required: "עליך להעלות צילום של לוחית רישוי"
-				}
-			}
-	});
-
+<meta charset="utf-8">
+<title>טראפי-טראק - הוסף משאית</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="js/default/jquery.mobile.theme-1.4.5.css" rel="stylesheet">
+<link href="js/default/jquery.mobile.icons-1.4.5.min.css" rel="stylesheet">
+<link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
+<link href="css/mobile.css" rel="stylesheet">
+<link href="css/add_truck.css" rel="stylesheet">
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+$(document).on("mobileinit", function()
+{
+   $.mobile.ajaxEnabled = false;
 });
+</script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script>
+function ValidateForm1(theForm)
+{
+   var regexp;
+   regexp = /^\d*$/;
+   if (!regexp.test(theForm.licensePlateNumber.value))
+   {
+      alert("שדה חובה");
+      theForm.licensePlateNumber.focus();
+      return false;
+   }
+   if (theForm.licensePlateNumber.value == "")
+   {
+      alert("שדה חובה");
+      theForm.licensePlateNumber.focus();
+      return false;
+   }
+   if (theForm.licensePlateNumber.value != "" && !(theForm.licensePlateNumber.value > 0))
+   {
+      alert("שדה חובה");
+      theForm.licensePlateNumber.focus();
+      return false;
+   }
+   if (theForm.vehicleLicensePhoto.value == "")
+   {
+      alert("שדה חובה");
+      theForm.vehicleLicensePhoto.focus();
+      return false;
+   }
+   if (theForm.truckPhoto.value == "")
+   {
+      alert("שדה חובה");
+      theForm.truckPhoto.focus();
+      return false;
+   }
+   return true;
+}
 </script>
 </head>
 <body>
-<div id="main">
-	<div id="title">
-		<img src="/images/truck-blue.jpg" width="15%"/>
-		<img src="/images/logo.jpg" width="20%"/>
-	</div>
-	<div id="body">
-		<div id="sidebar">
-			<p>&nbsp;</p>
-		</div>
-		<div id="content">
-			<h2>הוסף משאית</h2>
-			<form id="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data">
-			    <table>
-			    <tr> 
-					<td>
-						<a href="/myTrucks">המשאיות שלי</a>
-					</td>
-				</tr>
-			    <tr>
-			        <td><label for="licensePlateNumber">* מספר לוחית זיהוי:</label></td>
-			        <td><input name="licensePlateNumber" /></td>
-			    </tr>
-			    <tr>
-			        <td><label for="vehicleLicensePhoto">* צילום רשיון רכב:</label></td> 
-			        <td>
-				        <input type="file" accept="image/*" name="vehicleLicensePhoto"/>
-					</td>
-			    </tr>
-			    <tr>
-			        <td><label for="truckPhoto">צילום המשאית:</label></td> 
-			        <td>
-				        <input type="file" accept="image/*" name="truckPhoto"/>
-					</td>
-			    </tr>
-			    <tr>
-			        <td colspan="2">
-			            <input type="submit" value="הוסף משאית"/>
-			        </td>
-			    </tr>
-			</table>
-			<!-- inlcude csrf token -->
-		    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			</form>
-		</div>
-	</div>
+<div data-role="page" data-theme="a" data-title="Untitled Page" id="add_truck">
+<div data-role="header" id="Header1">
+<h1>הוסף משאית</h1>
+<a href="#" data-role="button" class="ui-btn-left">חזרה</a>
+<!--
+<a href="#" data-role="button" class="ui-btn-right">Contact</a>
+-->
+</div>
+<div class="ui-content" role="main">
+<div id="wb_Form1" style="">
+<form name="Form1" method="post" action="newTruck" enctype="text/plain" data-ajax="false" data-transition="pop" id="Form1" style="display:inline;" onsubmit="return ValidateForm1(this)">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<label for="licensePlateNumber">מספר לוחית רישוי</label>
+<input type="number" id="licensePlateNumber" style="" name="licensePlateNumber" value="" maxlength="7">
+<label for="vehicleLicensePhoto">צילום רשיון רכב</label>
+<input type="file" id="vehicleLicensePhoto" style="" name="vehicleLicensePhoto">
+<label for="truckPhoto">צילום משאית</label>
+<input type="file" id="truckPhoto" style="" name="truckPhoto">
+<input type="submit" id="Button1" name="" value="הוסף משאית">
+</form>
+</div>
+</div>
 </div>
 </body>
 </html>
