@@ -75,6 +75,7 @@ function ValidateForm1(theForm)
 <label for="truckPhoto">צילום משאית</label>
 <input type="file" id="truckPhoto" style="" name="truckPhoto">
 <input type="submit" id="Button1" name="" value="הוסף משאית">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
 </div>
 </div>
