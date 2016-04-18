@@ -1,8 +1,7 @@
-<html>
+<html dir="rtl">
 <head>
 <meta charset="utf-8">
 <title>טראפי-טראק - כניסה</title>
-<meta name="generator" content="WYSIWYG Web Builder 11 Trial Version - http://www.wysiwygwebbuilder.com">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="js/default/jquery.mobile.theme-1.4.5.css" rel="stylesheet">
 <link href="js/default/jquery.mobile.icons-1.4.5.min.css" rel="stylesheet">

@@ -177,6 +177,12 @@ public class HtmlController {
         return new ModelAndView("my_trucks", model);
     }
     
+    @RequestMapping(value = "/truckerMenu")
+    ModelAndView truckerMenu() {
+        Map<String, Object> model = new HashMap<>();
+        return new ModelAndView("trucker_menu", model);
+    }
+    
    
     @RequestMapping("/newTruck")
     ModelAndView newTruck() {
