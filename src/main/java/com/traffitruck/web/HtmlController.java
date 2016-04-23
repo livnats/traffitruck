@@ -3,8 +3,7 @@ package com.traffitruck.web;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -142,8 +141,11 @@ public class HtmlController {
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
         dao.storeUser(user);
-        Collection<? extends GrantedAuthority> m = new ArrayList<>();
-		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), m ));
+		SecurityContextHolder.getContext().setAuthentication(
+				new UsernamePasswordAuthenticationToken(
+						user.getUsername(), 
+						user.getPassword(), 
+						Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()))));
         return new ModelAndView("redirect:/");
     }
     

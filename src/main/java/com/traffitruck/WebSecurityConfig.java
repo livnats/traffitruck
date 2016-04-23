@@ -1,7 +1,6 @@
 package com.traffitruck;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -18,7 +17,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -58,10 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         				url = "/adminMenu";
         				break;
         			case LOAD_OWNER:
-        				url = "/loadMenu";
+        				url = "/loaderMenu";
         				break;
         			case TRUCK_OWNER:
-        				url = "/truckMenu";
+        				url = "/truckerMenu";
         				break;
         			default:
         				url = "/login";
@@ -104,6 +102,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	auth.authenticationProvider(userDetails);
         }
         
+
     }
 
 }
