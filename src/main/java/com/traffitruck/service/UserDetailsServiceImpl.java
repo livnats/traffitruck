@@ -2,6 +2,7 @@ package com.traffitruck.service;
 
 import java.util.Collections;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -33,7 +34,10 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
     	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
     	LoadsUser user = mongoTemplate.findOne(findByUsername, LoadsUser.class);
 
-    	if(user!=null && user.getPassword().equals(password) && user.getRole() != null)
+    	String encryptedPassword = user.getPassword();
+    	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+
+    	if(user!=null && passwordEncryptor.checkPassword(password, encryptedPassword) && user.getRole() != null)
     		return new UsernamePasswordAuthenticationToken(
     				authentication.getPrincipal(),
     				authentication.getCredentials(),

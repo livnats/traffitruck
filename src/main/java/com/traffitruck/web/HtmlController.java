@@ -144,9 +144,9 @@ public class HtmlController {
 		SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken(
 						user.getUsername(), 
-						user.getPassword(), 
+						"", 
 						Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()))));
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:" + user.getRole().getLandingUrl());
     }
     
     @RequestMapping(value = "/deleteLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

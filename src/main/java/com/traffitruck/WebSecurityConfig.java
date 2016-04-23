@@ -50,21 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         			HttpServletResponse response, Authentication authentication)
         					throws IOException, ServletException {
         		authentication.getAuthorities().forEach( auth -> {
-        			String url;
-        			switch(Role.valueOf(auth.getAuthority())) {
-        			case ADMIN:
-        				url = "/adminMenu";
-        				break;
-        			case LOAD_OWNER:
-        				url = "/loaderMenu";
-        				break;
-        			case TRUCK_OWNER:
-        				url = "/truckerMenu";
-        				break;
-        			default:
-        				url = "/login";
-        				break;
-        			}
+        			String url = Role.valueOf(auth.getAuthority()).getLandingUrl();
         			try {
 						getRedirectStrategy().sendRedirect(request, response, url);
 					} catch (Exception e) {

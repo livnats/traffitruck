@@ -2,6 +2,7 @@ package com.traffitruck.service;
 
 import java.util.List;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -75,6 +76,9 @@ public class MongoDAO {
     
     //User
     public void storeUser( LoadsUser user ) {
+    	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+    	String encryptedPassword = passwordEncryptor.encryptPassword(user.getPassword());
+    	user.setPassword(encryptedPassword);
     	mongoTemplate.insert(user);
     }
     
