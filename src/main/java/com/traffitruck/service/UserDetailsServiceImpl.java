@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
     	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
     	LoadsUser user = mongoTemplate.findOne(findByUsername, LoadsUser.class);
 
-    	if(user!=null && user.getPassword().equals(password))
+    	if(user!=null && user.getPassword().equals(password) && user.getRole() != null)
     		return new UsernamePasswordAuthenticationToken(
     				authentication.getPrincipal(),
     				authentication.getCredentials(),

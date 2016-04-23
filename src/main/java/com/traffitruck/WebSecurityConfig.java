@@ -1,6 +1,12 @@
 package com.traffitruck;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
@@ -11,9 +17,13 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import com.traffitruck.domain.Role;
 import com.traffitruck.service.UserDetailsServiceImpl;
 
 @Configuration
@@ -36,6 +46,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setForceEncoding(true);
         http.addFilterBefore(filter,CsrfFilter.class);
         
+        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler() {
+        	@Override
+        	protected void handle(HttpServletRequest request,
+        			HttpServletResponse response, Authentication authentication)
+        					throws IOException, ServletException {
+        		authentication.getAuthorities().forEach( auth -> {
+        			String url;
+        			switch(Role.valueOf(auth.getAuthority())) {
+        			case ADMIN:
+        				url = "/adminMenu";
+        				break;
+        			case LOAD_OWNER:
+        				url = "/loadMenu";
+        				break;
+        			case TRUCK_OWNER:
+        				url = "/truckMenu";
+        				break;
+        			default:
+        				url = "/login";
+        				break;
+        			}
+        			try {
+						getRedirectStrategy().sendRedirect(request, response, url);
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+        		});
+        	}
+        };
+        
         http
             .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/images/**", "/registerUser","/registrationConfirmation").permitAll()
@@ -43,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/loads")
+                .successHandler(handler)
                 .permitAll()
                 .and()
             .logout()
