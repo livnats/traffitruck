@@ -10,7 +10,7 @@ public class LoadsUser{
 	private String cellNumber;
 	private String username;
 	private String password;
-	private String role;
+	private Role role;
 	//TODO add id and unique constraint on email
 	
 
@@ -56,12 +56,13 @@ public class LoadsUser{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
+	
 	@Override
 	public String toString() {
 		return "LoadsUser [email=" + email + ", address=" + address
@@ -69,5 +70,6 @@ public class LoadsUser{
 				+ phoneNumber + ", cellNumber=" + cellNumber + ", username="
 				+ username + ", Role=" + role + "]";
 	}
+
 	
 }
