@@ -61,9 +61,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         };
         
         http
-            .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/images/**", "/registerUser","/registrationConfirmation").permitAll()
-                .anyRequest().authenticated();
+        .authorizeRequests()
+            .antMatchers("/css/**", "/js/**", "/images/**", "/registerUser","/registrationConfirmation").permitAll()
+            .antMatchers("/newload", "/myLoads", "/deleteLoad").hasAuthority(Role.LOAD_OWNER.name())
+            .antMatchers("/truckerMenu", "/findTrucksForLoad", "/addAvailability", "/myTrucks", "/newTruck").hasAuthority(Role.TRUCK_OWNER.name())
+            .antMatchers("/loads", "/trucks", "/truckApproval", "/nonApprovedTrucks", "/approval/licenseimage/**",
+            		"/truckApproval").hasAuthority(Role.ADMIN.name())
+            .anyRequest().authenticated();
         http
             .formLogin()
                 .loginPage("/login")

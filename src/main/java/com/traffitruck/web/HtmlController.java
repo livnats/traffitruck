@@ -86,6 +86,13 @@ public class HtmlController {
         return new ModelAndView("redirect:/myLoads");
     }
 
+    @RequestMapping("/newload")
+    ModelAndView newLoad() {
+        Map<String, Object> model = new HashMap<>();
+        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+		return new ModelAndView("new_load", model );
+    }
+
     @RequestMapping(value = "/myLoads")
     ModelAndView myLoads() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -162,13 +169,6 @@ public class HtmlController {
         return new ModelAndView("redirect:/");
     }
     
-    @RequestMapping("/newload")
-    ModelAndView newLoad() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-		return new ModelAndView("new_load", model );
-    }
-
     @RequestMapping(value = "/myTrucks")
     ModelAndView myTrucks() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -186,11 +186,6 @@ public class HtmlController {
     }
     
    
-    @RequestMapping("/newTruck")
-    ModelAndView newTruck() {
-        return new ModelAndView("new_truck");
-    }
-    
     @RequestMapping("/nonApprovedTrucks")
     ModelAndView showNonApprovedTrucks() {
     	Map<String, Object> model = new HashMap<>();
@@ -212,7 +207,10 @@ public class HtmlController {
         return new ModelAndView("truck_approval", model);
     }
     
-
+    @RequestMapping("/newTruck")
+    ModelAndView newTruck() {
+        return new ModelAndView("new_truck");
+    }
     
     @RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newTruck(@RequestParam("licensePlateNumber") String licensePlateNumber,
