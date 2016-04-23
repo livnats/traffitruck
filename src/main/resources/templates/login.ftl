@@ -59,8 +59,12 @@ $(document).on("mobileinit", function()
 <label for="rememberme-0">זכור אותי</label>
 </fieldset>
 -->
+</div>
 
-</div><input type="submit" id="login" name="login" value="כניסה"></form>
+<input type="submit" id="login" name="login" value="כניסה">
+<a href="/registerUser" data-role="button" class="ui-btn">רישום</a>
+
+</form>
 </div>
 
 <!--
