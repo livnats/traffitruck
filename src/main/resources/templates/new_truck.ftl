@@ -56,13 +56,11 @@ function ValidateForm1(theForm)
 </script>
 </head>
 <body>
-<div data-role="page" data-theme="a" data-title="Untitled Page" id="add_truck">
+<div data-role="page" data-theme="a" data-title="הוסף משאית" id="add_truck">
 <div data-role="header" id="Header1">
 <h1>הוסף משאית</h1>
-<a href="#" data-role="button" class="ui-btn-left">חזרה</a>
-<!--
-<a href="#" data-role="button" class="ui-btn-right">Contact</a>
--->
+<a href="/myTrucks" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
 <div id="wb_Form1" style="">

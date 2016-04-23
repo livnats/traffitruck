@@ -18,7 +18,12 @@ $(document).on("mobileinit", function()
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
-<div data-role="page" data-theme="a" data-title="Untitled Page" id="trucker_menu">
+<div data-role="page" data-theme="a" data-title="תפריט" id="trucker_menu">
+<div data-role="header" id="Header1">
+<h1>תפריט</h1>
+<a href="#" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+</div>
 <div class="ui-content" role="main">
 <a href="/myTrucks" class="linkbutton"><input type="button" id="Button1" name="" value="המשאיות שלי"></a>
 <a href="/findTrucksForLoad" class="linkbutton"><input type="button" id="Button2" name="" value="חפש מטענים להובלה"></a>

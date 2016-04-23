@@ -153,10 +153,11 @@ function ValidateForm1(theForm)
 </script>
 </head>
 <body>
-<div data-role="page" data-theme="a" data-title="Untitled Page" id="add_load">
+<div data-role="page" data-theme="a" data-title="הוספת מטען" id="add_load">
 <div data-role="header" id="Header1">
 <h1>הוסף מטען</h1>
-<a href="#" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/myLoads" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
 <div id="wb_Form1" style="">
