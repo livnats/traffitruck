@@ -125,6 +125,13 @@ $(document).ready(function() {
 			    table_html += "    <td>" + ((load.comments != null) ? load.comments : "") + "</td>";
 			    table_html += "</tr>";
 			    
+			    if (load.hasPhoto) {
+				    table_html += "<tr>";
+				    table_html += "    <td>תמונה:</td>";
+				    table_html += "    <td><img src='/load/image/" + load.id + "'></td>";
+				    table_html += "</tr>";
+			    }
+			    
 			    table_html += "</table>";
 
      		   $('#load_details').html(table_html);

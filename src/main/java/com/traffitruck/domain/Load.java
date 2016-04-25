@@ -2,159 +2,174 @@ package com.traffitruck.domain;
 
 import java.util.Date;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 
 public class Load {
 
-	@Id
-	private String id;
-	
-	private String username;
-	private String source;
-	private String destination;
-	private Date creationDate;
-	private Double suggestedQuote;
-	private Double weight;
-	private Double volume;
-	private String comments;
-	private LoadType type;
-	private String loadingType;
-	private String downloadingType;
-	private String name;
-	private Double waitingTime;
-	
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getUsername() {
-		return username;
-	}
-	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Id
+    private String id;
 
-	public String getDestination() {
-		return destination;
-	}
+    private String username;
+    private String source;
+    private String destination;
+    private Date creationDate;
+    private Double suggestedQuote;
+    private Double weight;
+    private Double volume;
+    private String comments;
+    private LoadType type;
+    private String loadingType;
+    private String downloadingType;
+    private String name;
+    private Double waitingTime;
+    private boolean hasPhoto;
+    private Binary loadPhoto;
 
-	public void setDestination(String destination) {
-		this.destination = destination;
-	}
+    public String getId() {
+	return id;
+    }
 
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    public void setId(String id) {
+	this.id = id;
+    }
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    public String getUsername() {
+	return username;
+    }
 
-	public Double getSuggestedQuote() {
-		return suggestedQuote;
-	}
+    public void setUsername(String username) {
+	this.username = username;
+    }
 
-	public void setSuggestedQuote(double suggestedQuote) {
-		this.suggestedQuote = suggestedQuote;
-	}
+    public String getName() {
+	return name;
+    }
 
-	public String getSource() {
-		return source;
-	}
+    public void setName(String name) {
+	this.name = name;
+    }
 
-	public void setSource(String source) {
-		this.source = source;
-	}
+    public String getDestination() {
+	return destination;
+    }
 
-	public Double getWeight() {
-		return weight;
-	}
+    public void setDestination(String destination) {
+	this.destination = destination;
+    }
 
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
+    public Date getCreationDate() {
+	return creationDate;
+    }
 
-	public Double getVolume() {
-		return volume;
-	}
+    public void setCreationDate(Date creationDate) {
+	this.creationDate = creationDate;
+    }
 
-	public void setVolume(Double volume) {
-		this.volume = volume;
-	}
+    public Double getSuggestedQuote() {
+	return suggestedQuote;
+    }
 
-	public String getComments() {
-		return comments;
-	}
+    public void setSuggestedQuote(double suggestedQuote) {
+	this.suggestedQuote = suggestedQuote;
+    }
 
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
+    public String getSource() {
+	return source;
+    }
 
-	public void setSuggestedQuote(Double suggestedQuote) {
-		this.suggestedQuote = suggestedQuote;
-	}
+    public void setSource(String source) {
+	this.source = source;
+    }
 
-	public void setWeight(Double weight) {
-		this.weight = weight;
-	}
+    public Double getWeight() {
+	return weight;
+    }
 
-	public LoadType getType() {
-		return type;
-	}
+    public void setWeight(double weight) {
+	this.weight = weight;
+    }
 
-	public void setType(LoadType type) {
-		this.type = type;
-	}
+    public Double getVolume() {
+	return volume;
+    }
 
-	public String getLoadingType() {
-		return loadingType;
-	}
+    public void setVolume(Double volume) {
+	this.volume = volume;
+    }
 
-	public void setLoadingType(String loadingType) {
-		this.loadingType = loadingType;
-	}
+    public String getComments() {
+	return comments;
+    }
 
-	public String getDownloadingType() {
-		return downloadingType;
-	}
+    public void setComments(String comments) {
+	this.comments = comments;
+    }
 
-	public void setDownloadingType(String downloadingType) {
-		this.downloadingType = downloadingType;
-	}
+    public void setSuggestedQuote(Double suggestedQuote) {
+	this.suggestedQuote = suggestedQuote;
+    }
 
-	
-	public Double getWaitingTime() {
-		return waitingTime;
-	}
+    public void setWeight(Double weight) {
+	this.weight = weight;
+    }
 
-	public void setWaitingTime(Double waitingTime) {
-		this.waitingTime = waitingTime;
-	}
+    public LoadType getType() {
+	return type;
+    }
 
-	@Override
-	public String toString() {
-		return "Load [id=" + id + ", username=" + username + ", source="
-				+ source + ", destination=" + destination + ", creationDate="
-				+ creationDate + ", suggestedQuote=" + suggestedQuote
-				+ ", weight=" + weight + ", volume=" + volume + ", comments="
-				+ comments + ", type=" + type + ", loadingType=" + loadingType
-				+ ", downloadingType=" + downloadingType + ", name=" + name
-				+ ", waitingTime=" + waitingTime + "]";
-	}
-	
+    public void setType(LoadType type) {
+	this.type = type;
+    }
+
+    public String getLoadingType() {
+	return loadingType;
+    }
+
+    public void setLoadingType(String loadingType) {
+	this.loadingType = loadingType;
+    }
+
+    public String getDownloadingType() {
+	return downloadingType;
+    }
+
+    public void setDownloadingType(String downloadingType) {
+	this.downloadingType = downloadingType;
+    }
+
+
+    public Double getWaitingTime() {
+	return waitingTime;
+    }
+
+    public void setWaitingTime(Double waitingTime) {
+	this.waitingTime = waitingTime;
+    }
+
+    public Binary getLoadPhoto() {
+	return loadPhoto;
+    }
+    
+    public void setLoadPhoto(Binary loadPhoto) {
+	this.hasPhoto = true;
+	this.loadPhoto = loadPhoto;
+    }
+    
+    public boolean getHasPhoto() {
+	return hasPhoto;
+    }
+    
+    @Override
+    public String toString() {
+	return "Load [id=" + id + ", username=" + username + ", source="
+		+ source + ", destination=" + destination + ", creationDate="
+		+ creationDate + ", suggestedQuote=" + suggestedQuote
+		+ ", weight=" + weight + ", volume=" + volume + ", comments="
+		+ comments + ", type=" + type + ", loadingType=" + loadingType
+		+ ", downloadingType=" + downloadingType + ", name=" + name
+		+ ", waitingTime=" + waitingTime + "]";
+    }
+
 
 }

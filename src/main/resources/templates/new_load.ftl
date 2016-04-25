@@ -201,7 +201,7 @@ function ValidateForm1(theForm)
 <label for="comments">הערות</label>
 <input type="text" id="comments" style="" name="comments" value="">
 <label for="loadImage">צילום המטען</label>
-<input type="file" id="loadImage" style="" name="loadImage">
+<input type="file" id="loadPhoto" style="" name="loadPhoto">
 <input type="submit" id="Button1" name="" value="הוסף מטען">
 </form>
 </div>

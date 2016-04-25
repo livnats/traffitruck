@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,141 +38,145 @@ import freemarker.ext.beans.BeansWrapper;
 @RestController
 public class HtmlController {
 
-	@Autowired
-	private MongoDAO dao;
+    @Autowired
+    private MongoDAO dao;
 
     @RequestMapping("/login")
     ModelAndView login() {
-        return new ModelAndView("login");
+	return new ModelAndView("login");
     }
 
     @RequestMapping({"/loads"})
     ModelAndView showLoads() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("loads", dao.getLoads());
-        return new ModelAndView("show_loads", model);
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("loads", dao.getLoads());
+	return new ModelAndView("show_loads", model);
     }
 
     @RequestMapping({"/trucks"})
     ModelAndView showTrucks() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("trucks", dao.getTrucksWithoutImages());
-        return new ModelAndView("show_trucks", model);
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("trucks", dao.getTrucksWithoutImages());
+	return new ModelAndView("show_trucks", model);
     }
 
     @RequestMapping({"/findTrucksForLoad"})
     ModelAndView findTrucksForLoad() {
-        Map<String, Object> model = new HashMap<>();
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();
-        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
-        return new ModelAndView("find_load_for_trucks", model);
+	Map<String, Object> model = new HashMap<>();
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
+	return new ModelAndView("find_load_for_trucks", model);
     }
 
     @RequestMapping(value = "/newload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ModelAndView newLoad(@ModelAttribute("load") Load load) {
-    	load.setCreationDate(new Date());
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();
-    	load.setUsername(username);
-        dao.storeLoad(load);
-        return new ModelAndView("redirect:/myLoads");
+    ModelAndView newLoad(@ModelAttribute("load") Load load, BindingResult br1,
+	    @RequestParam("loadPhoto") MultipartFile loadPhoto, BindingResult br2) throws IOException {
+	load.setCreationDate(new Date());
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	load.setUsername(username);
+	if (!loadPhoto.isEmpty()) {
+	    load.setLoadPhoto(new Binary(loadPhoto.getBytes()));
+	}
+	dao.storeLoad(load);
+	return new ModelAndView("redirect:/myLoads");
     }
 
     @RequestMapping("/newload")
     ModelAndView newLoad() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-		return new ModelAndView("new_load", model );
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	return new ModelAndView("new_load", model );
     }
 
     @RequestMapping(value = "/myLoads")
     ModelAndView myLoads() {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();
-        Map<String, Object> model = new HashMap<>();
-        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("loads", dao.getLoadsForUser(username));
-        return new ModelAndView("my_loads", model);
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("loads", dao.getLoadsForUser(username));
+	return new ModelAndView("my_loads", model);
     }
 
     @RequestMapping(value = "/registerUser", method = RequestMethod.GET)
     ModelAndView registerUser() {
-        return new ModelAndView("register_user");
+	return new ModelAndView("register_user");
     }
 
     @RequestMapping(value = "/addAvailability", method = RequestMethod.GET)
     ModelAndView addAvailability() {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();
-    	Map<String, Object> model = new HashMap<>();
-    	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("trucks", dao.getMyApprovedTrucksId(username));
-        return new ModelAndView("add_availability", model);
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("trucks", dao.getMyApprovedTrucksId(username));
+	return new ModelAndView("add_availability", model);
     }
 
     @RequestMapping(value = "/addAvailability", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView addAvailability(@RequestParam("truckId") String truckId,
-    					  		 @RequestParam("source") String source,
-    					  		 @RequestParam("destination") String destination,
-    					  		 @RequestParam("availTime") String availTime,
-    					  		 @RequestParam("dateAvail") String dateAvail,
-    					  		 @RequestParam("hourAvail") String hourAvail) throws IOException, ParseException{
+	    @RequestParam("source") String source,
+	    @RequestParam("destination") String destination,
+	    @RequestParam("availTime") String availTime,
+	    @RequestParam("dateAvail") String dateAvail,
+	    @RequestParam("hourAvail") String hourAvail) throws IOException, ParseException{
 
-    	TruckAvailability truckAvail = new TruckAvailability();
-    	truckAvail.setTruckId(truckId);
-    	truckAvail.setSource(source);
-    	truckAvail.setDestination(destination);
-    	Date now = new Date();
-    	truckAvail.setCreationDate(now);
-    	if("now".equals(availTime)){
-    		truckAvail.setAvailableStart(now);
-    	}
-    	else{
-    		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyyHHmm");
-    		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
-    		Date requestedTime = sdf.parse(dateAvail+hourAvail);
-    		truckAvail.setAvailableStart(requestedTime);
-    	}
-    	dao.storeTruckAvailability(truckAvail);
-        return new ModelAndView("redirect:/addAvailability");
+	TruckAvailability truckAvail = new TruckAvailability();
+	truckAvail.setTruckId(truckId);
+	truckAvail.setSource(source);
+	truckAvail.setDestination(destination);
+	Date now = new Date();
+	truckAvail.setCreationDate(now);
+	if("now".equals(availTime)){
+	    truckAvail.setAvailableStart(now);
+	}
+	else{
+	    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyyHHmm");
+	    sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
+	    Date requestedTime = sdf.parse(dateAvail+hourAvail);
+	    truckAvail.setAvailableStart(requestedTime);
+	}
+	dao.storeTruckAvailability(truckAvail);
+	return new ModelAndView("redirect:/addAvailability");
     }
 
-	@RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
-        dao.storeUser(user);
-		SecurityContextHolder.getContext().setAuthentication(
-				new UsernamePasswordAuthenticationToken(
-						user.getUsername(),
-						"",
-						Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()))));
-        return new ModelAndView("redirect:" + user.getRole().getLandingUrl());
+	dao.storeUser(user);
+	SecurityContextHolder.getContext().setAuthentication(
+		new UsernamePasswordAuthenticationToken(
+			user.getUsername(),
+			"",
+			Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()))));
+	return new ModelAndView("redirect:" + user.getRole().getLandingUrl());
     }
 
     @RequestMapping(value = "/deleteLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView deleteLoad(String loadId) {
-        dao.deleteLoadById(loadId);
-        return new ModelAndView("redirect:/myLoads");
+	dao.deleteLoadById(loadId);
+	return new ModelAndView("redirect:/myLoads");
     }
 
     @RequestMapping(value = "/truckApproval", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView approveTruck(@ModelAttribute("truck") Truck truck) {
-    	truck.setRegistrationStatus(TruckRegistrationStatus.APPROVED);
-        dao.updateTruck(truck);
-        return new ModelAndView("redirect:/");
+	truck.setRegistrationStatus(TruckRegistrationStatus.APPROVED);
+	dao.updateTruck(truck);
+	return new ModelAndView("redirect:/");
     }
 
     @RequestMapping(value = "/myTrucks")
     ModelAndView myTrucks() {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();
-        Map<String, Object> model = new HashMap<>();
-        model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("trucks", dao.getTrucksForUser(username));
-        return new ModelAndView("my_trucks", model);
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("trucks", dao.getTrucksForUser(username));
+	return new ModelAndView("my_trucks", model);
     }
 
     @RequestMapping(value = "/truckerMenu")
@@ -186,46 +191,51 @@ public class HtmlController {
 
     @RequestMapping("/nonApprovedTrucks")
     ModelAndView showNonApprovedTrucks() {
-    	Map<String, Object> model = new HashMap<>();
-    	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("trucks", dao.getNonApprovedTrucks());
-        return new ModelAndView("show_non_approved_trucks", model);
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("trucks", dao.getNonApprovedTrucks());
+	return new ModelAndView("show_non_approved_trucks", model);
     }
 
-	@RequestMapping(value = "/approval/licenseimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public byte[] getUser(@PathVariable String truckId) {
-		return dao.getTruckById(truckId).getVehicleLicensePhoto().getData();
-	}
+    @RequestMapping(value = "/approval/licenseimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getTrucLicenseImage(@PathVariable String truckId) {
+	return dao.getTruckById(truckId).getVehicleLicensePhoto().getData();
+    }
+
+    @RequestMapping(value = "/load/image/{loadId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getLoadImage(@PathVariable String loadId) {
+	return dao.getLoadPhoto(loadId);
+    }
 
     @RequestMapping("/truckApproval")
     ModelAndView approveTruck(@RequestParam("truckId") String id) {
-    	Map<String, Object> model = new HashMap<>();
-    	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("truck", dao.getTruckByIdWithoutImages(id));
-        return new ModelAndView("truck_approval", model);
+	Map<String, Object> model = new HashMap<>();
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	model.put("truck", dao.getTruckByIdWithoutImages(id));
+	return new ModelAndView("truck_approval", model);
     }
 
     @RequestMapping("/newTruck")
     ModelAndView newTruck() {
-        return new ModelAndView("new_truck");
+	return new ModelAndView("new_truck");
     }
 
     @RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newTruck(@RequestParam("licensePlateNumber") String licensePlateNumber,
-    					  @RequestParam("truckPhoto") MultipartFile truckPhoto,
-    		              @RequestParam("vehicleLicensePhoto") MultipartFile vehicleLicensePhoto) throws IOException{
+	    @RequestParam("truckPhoto") MultipartFile truckPhoto,
+	    @RequestParam("vehicleLicensePhoto") MultipartFile vehicleLicensePhoto) throws IOException{
 
-    	Truck truck = new Truck();
-    	truck.setLicensePlateNumber(licensePlateNumber);
-    	truck.setVehicleLicensePhoto(new Binary(vehicleLicensePhoto.getBytes()));
-    	truck.setTruckPhoto(new Binary(truckPhoto.getBytes()));
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String username = authentication.getName();
-    	truck.setUsername(username);
-    	truck.setCreationDate(new Date());
-    	truck.setRegistrationStatus(TruckRegistrationStatus.REGISTERED);
-    	dao.storeTruck(truck);
-        return new ModelAndView("redirect:/myTrucks");
+	Truck truck = new Truck();
+	truck.setLicensePlateNumber(licensePlateNumber);
+	truck.setVehicleLicensePhoto(new Binary(vehicleLicensePhoto.getBytes()));
+	truck.setTruckPhoto(new Binary(truckPhoto.getBytes()));
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	truck.setUsername(username);
+	truck.setCreationDate(new Date());
+	truck.setRegistrationStatus(TruckRegistrationStatus.REGISTERED);
+	dao.storeTruck(truck);
+	return new ModelAndView("redirect:/myTrucks");
     }
 
 }

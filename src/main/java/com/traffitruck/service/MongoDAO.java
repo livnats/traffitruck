@@ -38,7 +38,17 @@ public class MongoDAO {
     }
     
     public Load getLoad( String loadId ) {
-    	return mongoTemplate.findById(loadId, Load.class);
+    	Query q = new Query();
+    	q.fields().exclude("loadPhoto");
+    	List<Load> loadslist = mongoTemplate.find(q,Load.class);
+	if (loadslist.isEmpty())
+	    return null;
+	return loadslist.get(0);
+    }
+    
+    public byte[] getLoadPhoto( String loadId ) {
+    	Load load = mongoTemplate.findById(loadId, Load.class);
+    	return (load != null) ? load.getLoadPhoto().getData() : null;
     }
     
     public List<Load> getLoadsForUser(String username) {
