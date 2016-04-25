@@ -135,7 +135,7 @@ function ValidateForm1(theForm)
       theForm.waitingTime.focus();
       return false;
    }
-   if (theForm.waitingTime.value != "" && !(theForm.waitingTime.value > 0))
+   if (theForm.waitingTime.value != "" && !(theForm.waitingTime.value >= 0))
    {
       alert("זמן המתנה חייב להכיל רק ספרות");
       theForm.waitingTime.focus();
