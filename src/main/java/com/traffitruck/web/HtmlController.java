@@ -199,7 +199,7 @@ public class HtmlController {
     }
 
     @RequestMapping(value = "/approval/licenseimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getTrucLicenseImage(@PathVariable String truckId) {
+    public byte[] getTruckLicenseImage(@PathVariable String truckId) {
 	return dao.getTruckById(truckId).getVehicleLicensePhoto().getData();
     }
 
