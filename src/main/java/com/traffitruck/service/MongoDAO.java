@@ -39,6 +39,7 @@ public class MongoDAO {
     
     public Load getLoad( String loadId ) {
     	Query q = new Query();
+    	q.addCriteria(Criteria.where("_id").is(loadId));
     	q.fields().exclude("loadPhoto");
     	List<Load> loadslist = mongoTemplate.find(q,Load.class);
 	if (loadslist.isEmpty())
