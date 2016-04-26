@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
     	String username = (String)authentication.getPrincipal();
     	String password = (String)authentication.getCredentials();
     	
-    	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
+    	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username.toLowerCase()));
     	LoadsUser user = mongoTemplate.findOne(findByUsername, LoadsUser.class);
 
     	String encryptedPassword = user.getPassword();

@@ -147,6 +147,7 @@ public class HtmlController {
 
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
+		user.setUsername(user.getUsername().toLowerCase());
 	dao.storeUser(user);
 	SecurityContextHolder.getContext().setAuthentication(
 		new UsernamePasswordAuthenticationToken(
