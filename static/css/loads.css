@@ -1,0 +1,18 @@
+#loads
+{
+   text-align: center;
+}
+body
+{
+   background-color: #FFFFFF;
+}
+#Collapsible1
+{
+   text-align: center;
+}
+#ListView1 li img
+{
+   height: 80px;
+   width: 80px;
+   padding: 0px;
+}

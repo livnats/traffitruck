@@ -1,10 +1,21 @@
-<html dir="rtl">
-	<head>
-	    <title>TraffiTruck</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>טראפי-טראק - מטענים</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="js/default/jquery.mobile.theme-1.4.5.css" rel="stylesheet">
+<link href="js/default/jquery.mobile.icons-1.4.5.min.css" rel="stylesheet">
+<link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
+<link href="css/mobile.css" rel="stylesheet">
+<link href="css/loads.css" rel="stylesheet">
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+$(document).on("mobileinit", function()
+{
+   $.mobile.ajaxEnabled = false;
+});
+</script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -45,137 +56,31 @@ $(document).ready(function() {
 	$( ".typeConversion" ).each(function() {
 	  $(this).html(convertType($(this).html()));
 	});
-
-	
-		var selectedRow = null;
-      $(".clickableRow").click(function() {
-      		
-      		// revert the background color of the previously selected row
-			if ( selectedRow != null ) {
-				selectedRow.css('background-color', 'initial');
-			}
-			
-			// change the background color of the newly selected row
-			$(this).css('background-color', 'lightblue');
-			selectedRow = $(this);
-			
-			// get the load details
-			loadId = $(this).attr('id');
-			$.getJSON( "/load_details/" + loadId, function( load ) {
-
-
-			    table_html = "<table border='1'>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>בעל המטען:</td>";
-			    table_html += "    <td>" + ((load.username != null) ? load.username : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>שם המטען:</td>";
-			    table_html += "    <td>" + ((load.name != null) ? load.name : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>סוג המטען:</td>";
-			    table_html += "    <td>" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>משקל (ק\"ג):</td>";
-			    table_html += "    <td>" + ((load.weight != null) ? load.weight : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>נפח (קוב):</td>";
-			    table_html += "    <td>" + ((load.volume) ? load.volume : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>מוצא:</td>";
-			    table_html += "    <td>" + load.source + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>סוג טעינה:</td>";
-			    table_html += "    <td>" + ((load.loadingType != null) ? convertLiftType(load.loadingType) : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>יעד:</td>";
-			    table_html += "    <td>" + load.destination + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>סוג פריקה:</td>";
-			    table_html += "    <td>" + ((load.downloadingType != null) ? convertLiftType(load.downloadingType) : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>מחיר:</td>";
-			    table_html += "    <td>" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
-			    table_html += "</tr>";
-
-			    table_html += "<tr>";
-			    table_html += "    <td>זמן המתנה (שעות):</td>";
-			    table_html += "    <td>" + ((load.waitingTime != null) ? load.waitingTime : "") + "</td>";
-			    table_html += "</tr>";
-			    
-			    table_html += "<tr>";
-			    table_html += "    <td>הערות:</td>";
-			    table_html += "    <td>" + ((load.comments != null) ? load.comments : "") + "</td>";
-			    table_html += "</tr>";
-
-			    if (load.hasPhoto) {
-				    table_html += "<tr>";
-				    table_html += "    <td>תמונה:</td>";
-				    table_html += "    <td><img src='/load/image/" + load.id + "'></td>";
-				    table_html += "</tr>";
-			    }
-			    
-			    table_html += "</table>";
-			    
-			    table_html += "<form action='deleteLoad' method='post'>";
-				table_html += "	   <button name='loadId' type='submit' value="+load.id +">הסר</button>";
-				table_html += "    <input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/>";
-				table_html += "</form>"
-				
-
-     		   $('#load_details').html(table_html);
-  			});
-
-			// return false so the location won't change
-			return false;
-      });
 });
 </script>
-		
-	</head>
-	<body>
-	<div id="main">
-		<div id="title">
-			<img src="/images/truck-blue.jpg" width="15%"/>
-			<img src="/images/logo.jpg" width="20%"/>
-		</div>
-		<div id="body">
-			<div id="sidebar">
-				<p>&nbsp;</p>
-			</div>
-			<div id="content">
-				<h2>המטענים שלי</h2>
-				<table border="0">
-					<tr> 
-						<td>
-							<a href="/">חזור לעמוד הראשי</a>
-						</td>
-					</tr>
-					<tr> 	
-						<td>
-							<a href="/newload">הוספת מטען חדש</a>
-						</td>
-					</tr>
-					<tr> 
-						<td>
+
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script>
+$(document).on("pagecreate", "#loads", function(event)
+{
+   var ListView1Options =
+   {
+      inset: false
+   };
+   $("#ListView1").listview(ListView1Options);
+});
+</script>
+</head>
+<body>
+<div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">
+<div data-role="header" id="Header1">
+<h1>המטענים שלי</h1>
+<a href="/login" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+</div>
+<div class="ui-content" role="main">
+<a href="/newload" data-role="button" class="ui-btn">הוספת מטען חדש</a>
+
 							<#if loads?has_content>
 						
 									<table border="1">
@@ -202,17 +107,8 @@ $(document).ready(function() {
 							<#else>
 								אין מטענים להציג :(
 							</#if>
-						</td>
-					</tr>
-					<tr>
-					<td>&nbsp;</td>
-					</tr>
 
-				</table>
-			</div>
-			<div id="load_details">
-			</div>
-		</div>
-	</div>
-	</body>
+</div>
+</div>
+</body>
 </html>
