@@ -75,7 +75,7 @@ function ValidateForm1(theForm)
       theForm.volume.focus();
       return false;
    }
-   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
+   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.source.value))
    {
       alert("המוצא יכול להכיל אותיות ספרות ורווחים");
@@ -100,7 +100,7 @@ function ValidateForm1(theForm)
       theForm.loadingType.focus();
       return false;
    }
-   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
+   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.destination.value))
    {
       alert("היעד יכול להכיל אותיות ספרות ורווחים");
@@ -159,12 +159,42 @@ function ValidateForm1(theForm)
  <script type="text/javascript">
  $(function() {
        $( "#drivedate" ).datepicker();
-       $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );
+       $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
  });
  </script>
 
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script>
+            var autocomplete;
+            function initialize() {
+              
+              var geocoder = new google.maps.Geocoder();
+              
+              autocomplete_src = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('source')),
+                  { types: ['address'] });
+              google.maps.event.addListener(autocomplete_src, 'place_changed', function() {
+                 var address = document.getElementById('source').value;
+                 geocoder.geocode({'address': address}, function(results, status) {
+                   if (status === google.maps.GeocoderStatus.OK) {
+                       alert(results[0].geometry.location);
+                    } else {
+                       alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                 })
+              });
+
+              autocomplete_dest = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('destination')),
+                  { types: ['address'] });
+              google.maps.event.addListener(autocomplete_dest, 'place_changed', function() {
+              });
+            }
+        </script>
+
 </head>
-<body>
+<body onload="initialize()">
 <div data-role="page" data-theme="a" data-title="הוספת מטען" id="add_load">
 <div data-role="header" id="Header1">
 <h1>הוסף מטען</h1>
@@ -194,7 +224,7 @@ function ValidateForm1(theForm)
 <label for="volume">נפח (קוב)</label>
 <input type="number" id="volume" style="" name="volume" value="">
 <label for="source">מוצא</label>
-<input type="text" id="source" style="" name="source" value="">
+<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
 <label for="loadingType">סוג טעינה</label>
 <select name="loadingType" size="1" id="loadingType">
 <option>-- בחר --</option>
@@ -205,7 +235,7 @@ function ValidateForm1(theForm)
 <option value="TROLLY">עגלה</option>
 </select>
 <label for="destination">יעד</label>
-<input type="text" id="destination" style="" name="destination" value="">
+<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
 
 <label for="drivedate">תאריך הובלה</label>
 <input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
