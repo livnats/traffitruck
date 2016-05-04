@@ -14,6 +14,7 @@ public class Load {
     private String source;
     private String destination;
     private Date creationDate;
+    private Date driveDate;
     private Double suggestedQuote;
     private Double weight;
     private Double volume;
@@ -160,11 +161,19 @@ public class Load {
 	return hasPhoto;
     }
     
+    public Date getDriveDate() {
+	return driveDate;
+    }
+    
+    public void setDriveDate(Date driveDate) {
+	this.driveDate = driveDate;
+    }
+    
     @Override
     public String toString() {
 	return "Load [id=" + id + ", username=" + username + ", source="
 		+ source + ", destination=" + destination + ", creationDate="
-		+ creationDate + ", suggestedQuote=" + suggestedQuote
+		+ creationDate + ", driveDate=" + driveDate + ", suggestedQuote=" + suggestedQuote
 		+ ", weight=" + weight + ", volume=" + volume + ", comments="
 		+ comments + ", type=" + type + ", loadingType=" + loadingType
 		+ ", downloadingType=" + downloadingType + ", name=" + name

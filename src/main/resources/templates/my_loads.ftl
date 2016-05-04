@@ -99,7 +99,11 @@ $(document).on("pagecreate", "#loads", function(event)
 											<td>${load.destination}</td>
 											<td class="typeConversion">${load.type!'לא נמסר'}</td>
 											<td>${load.suggestedQuote!'לא נמסר'}</td>
-											<td>${load.creationDate?string("HH:mm dd-MM-yyyy")!''}</td>
+											<#if load.driveDate??>
+												<td>${load.driveDate?string("dd-MM-yyyy")!''}</td>
+											<#else>
+												<td></td>
+											</#if>
 										</tr>
 										</#list>
 									</table>

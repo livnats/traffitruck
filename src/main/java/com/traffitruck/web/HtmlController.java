@@ -74,8 +74,15 @@ public class HtmlController {
 
     @RequestMapping(value = "/newload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newLoad(@ModelAttribute("load") Load load, BindingResult br1,
-	    @RequestParam("loadPhoto") MultipartFile loadPhoto, BindingResult br2) throws IOException {
+	    @RequestParam("loadPhoto") MultipartFile loadPhoto, BindingResult br2,
+	    @RequestParam("drivedate") String drivedate, BindingResult br3) throws IOException {
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 	load.setCreationDate(new Date());
+	try {
+	    load.setDriveDate(sdf.parse(drivedate));
+	} catch (ParseException e) {
+	    throw new RuntimeException(e);
+	}
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	String username = authentication.getName();
 	load.setUsername(username);

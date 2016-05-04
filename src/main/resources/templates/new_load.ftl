@@ -9,6 +9,10 @@
 <link href="css/mobile.css" rel="stylesheet">
 <link href="css/add_load.css" rel="stylesheet">
 <script src="js/jquery-1.11.3.min.js"></script>
+
+     <link rel="stylesheet" href="css/jquery-ui-1.11.1.css">
+	<script type="text/javascript" src="js/jquery-ui-1.11.1.js"></script>
+
 <script>
 $(document).on("mobileinit", function()
 {
@@ -151,6 +155,14 @@ function ValidateForm1(theForm)
    return true;
 }
 </script>
+
+ <script type="text/javascript">
+ $(function() {
+       $( "#drivedate" ).datepicker();
+       $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );
+ });
+ </script>
+
 </head>
 <body>
 <div data-role="page" data-theme="a" data-title="הוספת מטען" id="add_load">
@@ -194,6 +206,10 @@ function ValidateForm1(theForm)
 </select>
 <label for="destination">יעד</label>
 <input type="text" id="destination" style="" name="destination" value="">
+
+<label for="drivedate">תאריך הובלה</label>
+<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
+
 <label for="suggestedQuote">מחיר (שקלים)</label>
 <input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
 <label for="waitingTime">זמן המתנה (שעות)</label>
