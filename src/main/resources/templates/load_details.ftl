@@ -94,7 +94,13 @@ $(document).ready(function() {
 </tr>
 <tr>
     <td>מוצא:</td>
-    <td>${load.source!''}</td>
+    <td>
+		<#if load.sourceLocation??>
+			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[0]},${load.sourceLocation.coordinates[1]}" target="_blank">${load.source!''}</a>
+		<#else>
+		    ${load.source!''}
+		</#if>
+    </td>
 </tr>
 <tr>
     <td>סוג טעינה:</td>
