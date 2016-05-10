@@ -60,16 +60,7 @@ $(document).ready(function() {
 </script>
 
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
-<script>
-$(document).on("pagecreate", "#loads", function(event)
-{
-   var ListView1Options =
-   {
-      inset: false
-   };
-   $("#ListView1").listview(ListView1Options);
-});
-</script>
+
 </head>
 <body>
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">
@@ -94,7 +85,7 @@ $(document).on("pagecreate", "#loads", function(event)
 										</tr>
 										<#list loads as load>
 										<tr id="${load.id}" class="clickableRow">
-											<td><a href="#">${load.name!'---'}</a></td>
+											<td><a href="/load_details/${load.id}">${load.name!'---'}</a></td>
 											<td>${load.source}</td>
 											<td>${load.destination}</td>
 											<td class="typeConversion">${load.type!'לא נמסר'}</td>

@@ -100,6 +100,18 @@ function ValidateForm1(theForm)
       theForm.loadingType.focus();
       return false;
    }
+   if (theForm.downloadingType.selectedIndex < 0)
+   {
+      alert("שדה חובה");
+      theForm.downloadingType.focus();
+      return false;
+   }
+   if (theForm.downloadingType.selectedIndex == 0)
+   {
+      alert("שדה חובה");
+      theForm.downloadingType.focus();
+      return false;
+   }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.destination.value))
    {
@@ -194,7 +206,7 @@ function ValidateForm1(theForm)
         </script>
 
 </head>
-<body onload="initialize()">
+<body onload="initialize()" dir="rtl">
 <div data-role="page" data-theme="a" data-title="הוספת מטען" id="add_load">
 <div data-role="header" id="Header1">
 <h1>הוסף מטען</h1>
@@ -236,6 +248,16 @@ function ValidateForm1(theForm)
 </select>
 <label for="destination">יעד</label>
 <input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
+
+<label for="downloadingType">סוג פריקה</label>
+<select name="downloadingType" size="1" id="downloadingType">
+<option>-- בחר --</option>
+<option value="MANUAL">ידני</option>
+<option value="FORKLIFT">מלגזה</option>
+<option value="CRANE">מנוף</option>
+<option value="RAMP">רמפה</option>
+<option value="TROLLY">עגלה</option>
+</select>
 
 <label for="drivedate">תאריך הובלה</label>
 <input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">

@@ -246,4 +246,12 @@ public class HtmlController {
 	return new ModelAndView("redirect:/myTrucks");
     }
 
+    @RequestMapping(value="/load_details/{loadId}", method=RequestMethod.GET)
+    ModelAndView getLoad(@PathVariable String loadId) {
+	Load load = dao.getLoad(loadId);
+	Map<String, Object> model = new HashMap<>();
+	model.put("load", load);
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	return new ModelAndView("load_details", model);
+    }
 }

@@ -24,11 +24,6 @@ public class JsonController {
 	@Autowired
 	private MongoDAO dao;
 
-	@RequestMapping(value="/load_details/{loadId}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Load getLoad(@PathVariable String loadId) {
-		return dao.getLoad(loadId);
-	}
-
 	@RequestMapping(value="/load_user_details/{licensePlateNumber}/{loadId}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public LoadAndUser getLoadAndUser(@PathVariable String licensePlateNumber, @PathVariable String loadId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

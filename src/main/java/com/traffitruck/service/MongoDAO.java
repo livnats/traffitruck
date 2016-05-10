@@ -54,7 +54,7 @@ public class MongoDAO {
     
     public List<Load> getLoadsForUser(String username) {
     	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
-    	findByUsername.with(new Sort("name"));
+    	findByUsername.with(new Sort("driveDate"));
     	return mongoTemplate.find(findByUsername,Load.class);
     }
 
