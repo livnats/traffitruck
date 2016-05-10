@@ -42,7 +42,7 @@ $(document).ready(function() {
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="trucks">
 <div data-role="header" id="Header1">
 <h1>המשאיות שלי</h1>
-<a href="/login" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/truckerMenu" data-role="button" class="ui-btn-left">חזרה</a>
 <a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
