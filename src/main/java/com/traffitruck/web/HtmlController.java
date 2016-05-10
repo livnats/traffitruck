@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
+import com.traffitruck.domain.Location;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
@@ -75,7 +76,12 @@ public class HtmlController {
     @RequestMapping(value = "/newload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newLoad(@ModelAttribute("load") Load load, BindingResult br1,
 	    @RequestParam("loadPhoto") MultipartFile loadPhoto, BindingResult br2,
-	    @RequestParam("drivedate") String drivedate, BindingResult br3) throws IOException {
+	    @RequestParam("drivedate") String drivedate, BindingResult br3,
+	    @RequestParam("sourceLat") Double sourceLat, BindingResult br4,
+	    @RequestParam("sourceLng") Double sourceLng, BindingResult br5,
+	    @RequestParam("destinationLat") Double destinationLat, BindingResult br6,
+	    @RequestParam("destinationLng") Double destinationLng, BindingResult br7
+	    ) throws IOException {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
 	load.setCreationDate(new Date());
 	try {
@@ -88,6 +94,12 @@ public class HtmlController {
 	load.setUsername(username);
 	if (!loadPhoto.isEmpty()) {
 	    load.setLoadPhoto(new Binary(loadPhoto.getBytes()));
+	}
+	if (sourceLat != null && sourceLng != null) {
+	    load.setSourceLocation(new Location(new double[] { sourceLat, sourceLng}));
+	}
+	if (destinationLat != null && destinationLng != null) {
+	    load.setDestinationLocation(new Location(new double[] { destinationLat, destinationLng}));
 	}
 	dao.storeLoad(load);
 	return new ModelAndView("redirect:/myLoads");

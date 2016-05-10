@@ -190,7 +190,8 @@ function ValidateForm1(theForm)
                  var address = document.getElementById('source').value;
                  geocoder.geocode({'address': address}, function(results, status) {
                    if (status === google.maps.GeocoderStatus.OK) {
-                       alert(results[0].geometry.location);
+	                   $("#sourceLat").val( results[0].geometry.location.lat() );
+	                   $("#sourceLng").val( results[0].geometry.location.lng() );
                     } else {
                        alert('Geocode was not successful for the following reason: ' + status);
                     }
@@ -201,6 +202,15 @@ function ValidateForm1(theForm)
                   /** @type {HTMLInputElement} */(document.getElementById('destination')),
                   { types: ['address'] });
               google.maps.event.addListener(autocomplete_dest, 'place_changed', function() {
+                 var address = document.getElementById('destination').value;
+                 geocoder.geocode({'address': address}, function(results, status) {
+                   if (status === google.maps.GeocoderStatus.OK) {
+	                   $("#destinationLat").val( results[0].geometry.location.lat() );
+	                   $("#destinationLng").val( results[0].geometry.location.lng() );
+                    } else {
+                       alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                  })
               });
             }
         </script>
@@ -237,6 +247,8 @@ function ValidateForm1(theForm)
 <input type="number" id="volume" style="" name="volume" value="">
 <label for="source">מוצא</label>
 <input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
+<input type="hidden" id="sourceLat" name="sourceLat" value="">
+<input type="hidden" id="sourceLng" name="sourceLng" value="">
 <label for="loadingType">סוג טעינה</label>
 <select name="loadingType" size="1" id="loadingType">
 <option>-- בחר --</option>
@@ -248,6 +260,8 @@ function ValidateForm1(theForm)
 </select>
 <label for="destination">יעד</label>
 <input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
+<input type="hidden" id="destinationLat" name="destinationLat" value="">
+<input type="hidden" id="destinationLng" name="destinationLng" value="">
 
 <label for="downloadingType">סוג פריקה</label>
 <select name="downloadingType" size="1" id="downloadingType">

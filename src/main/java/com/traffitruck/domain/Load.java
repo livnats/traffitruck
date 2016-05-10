@@ -12,6 +12,8 @@ public class Load {
 
     private String username;
     private String source;
+    private Location sourceLocation;
+    private Location destinationLocation;
     private String destination;
     private Date creationDate;
     private Date driveDate;
@@ -167,6 +169,22 @@ public class Load {
     
     public void setDriveDate(Date driveDate) {
 	this.driveDate = driveDate;
+    }
+    
+    public Location getSourceLocation() {
+	return sourceLocation;
+    }
+    
+    public void setSourceLocation(Location sourceLocation) {
+	this.sourceLocation = sourceLocation;
+    }
+    
+    public Location getDestinationLocation() {
+	return destinationLocation;
+    }
+    
+    public void setDestinationLocation(Location destinationLocation) {
+	this.destinationLocation = destinationLocation;
     }
     
     @Override

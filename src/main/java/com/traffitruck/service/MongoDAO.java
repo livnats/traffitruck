@@ -6,6 +6,8 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeospatialIndex;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -25,6 +27,9 @@ public class MongoDAO {
     @Autowired
     public MongoDAO(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
+        // Creates an index on the specified field if the index does not already exist
+        mongoTemplate.indexOps(Load.class).ensureIndex(new GeospatialIndex("sourceLocation").typed(GeoSpatialIndexType.GEO_2DSPHERE));
+        mongoTemplate.indexOps(Load.class).ensureIndex(new GeospatialIndex("destinationLocation").typed(GeoSpatialIndexType.GEO_2DSPHERE));
     }
        
     //Load
