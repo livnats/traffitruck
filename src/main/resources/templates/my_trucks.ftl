@@ -1,12 +1,22 @@
-<html dir="rtl">
+<!doctype html>
+<html>
 <head>
-    <title>TraffiTruck</title>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		
+<meta charset="utf-8">
+<title>טראפי-טראק - משאיות</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="js/default/jquery.mobile.theme-1.4.5.css" rel="stylesheet">
+<link href="js/default/jquery.mobile.icons-1.4.5.min.css" rel="stylesheet">
+<link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
+<link href="css/mobile.css" rel="stylesheet">
+<link href="css/trucks.css" rel="stylesheet">
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+$(document).on("mobileinit", function()
+{
+   $.mobile.ajaxEnabled = false;
+});
+</script>
 <script type="text/javascript">
-	
 $(document).ready(function() {
 
 	function convertType(type) {
@@ -24,35 +34,22 @@ $(document).ready(function() {
 });
 </script>
 
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+
 </head>
 <body>
-<div id="main">
-	<div id="title">
-		<img src="/images/truck-blue.jpg" width="15%"/>
-		<img src="/images/logo.jpg" width="20%"/>
-	</div>
-	<div id="body">
-		<div id="sidebar">
-			<p>&nbsp;</p>
-		</div>
-		<div id="content">
-			<h2>המשאיות שלי</h2>
-			<table>
-				<tr> 
-					<td>
-						<a href="/">חזור לעמוד הראשי</a>
-					</td>
-				</tr>
-				<tr> 
-					<td>
-						<a href="/newTruck">הוספת משאית חדשה</a>
-					</td>
+<div data-role="page" data-theme="a" data-title="המטענים שלי" id="trucks">
+<div data-role="header" id="Header1">
+<h1>המשאיות שלי</h1>
+<a href="/login" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+</div>
+<div class="ui-content" role="main">
+<a href="/newTruck" data-role="button" class="ui-btn">הוספת משאית חדש</a>
 
-				</tr>
-				<tr> 
-					<td>
-						<#if trucks?has_content>
-					
+							<#if trucks?has_content>
+						
 								<table border="1">
 									<tr>
 										<th>מספר לוחית זיהוי</th>
@@ -65,18 +62,12 @@ $(document).ready(function() {
 									</tr>
 									</#list>
 								</table>
-					
-						<#else>
-							אין משאיות רשומות
-						</#if>
-					</td>
-				</tr>
-				<tr>
-				<td>&nbsp;</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+						
+							<#else>
+								אין משאיות רשומות
+							</#if>
+
+</div>
 </div>
 </body>
 </html>
