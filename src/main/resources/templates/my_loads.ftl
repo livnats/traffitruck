@@ -74,7 +74,8 @@ $(document).ready(function() {
 
 							<#if loads?has_content>
 						
-									<table border="1">
+									<table data-role="table" class="table-stripe ui-responsive">
+									<thead>
 										<tr>
 											<th>שם</th>
 											<th>מוצא</th>
@@ -83,6 +84,8 @@ $(document).ready(function() {
 											<th>מחיר</th>
 											<th>תאריך</th>
 										</tr>
+									</thead>
+									<tbody>
 										<#list loads as load>
 										<tr id="${load.id}" class="clickableRow">
 											<td><a href="/load_details/${load.id}">${load.name!'---'}</a></td>
@@ -97,6 +100,7 @@ $(document).ready(function() {
 											</#if>
 										</tr>
 										</#list>
+									</tbody>
 									</table>
 						
 							<#else>

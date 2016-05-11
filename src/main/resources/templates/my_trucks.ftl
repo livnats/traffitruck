@@ -50,17 +50,21 @@ $(document).ready(function() {
 
 							<#if trucks?has_content>
 						
-								<table border="1">
+								<table data-role="table" class="table-stripe ui-responsive">
+								<thead>
 									<tr>
 										<th>מספר לוחית זיהוי</th>
 										<th>סטטוס</th>
 									</tr>
+								</thead>
+								<tbody>
 									<#list trucks as truck>
 									<tr id="${truck.id}">
-										<td>${truck.licensePlateNumber}</td>
+										<th>${truck.licensePlateNumber}</th>
 										<td class="typeConversion">${truck.registrationStatus!'שגיאה'}</td>
 									</tr>
 									</#list>
+								</tbody>
 								</table>
 						
 							<#else>

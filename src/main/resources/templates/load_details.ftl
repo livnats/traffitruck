@@ -56,6 +56,9 @@ $(document).ready(function() {
 	$( ".typeConversion" ).each(function() {
 	  $(this).html(convertType($(this).html()));
 	});
+	$( ".liftTypeConversion" ).each(function() {
+	  $(this).html(convertLiftType($(this).html()));
+	});
 });
 </script>
 
@@ -71,29 +74,36 @@ $(document).ready(function() {
 </div>
 <div class="ui-content" role="main">
 
-<table border='1'>
+<table data-role="table" class="table-stroke ui-responsive">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+<tbody>
 <tr>
-    <td>בעל המטען:</td>
+    <th>בעל המטען:</th>
     <td>${load.username!''}</td>
 </tr>
 <tr>
-    <td>שם המטען:</td>
+    <th>שם המטען:</th>
     <td>${load.name!''}</td>
 </tr>
 <tr>
-    <td>סוג המטען:</td>
+    <th>סוג המטען:</th>
     <td class="typeConversion">${load.type!''}</td>
 </tr>
 <tr>
-    <td>משקל (ק\"ג):</td>
+    <th>משקל (ק\"ג):</th>
     <td>${load.weight!''}</td>
 </tr>
 <tr>
-    <td>נפח (קוב):</td>
+    <th>נפח (קוב):</th>
     <td>${load.volume!''}</td>
 </tr>
 <tr>
-    <td>מוצא:</td>
+    <th>מוצא:</th>
     <td>
 		<#if load.sourceLocation??>
 			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[0]},${load.sourceLocation.coordinates[1]}" target="_blank">${load.source!''}</a>
@@ -103,43 +113,41 @@ $(document).ready(function() {
     </td>
 </tr>
 <tr>
-    <td>סוג טעינה:</td>
-	<#if load.loadingType??>
-		<td><script>document.write(convertLiftType(${load.loadingType}))</script></td>
-	<#else>
-		<td></td>
-	</#if>
+    <th>סוג טעינה:</th>
+	<td class="liftTypeConversion">${load.loadingType!''}</td>
 </tr>
 <tr>
-    <td>יעד:</td>
+    <th>יעד:</th>
     <td>${load.destination!''}</td>
 </tr>
 <tr>
-    <td>סוג פריקה:</td>
+    <th>סוג פריקה:</th>
 	<#if load.downloadingType??>
-		<td><script>document.write(convertLiftType(${load.downloadingType}))</script></td>
+		<td class="liftTypeConversion">${load.downloadingType!''}</td>
 	<#else>
 		<td></td>
 	</#if>
 </tr>
 <tr>
-    <td>מחיר:</td>
+    <th>מחיר:</th>
     <td>${load.suggestedQuote!''}</td>
 </tr>
 <tr>
-    <td>זמן המתנה (שעות):</td>
+    <th>זמן המתנה (שעות):</th>
     <td>${load.waitingTime!''}</td>
 </tr>
 <tr>
-    <td>הערות:</td>
+    <th>הערות:</th>
     <td>${load.comments!''}</td>
 </tr>
 <#if load.hasPhoto>
 <tr>
-	<td>תמונה:</td>
+	<th>תמונה:</th>
 	<td><img src="/load/image/${load.id}" class="ui-li-thumb" style="width:100%; max-width:200px;"></td>
 </tr>
 </#if>
+
+</tbody>
 </table>
 			    
 <form action='/deleteLoad' method='post'>
