@@ -227,63 +227,74 @@ function ValidateForm1(theForm)
 <div id="wb_Form1" style="">
 <form name="newloadForm" method="post" action="newload" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newloadForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<label for="name">שם המטען</label>
-<input type="text" id="name" style="" name="name" value="">
-<label for="type">סוג המטען</label>
-<select name="type" size="1" id="type">
-<option>-- בחר --</option>
-<option value="CONTAINER_20">מכולה 20'</option>
-<option value="CONTAINER_40">מכולה 40'</option>
-<option value="LIFTS">משטחים</option>
-<option value="BAGS">שקים (באלות)</option>
-<option value="ANIMALS">בעלי חיים</option>
-<option value="SCATTERED">תפזורת</option>
-<option value="HAZMAT">חומ"ס</option>
-<option value="OTHER">אחר</option>
-</select>
-<label for="weight">משקל (ק"ג)</label>
-<input type="number" id="weight" style="" name="weight" value="">
-<label for="volume">נפח (קוב)</label>
-<input type="number" id="volume" style="" name="volume" value="">
-<label for="source">מוצא</label>
-<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
-<input type="hidden" id="sourceLat" name="sourceLat" value="">
-<input type="hidden" id="sourceLng" name="sourceLng" value="">
-<label for="loadingType">סוג טעינה</label>
-<select name="loadingType" size="1" id="loadingType">
-<option>-- בחר --</option>
-<option value="MANUAL">ידני</option>
-<option value="FORKLIFT">מלגזה</option>
-<option value="CRANE">מנוף</option>
-<option value="RAMP">רמפה</option>
-<option value="TROLLY">עגלה</option>
-</select>
-<label for="destination">יעד</label>
-<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
-<input type="hidden" id="destinationLat" name="destinationLat" value="">
-<input type="hidden" id="destinationLng" name="destinationLng" value="">
-
-<label for="downloadingType">סוג פריקה</label>
-<select name="downloadingType" size="1" id="downloadingType">
-<option>-- בחר --</option>
-<option value="MANUAL">ידני</option>
-<option value="FORKLIFT">מלגזה</option>
-<option value="CRANE">מנוף</option>
-<option value="RAMP">רמפה</option>
-<option value="TROLLY">עגלה</option>
-</select>
-
-<label for="drivedate">תאריך הובלה</label>
-<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
-
-<label for="suggestedQuote">מחיר (שקלים)</label>
-<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
-<label for="waitingTime">זמן המתנה (שעות)</label>
-<input type="number" id="waitingTime" style="" name="waitingTime" value="">
-<label for="comments">הערות</label>
-<input type="text" id="comments" style="" name="comments" value="">
-<label for="loadImage">צילום המטען</label>
-<input type="file" id="loadPhoto" style="" name="loadPhoto">
+<div class="ui-field-contain">
+	<label for="name">שם המטען</label>
+	<input type="text" id="name" style="" name="name" value="">
+</div><div class="ui-field-contain">
+	<label for="type">סוג המטען</label>
+	<select name="type" size="1" id="type">
+	<option>-- בחר --</option>
+	<option value="CONTAINER_20">מכולה 20'</option>
+	<option value="CONTAINER_40">מכולה 40'</option>
+	<option value="LIFTS">משטחים</option>
+	<option value="BAGS">שקים (באלות)</option>
+	<option value="ANIMALS">בעלי חיים</option>
+	<option value="SCATTERED">תפזורת</option>
+	<option value="HAZMAT">חומ"ס</option>
+	<option value="OTHER">אחר</option>
+	</select>
+</div><div class="ui-field-contain">
+	<label for="weight">משקל (ק"ג)</label>
+	<input type="number" id="weight" style="" name="weight" value="">
+</div><div class="ui-field-contain">
+	<label for="volume">נפח (קוב)</label>
+	<input type="number" id="volume" style="" name="volume" value="">
+</div><div class="ui-field-contain">
+	<label for="source">מוצא</label>
+	<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
+	<input type="hidden" id="sourceLat" name="sourceLat" value="">
+	<input type="hidden" id="sourceLng" name="sourceLng" value="">
+</div><div class="ui-field-contain">
+	<label for="loadingType">סוג טעינה</label>
+	<select name="loadingType" size="1" id="loadingType">
+	<option>-- בחר --</option>
+	<option value="MANUAL">ידני</option>
+	<option value="FORKLIFT">מלגזה</option>
+	<option value="CRANE">מנוף</option>
+	<option value="RAMP">רמפה</option>
+	<option value="TROLLY">עגלה</option>
+	</select>
+</div><div class="ui-field-contain">
+	<label for="destination">יעד</label>
+	<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
+	<input type="hidden" id="destinationLat" name="destinationLat" value="">
+	<input type="hidden" id="destinationLng" name="destinationLng" value="">
+</div><div class="ui-field-contain">
+	<label for="downloadingType">סוג פריקה</label>
+	<select name="downloadingType" size="1" id="downloadingType">
+	<option>-- בחר --</option>
+	<option value="MANUAL">ידני</option>
+	<option value="FORKLIFT">מלגזה</option>
+	<option value="CRANE">מנוף</option>
+	<option value="RAMP">רמפה</option>
+	<option value="TROLLY">עגלה</option>
+	</select>
+</div><div class="ui-field-contain">
+	<label for="drivedate">תאריך הובלה</label>
+	<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
+</div><div class="ui-field-contain">
+	<label for="suggestedQuote">מחיר (שקלים)</label>
+	<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
+</div><div class="ui-field-contain">
+	<label for="waitingTime">זמן המתנה (שעות)</label>
+	<input type="number" id="waitingTime" style="" name="waitingTime" value="">
+</div><div class="ui-field-contain">
+	<label for="comments">הערות</label>
+	<input type="text" id="comments" style="" name="comments" value="">
+</div><div class="ui-field-contain">
+	<label for="loadImage">צילום המטען</label>
+	<input type="file" id="loadPhoto" style="" name="loadPhoto">
+</div>
 <input type="submit" id="Button1" name="" value="הוסף מטען">
 </form>
 </div>

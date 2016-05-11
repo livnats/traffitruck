@@ -66,12 +66,18 @@ function ValidateForm1(theForm)
 <div id="wb_Form1" style="">
 <form name="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newTruckForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<label for="licensePlateNumber">מספר לוחית רישוי</label>
-<input type="number" id="licensePlateNumber" style="" name="licensePlateNumber" value="" maxlength="7">
-<label for="vehicleLicensePhoto">צילום רשיון רכב</label>
-<input type="file" id="vehicleLicensePhoto" style="" name="vehicleLicensePhoto">
-<label for="truckPhoto">צילום משאית</label>
-<input type="file" id="truckPhoto" style="" name="truckPhoto">
+<div class="ui-field-contain">
+	<label for="licensePlateNumber">מספר לוחית רישוי</label>
+	<input type="number" id="licensePlateNumber" style="" name="licensePlateNumber" value="" maxlength="7">
+</div>
+<div class="ui-field-contain">
+	<label for="vehicleLicensePhoto">צילום רשיון רכב</label>
+	<input type="file" id="vehicleLicensePhoto" style="" name="vehicleLicensePhoto">
+</div>
+<div class="ui-field-contain">
+	<label for="truckPhoto">צילום משאית</label>
+	<input type="file" id="truckPhoto" style="" name="truckPhoto">
+</div>
 <input type="submit" id="Button1" name="" value="הוסף משאית">
 </form>
 </div>
