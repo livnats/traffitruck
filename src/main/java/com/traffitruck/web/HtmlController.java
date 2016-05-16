@@ -96,10 +96,10 @@ public class HtmlController {
 	    load.setLoadPhoto(new Binary(loadPhoto.getBytes()));
 	}
 	if (sourceLat != null && sourceLng != null) {
-	    load.setSourceLocation(new Location(new double[] { sourceLat, sourceLng}));
+	    load.setSourceLocation(new Location(new double[] { sourceLng, sourceLat}));
 	}
 	if (destinationLat != null && destinationLng != null) {
-	    load.setDestinationLocation(new Location(new double[] { destinationLat, destinationLng}));
+	    load.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
 	}
 	dao.storeLoad(load);
 	return new ModelAndView("redirect:/myLoads");
