@@ -166,7 +166,7 @@ public class HtmlController {
 
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
-		user.setUsername(user.getUsername().toLowerCase());
+	user.setUsername(user.getUsername().toLowerCase());
 	dao.storeUser(user);
 	SecurityContextHolder.getContext().setAuthentication(
 		new UsernamePasswordAuthenticationToken(
@@ -265,5 +265,16 @@ public class HtmlController {
 	model.put("load", load);
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 	return new ModelAndView("load_details", model);
+    }
+
+    @RequestMapping(value="/load_details_for_trucker/{loadId}", method=RequestMethod.GET)
+    ModelAndView getLoadForTrucker(@PathVariable String loadId) {
+	Load load = dao.getLoad(loadId);
+	LoadsUser loadsUser = dao.getUser(load.getUsername());
+	Map<String, Object> model = new HashMap<>();
+	model.put("load", load);
+	model.put("loadsUser", loadsUser);
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	return new ModelAndView("load_details_for_trucker", model);
     }
 }

@@ -69,7 +69,7 @@ $(document).ready(function() {
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="load_details">
 <div data-role="header" id="Header1">
 <h1>פרטי מטען</h1>
-<a href="/myLoads" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/findTrucksForLoad" data-role="button" class="ui-btn-left">חזרה</a>
 <a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
@@ -82,9 +82,15 @@ $(document).ready(function() {
         </tr>
       </thead>
 <tbody>
+<#if loadsUser.contactPerson??>
+	<tr>
+	    <th>איש קשר:</th>
+	    <td>${loadsUser.contactPerson!''}</td>
+	</tr>
+</#if>
 <tr>
-    <th>בעל המטען:</th>
-    <td>${load.username!''}</td>
+    <th>מספר ליצירת קשר:</th>
+    <td>${loadsUser.phoneNumber!''}</td>
 </tr>
 <tr>
     <th>שם המטען:</th>
@@ -155,12 +161,6 @@ $(document).ready(function() {
 
 </tbody>
 </table>
-			    
-<form action='/deleteLoad' method='post'>
-	<input type="submit" value="הסר מטען"/>
-	<input type="hidden" id="loadId" name="loadId" value="${load.id}"/>
-	<input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/>
-</form>
 
 </div>
 </div>

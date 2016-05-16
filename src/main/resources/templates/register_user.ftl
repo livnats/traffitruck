@@ -77,6 +77,12 @@ function ValidateForm1(theForm)
       theForm.cellNumber.focus();
       return false;
    }
+   if (theForm.cellNumber.value == "" && theForm.phoneNumber.value == "")
+   {
+      alert("חובה לספק מספר טלפון");
+      theForm.phoneNumber.focus();
+      return false;
+   }
    return true;
 }
 </script>
@@ -111,7 +117,7 @@ function ValidateForm1(theForm)
 	<input type="email" id="email" style="" name="email" value="" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
-	<label for="phoneNumber">טלפון</label>
+	<label for="phoneNumber">* טלפון</label>
 	<input type="tel" id="phoneNumber" style="" name="phoneNumber" value="" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
