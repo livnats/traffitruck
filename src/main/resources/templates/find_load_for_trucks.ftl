@@ -20,7 +20,6 @@ $(document).on("mobileinit", function()
    $.mobile.ajaxEnabled = false;
 });
 </script>
-<script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
