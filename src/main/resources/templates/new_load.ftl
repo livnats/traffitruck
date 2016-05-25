@@ -21,146 +21,155 @@ $(document).on("mobileinit", function()
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script>
+
+function mAlert(text1) {
+  $("#sure .sure-1").text(text1);
+  $("#sure .sure-do").on("click.sure", function() {
+    $(this).off("click.sure");
+  });
+  $.mobile.changePage("#sure");
+}
+
 function ValidateForm1(theForm)
 {
    var regexp;
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
    if (!regexp.test(theForm.name.value))
    {
-      alert("שם המטען יכול להכיל אותיות ספרות ורווחים");
+      mAlert("שם המטען יכול להכיל אותיות ספרות ורווחים");
       theForm.name.focus();
       return false;
    }
    if (theForm.name.value == "")
    {
-      alert("שם המטען יכול להכיל אותיות ספרות ורווחים");
+      mAlert("שם המטען יכול להכיל אותיות ספרות ורווחים");
       theForm.name.focus();
       return false;
    }
    if (theForm.type.selectedIndex < 0)
    {
-      alert("שדה חובה");
+      mAlert("שדה חובה");
       theForm.type.focus();
       return false;
    }
    if (theForm.type.selectedIndex == 0)
    {
-      alert("שדה חובה");
+      mAlert("חובה לספק את סוג המטען");
       theForm.type.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
    if (!regexp.test(theForm.weight.value))
    {
-      alert("המשקל חייב להכיל רק ספרות");
+      mAlert("המשקל חייב להכיל רק ספרות");
       theForm.weight.focus();
       return false;
    }
    if (theForm.weight.value != "" && !(theForm.weight.value > 0))
    {
-      alert("המשקל חייב להכיל רק ספרות");
+      mAlert("המשקל חייב להכיל רק ספרות");
       theForm.weight.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
    if (!regexp.test(theForm.volume.value))
    {
-      alert("הנפח חייב להכיל רק ספרות");
+      mAlert("הנפח חייב להכיל רק ספרות");
       theForm.volume.focus();
       return false;
    }
    if (theForm.volume.value != "" && !(theForm.volume.value > 0))
    {
-      alert("הנפח חייב להכיל רק ספרות");
+      mAlert("הנפח חייב להכיל רק ספרות");
       theForm.volume.focus();
       return false;
    }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.source.value))
    {
-      alert("המוצא יכול להכיל אותיות ספרות ורווחים");
+      mAlert("המוצא יכול להכיל אותיות ספרות ורווחים");
       theForm.source.focus();
       return false;
    }
    if (theForm.source.value == "")
    {
-      alert("המוצא יכול להכיל אותיות ספרות ורווחים");
+      mAlert("המוצא יכול להכיל אותיות ספרות ורווחים");
       theForm.source.focus();
       return false;
    }
    if (theForm.loadingType.selectedIndex < 0)
    {
-      alert("שדה חובה");
+      mAlert("חובה לספק את סוג הטעינה");
       theForm.loadingType.focus();
       return false;
    }
    if (theForm.loadingType.selectedIndex == 0)
    {
-      alert("שדה חובה");
+      mAlert("חובה לספק את סוג הטעינה");
       theForm.loadingType.focus();
       return false;
    }
    if (theForm.downloadingType.selectedIndex < 0)
    {
-      alert("שדה חובה");
+      mAlert("חובה לספק את סוג הפריקה");
       theForm.downloadingType.focus();
       return false;
    }
    if (theForm.downloadingType.selectedIndex == 0)
    {
-      alert("שדה חובה");
+      mAlert("חובה לספק את סוג הפריקה");
       theForm.downloadingType.focus();
       return false;
    }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.destination.value))
    {
-      alert("היעד יכול להכיל אותיות ספרות ורווחים");
+      mAlert("היעד יכול להכיל אותיות ספרות ורווחים");
       theForm.destination.focus();
       return false;
    }
    if (theForm.destination.value == "")
    {
-      alert("היעד יכול להכיל אותיות ספרות ורווחים");
+      mAlert("היעד יכול להכיל אותיות ספרות ורווחים");
       theForm.destination.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
    if (!regexp.test(theForm.suggestedQuote.value))
    {
-      alert("המחיר חייב להכיל רק ספרות");
+      mAlert("המחיר חייב להכיל רק ספרות");
       theForm.suggestedQuote.focus();
       return false;
    }
    if (theForm.suggestedQuote.value == "")
    {
-      alert("המחיר חייב להכיל רק ספרות");
+      mAlert("המחיר חייב להכיל רק ספרות");
       theForm.suggestedQuote.focus();
       return false;
    }
    if (theForm.suggestedQuote.value != "" && !(theForm.suggestedQuote.value > 0))
    {
-      alert("המחיר חייב להכיל רק ספרות");
+      mAlert("המחיר חייב להכיל רק ספרות");
       theForm.suggestedQuote.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
    if (!regexp.test(theForm.waitingTime.value))
    {
-      alert("זמן המתנה חייב להכיל רק ספרות");
+      mAlert("זמן המתנה חייב להכיל רק ספרות");
       theForm.waitingTime.focus();
       return false;
    }
    if (theForm.waitingTime.value != "" && !(theForm.waitingTime.value >= 0))
    {
-      alert("זמן המתנה חייב להכיל רק ספרות");
+      mAlert("זמן המתנה חייב להכיל רק ספרות");
       theForm.waitingTime.focus();
       return false;
    }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
    if (!regexp.test(theForm.comments.value))
    {
-      alert("ההערות יכולות להכיל אותיות ספרות ורווחים");
+      mAlert("ההערות יכולות להכיל אותיות ספרות ורווחים");
       theForm.comments.focus();
       return false;
    }
@@ -300,5 +309,13 @@ function ValidateForm1(theForm)
 </div>
 </div>
 </div>
+
+<div data-role="dialog" id="sure">
+  <div data-role="content">
+    <h3 class="sure-1">???</h3>
+    <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
+  </div>
+</div>
+
 </body>
 </html>

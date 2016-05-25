@@ -17,37 +17,40 @@ $(document).on("mobileinit", function()
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script>
+
+function mAlert(text1) {
+  $("#sure .sure-1").text(text1);
+  $("#sure .sure-do").on("click.sure", function() {
+    $(this).off("click.sure");
+  });
+  $.mobile.changePage("#sure");
+}
+
 function ValidateForm1(theForm)
 {
    var regexp;
    regexp = /^\d*$/;
    if (!regexp.test(theForm.licensePlateNumber.value))
    {
-      alert("שדה חובה");
+      mAlert("לוחית רישוי יכולה להכיל רק ספרות");
       theForm.licensePlateNumber.focus();
       return false;
    }
    if (theForm.licensePlateNumber.value == "")
    {
-      alert("שדה חובה");
-      theForm.licensePlateNumber.focus();
-      return false;
-   }
-   if (theForm.licensePlateNumber.value != "" && !(theForm.licensePlateNumber.value > 0))
-   {
-      alert("שדה חובה");
+      mAlert("חובה לספק מספר לוחית רישוי");
       theForm.licensePlateNumber.focus();
       return false;
    }
    if (theForm.vehicleLicensePhoto.value == "")
    {
-      alert("שדה חובה");
+      mAlert("חובה לספק צילום של רשיון הרכב");
       theForm.vehicleLicensePhoto.focus();
       return false;
    }
    if (theForm.truckPhoto.value == "")
    {
-      alert("שדה חובה");
+      mAlert("חובה לספק צילום של המשאית");
       theForm.truckPhoto.focus();
       return false;
    }
@@ -83,5 +86,13 @@ function ValidateForm1(theForm)
 </div>
 </div>
 </div>
+
+<div data-role="dialog" id="sure">
+  <div data-role="content">
+    <h3 class="sure-1">???</h3>
+    <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
+  </div>
+</div>
+
 </body>
 </html>

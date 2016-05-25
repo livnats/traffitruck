@@ -23,6 +23,14 @@ $(document).on("mobileinit", function()
 <script type="text/javascript">
 $(document).ready(function() {
 
+function mAlert(text1) {
+  $("#sure .sure-1").text(text1);
+  $("#sure .sure-do").on("click.sure", function() {
+    $(this).off("click.sure");
+  });
+  $.mobile.changePage("#sure");
+}
+
 	function convertType(type) {
 		if ( type == "${enums["com.traffitruck.domain.LoadType"].CONTAINER_20}" )
 			return "מכולה 20'";
@@ -159,7 +167,7 @@ $(document).ready(function() {
 	                   $("#sourceLat").val( results[0].geometry.location.lat() );
 	                   $("#sourceLng").val( results[0].geometry.location.lng() );
                     } else {
-                       alert('Geocode was not successful for the following reason: ' + status);
+                       mAlert('Geocode was not successful for the following reason: ' + status);
                     }
                  })
               });
@@ -174,7 +182,7 @@ $(document).ready(function() {
 	                   $("#destinationLat").val( results[0].geometry.location.lat() );
 	                   $("#destinationLng").val( results[0].geometry.location.lng() );
                     } else {
-                       alert('Geocode was not successful for the following reason: ' + status);
+                       mAlert('Geocode was not successful for the following reason: ' + status);
                     }
                   })
               });
@@ -193,12 +201,16 @@ $(document).ready(function() {
 
 						<#if trucks?has_content>
 							<div class="ui-field-contain">
-								<label for="truckSelection">בחר משאית</label>
-					        	<select name="truckSelection" id="truckSelection">
-								  <#list trucks as truck>
-									  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
-								  </#list>
-								</select>
+								<#if (trucks?size > 1)>
+									<label for="truckSelection">בחר משאית</label>
+						        	<select name="truckSelection" id="truckSelection">
+									  <#list trucks as truck>
+										  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
+									  </#list>
+									</select>
+								<#else>
+									<input type="hidden" name="truckSelection" id="truckSelection" value="${trucks[0].licensePlateNumber}">
+								</#if>
 							</div>
 							<div class="ui-field-contain">
 								<label for="source">חפש ליד מוצא</label>
@@ -224,5 +236,13 @@ $(document).ready(function() {
 		</div>
 </div>
 </div>
+
+<div data-role="dialog" id="sure">
+  <div data-role="content">
+    <h3 class="sure-1">???</h3>
+    <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
+  </div>
+</div>
+
 </body>
 </html>

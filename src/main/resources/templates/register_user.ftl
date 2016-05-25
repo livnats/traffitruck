@@ -17,69 +17,78 @@ $(document).on("mobileinit", function()
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script>
+
+function mAlert(text1) {
+  $("#sure .sure-1").text(text1);
+  $("#sure .sure-do").on("click.sure", function() {
+    $(this).off("click.sure");
+  });
+  $.mobile.changePage("#sure");
+}
+
 function ValidateForm1(theForm)
 {
    var regexp;
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
    if (!regexp.test(theForm.username.value))
    {
-      alert("שם הלקוח יכול להכיל אותיות ספרות ורווחים");
+      mAlert("שם הלקוח יכול להכיל אותיות ספרות ורווחים");
       theForm.username.focus();
       return false;
    }
    if (theForm.username.value == "")
    {
-      alert("אנא הכנס שם לקוח");
-      theForm.username.focus();
-      return false;
+		mAlert("חובה לספק שם לקוח");
+        theForm.username.focus();
+		return false;
    }
    if (theForm.password.value == "")
    {
-      alert("אנא הכנס סיסמה");
+      mAlert("אנא הכנס סיסמה");
       theForm.password.focus();
       return false;
    }
    if (theForm.confirm_password.value == "")
    {
-      alert("אנא הכנס וידוא סיסמה");
+      mAlert("אנא הכנס וידוא סיסמה");
       theForm.confirm_password.focus();
       return false;
    }
    if (theForm.password.value != theForm.confirm_password.value)
    {
-      alert("הסיסמאות חייבות להיות זהות");
+      mAlert("הסיסמאות חייבות להיות זהות");
       theForm.confirm_password.focus();
       return false;
    }
    regexp = /^[a-zA-Z0-9.@_-]*$/;
    if (!regexp.test(theForm.email.value))
    {
-      alert("כתובת הדוא\"ל אינה תקנית");
+      mAlert("כתובת הדוא\"ל אינה תקנית");
       theForm.email.focus();
       return false;
    }
    if (theForm.email.value == "")
    {
-      alert("אנא הכנס דוא\"ל");
+      mAlert("אנא הכנס דוא\"ל");
       theForm.email.focus();
       return false;
    }
    regexp = /^\d*$/;
    if (!regexp.test(theForm.phoneNumber.value))
    {
-      alert("מספר הטלפון חייב להכיל רק ספרות");
+      mAlert("מספר הטלפון חייב להכיל רק ספרות");
       theForm.phoneNumber.focus();
       return false;
    }
    if (!regexp.test(theForm.cellNumber.value))
    {
-      alert("מספר הטלפון חייב להכיל רק ספרות");
+      mAlert("מספר הטלפון חייב להכיל רק ספרות");
       theForm.cellNumber.focus();
       return false;
    }
    if (theForm.cellNumber.value == "" && theForm.phoneNumber.value == "")
    {
-      alert("חובה לספק מספר טלפון");
+      mAlert("חובה לספק מספר טלפון");
       theForm.phoneNumber.focus();
       return false;
    }
@@ -147,5 +156,13 @@ function ValidateForm1(theForm)
 </div>
 </div>
 </div>
+
+<div data-role="dialog" id="sure">
+  <div data-role="content">
+    <h3 class="sure-1">???</h3>
+    <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
+  </div>
+</div>
+
 </body>
 </html>
