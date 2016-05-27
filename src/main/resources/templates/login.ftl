@@ -16,61 +16,84 @@ $(document).on("mobileinit", function()
 });
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+
+<script>
+function mAlert(text1) {
+  $("#sure .sure-1").text(text1);
+  $("#sure .sure-do").on("click.sure", function() {
+    $(this).off("click.sure");
+  });
+  $.mobile.changePage("#sure");
+}
+
+function ValidateForm(theForm)
+{
+   if (theForm.username.value == "")
+   {
+      mAlert("חובה לספק שם משתמש");
+      theForm.username.focus();
+      return false;
+   }
+   if (theForm.password.value == "")
+   {
+      mAlert("חובה לספק סיסמה");
+      theForm.password.focus();
+      return false;
+   }
+	return true;
+}
+</script>
 </head>
 <body>
-<div data-role="page" data-theme="a" data-title="Untitled Page" id="page1">
-<div data-role="header" id="Header1">
+<div data-role="page" data-theme="a" data-title="טראפי-טראק כניסה" id="page1">
+	<div data-role="header" id="Header1">
+		<img src="/images/logo.jpg" width="20%"/>
+		<img src="/images/truck-blue.jpg" width="15%"/>
+	</div>
+	<div class="ui-content" role="main">
 
-<img src="/images/logo.jpg" width="20%"/>
-<img src="/images/truck-blue.jpg" width="15%"/>
-
-<!--
-<a href="#" data-role="button" class="ui-btn-left">בית</a>
-<a href="#" data-role="button" class="ui-btn-right">יצירת קשר</a>
--->
-</div>
-<div class="ui-content" role="main">
-
-				<#if RequestParameters.error??>
-					<div id="wb_Text1">
+			<#if RequestParameters.error??>
+				<div id="wb_Text1">
 					<span style="color:#000000;font-family:Arial;font-size:13px;">שם משתמש וסיסמה אינם מתאימים</span>
-					</div>
-		    	</#if>
-				<#if RequestParameters.logout??>
-					<div id="wb_Text1">
+				</div>
+	    	</#if>
+			<#if RequestParameters.logout??>
+				<div id="wb_Text1">
 					<span style="color:#000000;font-family:Arial;font-size:13px;">יצאת מהמערכת</span>
-					</div>
-			    </#if>
+				</div>
+		    </#if>
 
-<form name="loginform" method="post" action="/login" id="loginform">
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<input type="hidden" name="form_name" value="loginform">
-<div class="ui-field-contain">
-<label for="username">שם משתמש</label>
-<input type="text" id="username" style="" name="username" value="" autocapitalize="off">
-</div><div class="ui-field-contain">
-<label for="password">סיסמה</label>
-<input type="password" id="password" style="" name="password" value="">
-</div><div id="rememberme">
-
-<!--
-<fieldset data-role="controlgroup" data-shadow="true">
-<input type="checkbox" id="rememberme-0" name="rememberme" value="on" checked>
-<label for="rememberme-0">זכור אותי</label>
-</fieldset>
--->
+		<form name="loginform" method="post" action="/login" id="loginform" onsubmit="return ValidateForm(this)">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<input type="hidden" name="form_name" value="loginform">
+			<div class="ui-field-contain">
+				<label for="username">שם משתמש</label>
+				<input type="text" id="username" style="" name="username" value="" autocapitalize="off">
+			</div>
+			<div class="ui-field-contain">
+				<label for="password">סיסמה</label>
+				<input type="password" id="password" style="" name="password" value="">
+			</div>
+			<div id="rememberme">
+				<!--
+				<fieldset data-role="controlgroup" data-shadow="true">
+				<input type="checkbox" id="rememberme-0" name="rememberme" value="on" checked>
+				<label for="rememberme-0">זכור אותי</label>
+				</fieldset>
+				-->
+			</div>
+			<input type="submit" id="login" name="login" value="כניסה">
+		</form>
+		<a href="/registerUser" data-role="button" class="ui-btn">רישום</a>
+	</div>
 </div>
 
-<input type="submit" id="login" name="login" value="כניסה">
-<a href="/registerUser" data-role="button" class="ui-btn">רישום</a>
-
-</form>
+<div data-role="dialog" id="sure">
+  <div data-role="content">
+    <h3 class="sure-1">???</h3>
+    <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
+  </div>
 </div>
-
-<!--
-<div data-role="footer" id="Footer1" data-position="fixed"><h4>Footer</h4></div>
-</div>
--->
 
 </body>
 </html>

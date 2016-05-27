@@ -60,31 +60,31 @@ function ValidateForm1(theForm)
 </head>
 <body>
 <div data-role="page" data-theme="a" data-title="הוסף משאית" id="add_truck">
-<div data-role="header" id="Header1">
-<h1>הוסף משאית</h1>
-<a href="/myTrucks" data-role="button" class="ui-btn-left">חזרה</a>
-<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
-</div>
-<div class="ui-content" role="main">
-<div id="wb_Form1" style="">
-<form name="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newTruckForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<div class="ui-field-contain">
-	<label for="licensePlateNumber">מספר לוחית רישוי</label>
-	<input type="number" id="licensePlateNumber" style="" name="licensePlateNumber" value="" maxlength="7">
-</div>
-<div class="ui-field-contain">
-	<label for="vehicleLicensePhoto">צילום רשיון רכב</label>
-	<input type="file" id="vehicleLicensePhoto" style="" name="vehicleLicensePhoto">
-</div>
-<div class="ui-field-contain">
-	<label for="truckPhoto">צילום משאית</label>
-	<input type="file" id="truckPhoto" style="" name="truckPhoto">
-</div>
-<input type="submit" id="Button1" name="" value="הוסף משאית">
-</form>
-</div>
-</div>
+	<div data-role="header" id="Header1">
+		<h1>הוסף משאית</h1>
+		<a href="/myTrucks" data-role="button" class="ui-btn-left">חזרה</a>
+		<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+	</div>
+	<div class="ui-content" role="main">
+		<div id="wb_Form1" style="">
+			<form name="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newTruckForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<div class="ui-field-contain">
+				<label for="licensePlateNumber">מספר לוחית רישוי</label>
+				<input type="number" id="licensePlateNumber" style="" name="licensePlateNumber" value="" maxlength="7">
+			</div>
+			<div class="ui-field-contain">
+				<label for="vehicleLicensePhoto">צילום רשיון רכב</label>
+				<input type="file" id="vehicleLicensePhoto" style="" name="vehicleLicensePhoto">
+			</div>
+			<div class="ui-field-contain">
+				<label for="truckPhoto">צילום משאית</label>
+				<input type="file" id="truckPhoto" style="" name="truckPhoto">
+			</div>
+			<input type="submit" id="Button1" name="" value="הוסף משאית">
+			</form>
+		</div>
+	</div>
 </div>
 
 <div data-role="dialog" id="sure">
