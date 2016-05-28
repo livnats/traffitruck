@@ -112,7 +112,7 @@ $(document).ready(function() {
     <th>מוצא:</th>
     <td>
 		<#if load.sourceLocation??>
-			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[0]},${load.sourceLocation.coordinates[1]}" target="_blank">${load.source!''}</a>
+			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank">${load.source!''}</a>
 		<#else>
 		    ${load.source!''}
 		</#if>
@@ -126,7 +126,7 @@ $(document).ready(function() {
     <th>יעד:</th>
     <td>
 		<#if load.destinationLocation??>
-			<a href="http://maps.google.com/maps?q=loc:${load.destinationLocation.coordinates[0]},${load.destinationLocation.coordinates[1]}" target="_blank">${load.destination!''}</a>
+			<a href="http://maps.google.com/maps?q=loc:${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank">${load.destination!''}</a>
 		<#else>
 		    ${load.destination!''}
 		</#if>
