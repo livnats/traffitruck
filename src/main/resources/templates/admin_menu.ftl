@@ -33,6 +33,11 @@
 							<a href="/trucks">כל המשאיות</a>
 						</td>
 					</tr>
+					<tr> 
+						<td>
+							<a href="/logout">יציאה</a>
+						</td>
+					</tr>
 				</table>
 			</div>
 		</div>
