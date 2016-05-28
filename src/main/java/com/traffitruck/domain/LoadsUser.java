@@ -1,17 +1,22 @@
 package com.traffitruck.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class LoadsUser{
 	
+	@Id
+	private String id;
+
 	private String email;
 	private String address;
 	private String contactPerson;
 	private String phoneNumber;
 	private String cellNumber;
+	@Indexed(unique=true)
 	private String username;
 	private String password;
 	private Role role;
-	//TODO add id and unique constraint on email
 	
 
 	public String getAddress() {

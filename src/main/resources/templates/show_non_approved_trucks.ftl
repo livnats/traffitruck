@@ -40,7 +40,7 @@
 					<table border="0">
 						<tr> 
 							<td>
-								<a href="/">חזור לעמוד ראשי </a>
+								<a href="/adminMenu">חזור לעמוד ראשי </a>
 							</td>
 						</tr>
 						<tr> 

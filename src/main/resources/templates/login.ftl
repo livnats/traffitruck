@@ -54,7 +54,7 @@ function ValidateForm(theForm)
 
 			<#if RequestParameters.error??>
 				<div id="wb_Text1">
-					<span style="color:#000000;font-family:Arial;font-size:13px;">שם משתמש וסיסמה אינם מתאימים</span>
+					<span style="color:#FF0000;font-family:Arial;font-size:13px;">שם משתמש וסיסמה אינם מתאימים</span>
 				</div>
 	    	</#if>
 			<#if RequestParameters.logout??>

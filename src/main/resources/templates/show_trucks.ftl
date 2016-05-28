@@ -36,11 +36,11 @@ $(document).ready(function() {
 			<p>&nbsp;</p>
 		</div>
 		<div id="content">
-			<h2>המשאיות שלי</h2>
+			<h2>כל המשאיות</h2>
 			<table>
 				<tr> 
 					<td>
-						<a href="/">חזור לעמוד הראשי</a>
+						<a href="/adminMenu">חזור לעמוד הראשי</a>
 					</td>
 				</tr>
 				<tr> 

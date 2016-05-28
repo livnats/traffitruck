@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeospatialIndex;
+import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -31,6 +34,9 @@ public class MongoDAO {
 	// Creates an index on the specified field if the index does not already exist
 	mongoTemplate.indexOps(Load.class).ensureIndex(new GeospatialIndex("sourceLocation").typed(GeoSpatialIndexType.GEO_2DSPHERE));
 	mongoTemplate.indexOps(Load.class).ensureIndex(new GeospatialIndex("destinationLocation").typed(GeoSpatialIndexType.GEO_2DSPHERE));
+	mongoTemplate.indexOps(Truck.class).ensureIndex(new Index("licensePlateNumber", Direction.ASC).unique());
+	mongoTemplate.indexOps(LoadsUser.class).ensureIndex(new Index("username", Direction.ASC).unique());
+	mongoTemplate.indexOps(LoadsUser.class).ensureIndex(new Index("email", Direction.ASC).unique());
     }
 
     //Load
@@ -96,7 +102,12 @@ public class MongoDAO {
 	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 	String encryptedPassword = passwordEncryptor.encryptPassword(user.getPassword());
 	user.setPassword(encryptedPassword);
-	mongoTemplate.insert(user);
+	try {
+	    mongoTemplate.insert(user);
+	}
+	catch (DuplicateKeyException e) {
+	    throw new DuplicateException(user.getUsername());
+	}
     }
 
     public List<LoadsUser> getUsers() {
@@ -106,7 +117,12 @@ public class MongoDAO {
 
     ///Truck
     public void storeTruck( Truck truck ) {
-	mongoTemplate.insert(truck);
+	try {
+	    mongoTemplate.insert(truck);
+	}
+	catch ( DuplicateKeyException e ) {
+	    throw new DuplicateException(truck.getLicensePlateNumber());
+	}
     }
 
     public List<Truck> getMyApprovedTrucksId(String username){

@@ -159,7 +159,7 @@ $(document).ready(function() {
 				<table border="0">
 					<tr> 
 						<td>
-							<a href="/">חזור לעמוד הראשי</a>
+							<a href="/adminMenu">חזור לעמוד הראשי</a>
 						</td>
 					</tr>
 					<tr> 

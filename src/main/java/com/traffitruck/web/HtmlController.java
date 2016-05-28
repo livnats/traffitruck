@@ -32,6 +32,7 @@ import com.traffitruck.domain.Location;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
+import com.traffitruck.service.DuplicateException;
 import com.traffitruck.service.MongoDAO;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -167,7 +168,20 @@ public class HtmlController {
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
 	user.setUsername(user.getUsername().toLowerCase());
-	dao.storeUser(user);
+	try {
+	    dao.storeUser(user);
+	}
+	catch ( DuplicateException e) {
+		Map<String, Object> model = new HashMap<>();
+		model.put("error", "dup");
+		model.put("address", user.getAddress());
+		model.put("cellNumber", user.getCellNumber());
+		model.put("email", user.getEmail());
+		model.put("phoneNumber", user.getPhoneNumber());
+		model.put("role", user.getRole().toString());
+		model.put("contactPerson", user.getContactPerson());
+		return new ModelAndView("register_user", model);
+	}
 	SecurityContextHolder.getContext().setAuthentication(
 		new UsernamePasswordAuthenticationToken(
 			user.getUsername(),
@@ -186,7 +200,7 @@ public class HtmlController {
     ModelAndView approveTruck(@ModelAttribute("truck") Truck truck) {
 	truck.setRegistrationStatus(TruckRegistrationStatus.APPROVED);
 	dao.updateTruck(truck);
-	return new ModelAndView("redirect:/");
+	return new ModelAndView("redirect:/adminMenu");
     }
 
     @RequestMapping(value = "/myTrucks")
@@ -254,7 +268,14 @@ public class HtmlController {
 	truck.setUsername(username);
 	truck.setCreationDate(new Date());
 	truck.setRegistrationStatus(TruckRegistrationStatus.REGISTERED);
-	dao.storeTruck(truck);
+	try {
+	    dao.storeTruck(truck);
+	}
+	catch ( DuplicateException e) {
+		Map<String, Object> model = new HashMap<>();
+		model.put("error", "dup");
+		return new ModelAndView("new_truck", model);
+	}
 	return new ModelAndView("redirect:/myTrucks");
     }
 

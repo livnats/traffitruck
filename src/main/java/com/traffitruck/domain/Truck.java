@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -24,6 +25,7 @@ public class Truck {
 	private String username;
 	
 	//Information filled by the driver
+	@Indexed(unique=true)
 	private String licensePlateNumber;
 	private Binary vehicleLicensePhoto;
 	private Binary truckPhoto;

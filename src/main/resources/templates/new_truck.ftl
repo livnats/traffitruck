@@ -67,6 +67,12 @@ function ValidateForm1(theForm)
 	</div>
 	<div class="ui-content" role="main">
 		<div id="wb_Form1" style="">
+			<#if error??>
+				<div id="wb_Text1">
+					<span style="color:#FF0000;font-family:Arial;font-size:13px;">מספר לוחית רישוי קיים במערכת</span>
+				</div>
+			</#if>
+			
 			<form name="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newTruckForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="ui-field-contain">

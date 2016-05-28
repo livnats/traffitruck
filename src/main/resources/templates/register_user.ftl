@@ -14,6 +14,13 @@ $(document).on("mobileinit", function()
 {
    $.mobile.ajaxEnabled = false;
 });
+
+$(document).ready(function() {
+	<#if role??>
+		$("#role").val("${role}");
+	</#if>
+});
+
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script>
@@ -105,41 +112,47 @@ function ValidateForm1(theForm)
 <div class="ui-content" role="main">
 <div id="wb_Form1" style="">
 
+	<#if error??>
+		<div id="wb_Text1">
+			<span style="color:#FF0000;font-family:Arial;font-size:13px;">שם משתמש תפוס</span>
+		</div>
+	</#if>
+
 <form name="registerForm" method="post" action="registerUser" data-ajax="false" data-transition="pop" id="registerForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <input type="hidden" name="form_name" value="loginform">
 <div class="ui-field-contain">
 	<label for="username">* שם הלקוח</label>
-	<input type="text" id="username" style="" name="username" value="" autocapitalize="off">
+	<input type="text" id="username" style="" name="username" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
 	<label for="password">* בחר סיסמה</label>
-	<input type="password" id="password" style="" name="password" value="" autocapitalize="off">
+	<input type="password" id="password" style="" name="password" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
 	<label for="confirm_password">* וידוא סיסמה</label>
-	<input type="password" id="confirm_password" style="" name="confirm_password" value="" autocapitalize="off">
+	<input type="password" id="confirm_password" style="" name="confirm_password" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
 	<label for="email">* דוא"ל</label>
-	<input type="email" id="email" style="" name="email" value="" autocapitalize="off">
+	<input type="email" id="email" style="" name="email" autocapitalize="off" value="<#if email??>${email}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="phoneNumber">* טלפון</label>
-	<input type="tel" id="phoneNumber" style="" name="phoneNumber" value="" autocapitalize="off">
+	<input type="tel" id="phoneNumber" style="" name="phoneNumber" autocapitalize="off" value="<#if phoneNumber??>${phoneNumber}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="cellNumber">נייד</label>
-	<input type="tel" id="cellNumber" style="" name="cellNumber" value="" autocapitalize="off">
+	<input type="tel" id="cellNumber" style="" name="cellNumber" autocapitalize="off" value="<#if cellNumber??>${cellNumber}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="address">כתובת</label>
-	<input type="text" id="address" style="" name="address" value="" autocapitalize="off">
+	<input type="text" id="address" style="" name="address" autocapitalize="off" value="<#if address??>${address}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="contactPerson">איש קשר</label>
-	<input type="text" id="contactPerson" style="" name="contactPerson" value="" autocapitalize="off">
+	<input type="text" id="contactPerson" style="" name="contactPerson" autocapitalize="off" value="<#if contactPerson??>${contactPerson}</#if>">
 </div>
 <div class="ui-field-contain">
     <fieldset data-role="controlgroup" data-type="horizontal">
