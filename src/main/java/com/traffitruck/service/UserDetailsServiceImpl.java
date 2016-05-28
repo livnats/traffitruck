@@ -19,36 +19,40 @@ import com.traffitruck.domain.LoadsUser;
 
 @Component
 public class UserDetailsServiceImpl implements AuthenticationProvider {
-	
-	@Autowired
-	private MongoTemplate mongoTemplate;
- 
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
 
     @Override
-	public Authentication authenticate(Authentication authentication)
-			throws AuthenticationException {
-   
-    	String username = (String)authentication.getPrincipal();
-    	String password = (String)authentication.getCredentials();
-    	
-    	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username.toLowerCase()));
-    	LoadsUser user = mongoTemplate.findOne(findByUsername, LoadsUser.class);
+    public Authentication authenticate(Authentication authentication)
+	    throws AuthenticationException {
 
-    	String encryptedPassword = user.getPassword();
-    	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+	String username = (String)authentication.getPrincipal();
+	String password = (String)authentication.getCredentials();
 
-    	if(user!=null && passwordEncryptor.checkPassword(password, encryptedPassword) && user.getRole() != null)
-    		return new UsernamePasswordAuthenticationToken(
-    				authentication.getPrincipal(),
-    				authentication.getCredentials(),
-    				Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
-    	else
-    		return null;
+	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username.toLowerCase()));
+	LoadsUser user = mongoTemplate.findOne(findByUsername, LoadsUser.class);
+
+	if ( user == null ) {
+	    return null;
 	}
+	
+	String encryptedPassword = user.getPassword();
+	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return true;
-	}
+	if(user!=null && passwordEncryptor.checkPassword(password, encryptedPassword) && user.getRole() != null)
+	    return new UsernamePasswordAuthenticationToken(
+		    authentication.getPrincipal(),
+		    authentication.getCredentials(),
+		    Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
+	else
+	    return null;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+	return true;
+    }
 
 }
