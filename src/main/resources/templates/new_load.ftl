@@ -18,6 +18,42 @@ $(document).on("mobileinit", function()
 {
    $.mobile.ajaxEnabled = false;
 });
+
+$(document).ready(function() {
+	$('#loadPhoto1').change(function(){
+	    var file = this.files[0];
+	    var name = file.name;
+	    var size = file.size;
+	    var type = file.type;
+
+        if ( file != "" && ! type.startsWith("image/") ) {
+           mAlert("חובה לבחור תמונה");
+           this.val("");
+           this.focus();
+           return false;
+        }
+        
+        if ( size > 1000000 ) {
+            ratio = size / 400000;
+            oFReader = new FileReader(); 
+			oFReader.onload = function (oFREvent) {
+			  var img=new Image();
+			  img.onload=function(){
+			      var canvas=document.createElement("canvas");
+			      var ctx=canvas.getContext("2d");
+			      canvas.width=img.width/ratio;
+			      canvas.height=img.height/ratio;
+			      ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
+			      var imageData = canvas.toDataURL();
+                  $('#loadPhoto').val(imageData);
+			  }
+			  img.src=oFREvent.target.result;
+			};
+            oFReader.readAsDataURL(file);
+        }
+	});
+});
+
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script>
@@ -173,6 +209,8 @@ function ValidateForm1(theForm)
       theForm.comments.focus();
       return false;
    }
+   
+   $('#loadPhoto1').val("");
    return true;
 }
 </script>
@@ -301,8 +339,9 @@ function ValidateForm1(theForm)
 	<label for="comments">הערות</label>
 	<input type="text" id="comments" style="" name="comments" value="">
 </div><div class="ui-field-contain">
-	<label for="loadImage">צילום המטען</label>
-	<input type="file" id="loadPhoto" style="" name="loadPhoto">
+	<label for="loadPhoto1">צילום המטען</label>
+	<input type="file" id="loadPhoto1" style="" name="loadPhoto1">
+	<input type="hidden" id="loadPhoto" name="loadPhoto">
 </div>
 <input type="submit" id="Button1" name="" value="הוסף מטען">
 </form>
