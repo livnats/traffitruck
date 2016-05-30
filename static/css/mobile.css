@@ -84,3 +84,6 @@ h6
 {
    text-decoration: none;
 }
+.ui-datepicker.ui-widget {
+z-index: 100 !important;
+}
