@@ -102,8 +102,33 @@ function ValidateForm1(theForm)
    return true;
 }
 </script>
+
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script>
+            var autocomplete;
+            function initialize() {
+              
+              var geocoder = new google.maps.Geocoder();
+              
+              autocomplete_src = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('address')),
+                  { types: ['address'] });
+              google.maps.event.addListener(autocomplete_src, 'place_changed', function() {
+                 var address = document.getElementById('address').value;
+                 geocoder.geocode({'address': address}, function(results, status) {
+                   if (status === google.maps.GeocoderStatus.OK) {
+                      // nothing to do
+                    } else {
+                       alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                 })
+              });
+            }
+        </script>
+
 </head>
-<body>
+<body onload="initialize()" dir="rtl">
 <div data-role="page" data-theme="a" data-title="רישום משתמש" id="add_truck">
 <div data-role="header" id="Header1">
 <h1>רישום משתמש</h1>
@@ -148,7 +173,7 @@ function ValidateForm1(theForm)
 </div>
 <div class="ui-field-contain">
 	<label for="address">כתובת</label>
-	<input type="text" id="address" style="" name="address" autocapitalize="off" value="<#if address??>${address}</#if>">
+	<input type="text" id="address" style="" name="address" autocapitalize="off" value="<#if address??>${address}</#if>" placeholder="הכנס כתובת">
 </div>
 <div class="ui-field-contain">
 	<label for="contactPerson">איש קשר</label>
