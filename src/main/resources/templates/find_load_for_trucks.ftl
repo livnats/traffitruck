@@ -23,6 +23,9 @@ $(document).on("mobileinit", function()
 <script type="text/javascript">
 $(document).ready(function() {
 
+$( "#drivedate" ).datepicker();
+$( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
+
 function mAlert(text1) {
   $("#sure .sure-1").text(text1);
   $("#sure .sure-do").on("click.sure", function() {
@@ -76,7 +79,7 @@ function mAlert(text1) {
 				}
 				
 			    table_html = '<table data-role="table" class="table-stripe ui-responsive">';
-			    table_html += "<thead><tr><th>מוצא</th><th>יעד</th><th>סוג מטען</th><th>מחיר</th></tr></thead>";
+			    table_html += "<thead><tr><th>מוצא</th><th>יעד</th><th>סוג מטען</th><th>מחיר</th><th>תאריך נסיעה</th></tr></thead>";
 
 				for (var i in loads) {
 				    load = loads[i];
@@ -86,6 +89,7 @@ function mAlert(text1) {
 				    table_html += "    <td>" + load.destination + "</td>";
 				    table_html += "    <td>" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
 				    table_html += "    <td>" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
+				    table_html += "    <td>" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
 				    table_html += "</tr>";
 			    }
 			    
@@ -105,6 +109,7 @@ function mAlert(text1) {
 			destinationLng = $("#destinationLng").val();
 			source_radius = $("#source_radius").val();
 			destination_radius = $("#destination_radius").val();
+			drivedate = $("#drivedate").val();
 
 			$.post( "/load_for_truck_by_radius",
 				{
@@ -115,6 +120,7 @@ function mAlert(text1) {
 					destinationLng: destinationLng,
 					source_radius: source_radius, 
 					destination_radius: destination_radius,
+					drivedate: drivedate,
 					${_csrf.parameterName}: "${_csrf.token}"
 				} 
 				, function( loads ) {
@@ -125,7 +131,7 @@ function mAlert(text1) {
 				}
 				
 			    table_html = '<table data-role="table" class="table-stripe ui-responsive">';
-			    table_html += "<thead><tr><th>מוצא</th><th>יעד</th><th>סוג מטען</th><th>מחיר</th></tr></thead>";
+			    table_html += "<thead><tr><th>מוצא</th><th>יעד</th><th>סוג מטען</th><th>מחיר</th><th>תאריך נסיעה</th></tr></thead>";
 
 				for (var i in loads) {
 				    load = loads[i];
@@ -135,6 +141,7 @@ function mAlert(text1) {
 				    table_html += "    <td>" + load.destination + "</td>";
 				    table_html += "    <td>" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
 				    table_html += "    <td>" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
+				    table_html += "    <td>" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
 				    table_html += "</tr>";
 			    }
 			    
@@ -213,7 +220,7 @@ function mAlert(text1) {
 								</#if>
 							</div>
 							<div class="ui-field-contain">
-								<label for="source">חפש ליד מוצא</label>
+								<label for="source">סנן לפי מוצא</label>
 								<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
 								<label for="source_radius">מרחק בק"מ</label>
 								<input type="text" id="source_radius" style="" name="source_radius" value="">
@@ -221,14 +228,18 @@ function mAlert(text1) {
 								<input type="hidden" id="sourceLng" name="sourceLng" value="">
 							</div>
 							<div class="ui-field-contain">
-								<label for="source">חפש ליד יעד</label>
+								<label for="source">סנן לפי יעד</label>
 								<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
 								<label for="destination_radius">מרחק בק"מ</label>
 								<input type="text" id="destination_radius" style="" name="destination_radius" value="">
 								<input type="hidden" id="destinationLat" name="destinationLat" value="">
 								<input type="hidden" id="destinationLng" name="destinationLng" value="">
 							</div>
-							<button type="button" data-role="button" class="ui-btn" id="radiusFilter" name="radiusFilter">חפש לפי מרחק</button>
+							<div class="ui-field-contain">
+								<label for="drivedate">סנן לפי תאריך הובלה</label>
+								<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
+							</div>
+							<button type="button" data-role="button" class="ui-btn" id="radiusFilter" name="radiusFilter">סנן תוצאות</button>
 						<#else>
 							אין משאיות מאושרות 
 						</#if>

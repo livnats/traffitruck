@@ -1,6 +1,9 @@
 package com.traffitruck.web;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +64,8 @@ public class JsonController {
 	    @RequestParam("destinationLat") Double destinationLat,
 	    @RequestParam("destinationLng") Double destinationLng,
 	    @RequestParam("source_radius") Integer source_radius,
-	    @RequestParam("destination_radius") Integer destination_radius
+	    @RequestParam("destination_radius") Integer destination_radius,
+	    @RequestParam("drivedate") String drivedate
 	    ) {
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	String username = authentication.getName();
@@ -70,7 +74,16 @@ public class JsonController {
 	if (truck == null) { // the logged in user does not have a truck with this license plate number
 	    return Collections.emptyList();
 	}
+	Date driveDateObj = null;
+	if (drivedate != null && drivedate.length() > 0) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+		try {
+		    driveDateObj = sdf.parse(drivedate);
+		} catch (ParseException e) {
+		    throw new RuntimeException(e);
+		}
+	}
 	
-	return dao.getLoadsForTruckByDistance(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius);
+	return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);
     }
 }

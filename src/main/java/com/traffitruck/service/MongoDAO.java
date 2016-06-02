@@ -1,6 +1,11 @@
 package com.traffitruck.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Truck;
@@ -65,7 +72,8 @@ public class MongoDAO {
     }
 
     public List<Load> getLoadsForUser(String username) {
-	Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
+	Query findByUsername = new Query()
+		.addCriteria(Criteria.where("username").is(username));
 	findByUsername.with(new Sort("driveDate"));
 	return mongoTemplate.find(findByUsername,Load.class);
     }
@@ -188,6 +196,7 @@ public class MongoDAO {
 	// match weight
 	if (truck.getPermittedweight() != null) {
 	    loadsForTruckQuery.addCriteria(Criteria.where("weight").exists(true).lte(truck.getPermittedweight()));
+	    loadsForTruckQuery.addCriteria(Criteria.where("driveDate").gte(new Date()));
 	}
 	// TODO match load type
 
@@ -211,17 +220,22 @@ public class MongoDAO {
 	mongoTemplate.insert(truckAvail);
     }
 
-    public List<Load> getLoadsForTruckByDistance(Truck truck, Double sourceLat, Double sourceLng, Integer source_radius,
-	    Double destinationLat, Double destinationLng, Integer destination_radius) {
+    public List<Load> getLoadsForTruckByFilter(Truck truck, Double sourceLat, Double sourceLng, Integer source_radius,
+	    Double destinationLat, Double destinationLng, Integer destination_radius, Date drivedate) {
 	// The criteria API isn't good enough
 	String query = "{";
 	// match weight	
+//	QueryBuilder qb = QueryBuilder.start();
+//	qb.put("weight").lessThanEquals(truck.getPermittedweight());
+
 	query += "weight: { $exists: true, $lte: " + truck.getPermittedweight() + " } ";
 	if (sourceLat != null && sourceLng != null && source_radius != null) {
 		query += ", sourceLocation : { $near : { $geometry : { type : \"Point\" , coordinates : [" + sourceLng + ", " + sourceLat + "] }, $maxDistance : "+ source_radius * 1000 + " } }";
+//		qb.put("sourceLocation").near(sourceLng, sourceLat, source_radius * 1000);
 	}
 	if (destinationLat != null && destinationLng != null && destination_radius != null) {
 		query += ", destinationLocation : { $near : { $geometry : { type : \"Point\" , coordinates : [" + destinationLng + ", " + destinationLat + "] }, $maxDistance : "+ destination_radius * 1000 + " } }";
+//		qb.put("destinationLocation").near(destinationLng, destinationLat, destination_radius * 1000);
 	}
 	// TODO match load type
 
@@ -231,7 +245,21 @@ public class MongoDAO {
 //	query += "}, $orderby: { source: 1 } }";
 	query += "}";
 	BasicQuery queryobj = new BasicQuery(query);
+//	BasicQuery queryobj = new BasicQuery(qb.get());
+	List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 
-	return mongoTemplate.find(queryobj, Load.class);
+	if (drivedate != null) {
+		return coll.stream().filter(load -> {
+		    Calendar cal = Calendar.getInstance();
+		    cal.setTime(drivedate);
+		    cal.add(Calendar.DATE, 1);
+		    Date drivedateNextDay = cal.getTime();
+		    return load.getDriveDate() != null && load.getDriveDate().compareTo(drivedateNextDay) < 0 && load.getDriveDate().compareTo(drivedate) >= 0;
+		    }).collect(Collectors.toList());
+
+	}
+	else {
+	    return coll;
+	}
     }
 }

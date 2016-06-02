@@ -1,5 +1,6 @@
 package com.traffitruck.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.bson.types.Binary;
@@ -165,6 +166,11 @@ public class Load {
     
     public Date getDriveDate() {
 	return driveDate;
+    }
+    
+    public String getDriveDateStr() {
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+	return sdf.format(driveDate);
     }
     
     public void setDriveDate(Date driveDate) {
