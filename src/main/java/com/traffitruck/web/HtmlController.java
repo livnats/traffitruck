@@ -33,6 +33,7 @@ import com.traffitruck.domain.Location;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
+import com.traffitruck.service.DuplicateEmailException;
 import com.traffitruck.service.DuplicateException;
 import com.traffitruck.service.MongoDAO;
 
@@ -172,9 +173,22 @@ public class HtmlController {
 	try {
 	    dao.storeUser(user);
 	}
-	catch ( DuplicateException e) {
+	catch (DuplicateEmailException e) {
+		Map<String, Object> model = new HashMap<>();
+		model.put("erroremail", "dup");
+		model.put("username", user.getUsername());
+		model.put("address", user.getAddress());
+		model.put("cellNumber", user.getCellNumber());
+		model.put("email", user.getEmail());
+		model.put("phoneNumber", user.getPhoneNumber());
+		model.put("role", user.getRole().toString());
+		model.put("contactPerson", user.getContactPerson());
+		return new ModelAndView("register_user", model);
+	}
+	catch (DuplicateException e) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("error", "dup");
+		model.put("username", user.getUsername());
 		model.put("address", user.getAddress());
 		model.put("cellNumber", user.getCellNumber());
 		model.put("email", user.getEmail());

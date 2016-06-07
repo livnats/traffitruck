@@ -114,7 +114,10 @@ public class MongoDAO {
 	    mongoTemplate.insert(user);
 	}
 	catch (DuplicateKeyException e) {
-	    throw new DuplicateException(user.getUsername());
+	    if ( e.getMessage().contains("email") )
+		throw new DuplicateEmailException(user.getEmail());
+	    else
+		throw new DuplicateException(user.getUsername());
 	}
     }
 

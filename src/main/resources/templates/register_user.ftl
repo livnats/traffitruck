@@ -142,6 +142,11 @@ function ValidateForm1(theForm)
 			<span style="color:#FF0000;font-family:Arial;font-size:13px;">שם משתמש תפוס</span>
 		</div>
 	</#if>
+	<#if erroremail??>
+		<div id="wb_Text1">
+			<span style="color:#FF0000;font-family:Arial;font-size:13px;">כתובת דוא"ל בשימוש</span>
+		</div>
+	</#if>
 
 <form name="registerForm" method="post" action="registerUser" data-ajax="false" data-transition="pop" id="registerForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 
@@ -149,7 +154,7 @@ function ValidateForm1(theForm)
 <input type="hidden" name="form_name" value="loginform">
 <div class="ui-field-contain">
 	<label for="username">* שם הלקוח</label>
-	<input type="text" id="username" style="" name="username" autocapitalize="off">
+	<input type="text" id="username" style="" name="username" autocapitalize="off" value="<#if username??>${username}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="password">* בחר סיסמה</label>
