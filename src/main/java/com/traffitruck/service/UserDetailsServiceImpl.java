@@ -2,6 +2,7 @@ package com.traffitruck.service;
 
 import java.util.Collections;
 
+import org.apache.log4j.Logger;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -20,6 +21,7 @@ import com.traffitruck.domain.LoadsUser;
 @Component
 public class UserDetailsServiceImpl implements AuthenticationProvider {
 
+	private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -41,11 +43,13 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
 	String encryptedPassword = user.getPassword();
 	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 
-	if(user!=null && passwordEncryptor.checkPassword(password, encryptedPassword) && user.getRole() != null)
+	if(user!=null && passwordEncryptor.checkPassword(password, encryptedPassword) && user.getRole() != null) {
+		logger.info(username + " login");
 	    return new UsernamePasswordAuthenticationToken(
 		    authentication.getPrincipal(),
 		    authentication.getCredentials(),
 		    Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
+	}
 	else
 	    return null;
     }
