@@ -179,10 +179,40 @@ function mAlert(text1) {
                  })
               });
 
+              autocomplete_cities_src = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('source')),
+                  { types: ['(cities)'] });
+              google.maps.event.addListener(autocomplete_cities_src, 'place_changed', function() {
+                 var address = document.getElementById('source').value;
+                 geocoder.geocode({'address': address}, function(results, status) {
+                   if (status === google.maps.GeocoderStatus.OK) {
+	                   $("#sourceLat").val( results[0].geometry.location.lat() );
+	                   $("#sourceLng").val( results[0].geometry.location.lng() );
+                    } else {
+                       mAlert('Geocode was not successful for the following reason: ' + status);
+                    }
+                 })
+              });
+
               autocomplete_dest = new google.maps.places.Autocomplete(
                   /** @type {HTMLInputElement} */(document.getElementById('destination')),
                   { types: ['address'] });
               google.maps.event.addListener(autocomplete_dest, 'place_changed', function() {
+                 var address = document.getElementById('destination').value;
+                 geocoder.geocode({'address': address}, function(results, status) {
+                   if (status === google.maps.GeocoderStatus.OK) {
+	                   $("#destinationLat").val( results[0].geometry.location.lat() );
+	                   $("#destinationLng").val( results[0].geometry.location.lng() );
+                    } else {
+                       mAlert('Geocode was not successful for the following reason: ' + status);
+                    }
+                  })
+              });
+
+              autocomplete_cities_dest = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('destination')),
+                  { types: ['(cities)'] });
+              google.maps.event.addListener(autocomplete_cities_dest, 'place_changed', function() {
                  var address = document.getElementById('destination').value;
                  geocoder.geocode({'address': address}, function(results, status) {
                    if (status === google.maps.GeocoderStatus.OK) {

@@ -124,6 +124,20 @@ function ValidateForm1(theForm)
                     }
                  })
               });
+
+              autocomplete_cities_src = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('address')),
+                  { types: ['(cities)'] });
+              google.maps.event.addListener(autocomplete_cities_src, 'place_changed', function() {
+                 var address = document.getElementById('address').value;
+                 geocoder.geocode({'address': address}, function(results, status) {
+                   if (status === google.maps.GeocoderStatus.OK) {
+                      // nothing to do
+                    } else {
+                       alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                 })
+              });
             }
         </script>
 
