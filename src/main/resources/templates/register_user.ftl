@@ -154,27 +154,27 @@ function ValidateForm1(theForm)
 <input type="hidden" name="form_name" value="loginform">
 <div class="ui-field-contain">
 	<label for="username">* שם הלקוח</label>
-	<input type="text" id="username" style="" name="username" autocapitalize="off" value="<#if username??>${username}</#if>">
+	<input type="text" id="username" style="direction:LTR" name="username" autocapitalize="off" value="<#if username??>${username}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="password">* בחר סיסמה</label>
-	<input type="password" id="password" style="" name="password" autocapitalize="off">
+	<input type="password" id="password" style="direction:LTR" name="password" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
 	<label for="confirm_password">* וידוא סיסמה</label>
-	<input type="password" id="confirm_password" style="" name="confirm_password" autocapitalize="off">
+	<input type="password" id="confirm_password" style="direction:LTR" name="confirm_password" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
 	<label for="email">* דוא"ל</label>
-	<input type="email" id="email" style="" name="email" autocapitalize="off" value="<#if email??>${email}</#if>">
+	<input type="email" id="email" style="direction:LTR" name="email" autocapitalize="off" value="<#if email??>${email}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="phoneNumber">* טלפון</label>
-	<input type="tel" id="phoneNumber" style="" name="phoneNumber" autocapitalize="off" value="<#if phoneNumber??>${phoneNumber}</#if>">
+	<input type="tel" id="phoneNumber" style="direction:LTR" name="phoneNumber" autocapitalize="off" value="<#if phoneNumber??>${phoneNumber}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="cellNumber">נייד</label>
-	<input type="tel" id="cellNumber" style="" name="cellNumber" autocapitalize="off" value="<#if cellNumber??>${cellNumber}</#if>">
+	<input type="tel" id="cellNumber" style="direction:LTR" name="cellNumber" autocapitalize="off" value="<#if cellNumber??>${cellNumber}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="address">כתובת</label>
@@ -187,9 +187,9 @@ function ValidateForm1(theForm)
 <div class="ui-field-contain">
     <fieldset data-role="controlgroup" data-type="horizontal">
         <legend></legend>
-        <input type="radio" name="role" value="TRUCK_OWNER" id="trole" checked="checked">
+        <input type="radio" name="role" value="TRUCK_OWNER" id="trole" <#if (!(role??)) || (role?? && role == "TRUCK_OWNER")>checked="checked"</#if>>
         <label for="trole">בעל משאית</label>
-        <input type="radio" name="role" value="LOAD_OWNER" id="lrole">
+        <input type="radio" name="role" value="LOAD_OWNER" id="lrole" <#if role?? && role == "LOAD_OWNER">checked="checked"</#if>>
         <label for="lrole">בעל מטען</label>
     </fieldset>
 </div>

@@ -68,11 +68,11 @@ function ValidateForm(theForm)
 			<input type="hidden" name="form_name" value="loginform">
 			<div class="ui-field-contain">
 				<label for="username">שם משתמש</label>
-				<input type="text" id="username" style="" name="username" value="" autocapitalize="off">
+				<input type="text" id="username" style="direction:LTR" name="username" value="" autocapitalize="off">
 			</div>
 			<div class="ui-field-contain">
 				<label for="password">סיסמה</label>
-				<input type="password" id="password" style="" name="password" value="">
+				<input type="password" id="password" style="direction:LTR" name="password" value="">
 			</div>
 			<div id="rememberme">
 				<!--
