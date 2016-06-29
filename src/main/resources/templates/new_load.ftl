@@ -33,19 +33,26 @@ $(document).ready(function() {
            return false;
         }
         
+        ratio = 1;
         if ( size > 1000000 ) {
             ratio = size / 400000;
             oFReader = new FileReader(); 
 			oFReader.onload = function (oFREvent) {
 			  var img=new Image();
 			  img.onload=function(){
-			      var canvas=document.createElement("canvas");
-			      var ctx=canvas.getContext("2d");
-			      canvas.width=img.width/ratio;
-			      canvas.height=img.height/ratio;
-			      ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
-			      var imageData = canvas.toDataURL();
-                  $('#loadPhoto').val(imageData);
+                  if ( ratio != 1 ) {
+ 				      var canvas=document.createElement("canvas");
+				      var ctx=canvas.getContext("2d");
+				      canvas.width=img.width/ratio;
+				      canvas.height=img.height/ratio;
+				      ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
+				      var imageData = canvas.toDataURL();
+   	               $('#loadPhoto').val(imageData);
+		          }
+		          else {
+			         var imageData = oFReader.result;
+		             $('#loadPhoto').val(imageData);
+		          }
 			  }
 			  img.src=oFREvent.target.result;
 			};
