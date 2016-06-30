@@ -78,18 +78,18 @@ function mAlert(text1) {
 				   return;
 				}
 				
-			    table_html = '<table data-role="table" class="table-stripe ui-responsive">';
-			    table_html += "<thead><tr><th>מוצא</th><th>יעד</th><th>סוג מטען</th><th>מחיר</th><th>תאריך נסיעה</th></tr></thead>";
+			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
+			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
 
 				for (var i in loads) {
 				    load = loads[i];
 
 				    table_html += "<tr>";
-				    table_html += "    <td><a href='/load_details_for_trucker/" + load.id + "'>" + load.source + "</a></td>";
-				    table_html += "    <td>" + load.destination + "</td>";
-				    table_html += "    <td>" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
-				    table_html += "    <td>" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
-				    table_html += "    <td>" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
+				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source + "</a></td>";
+				    table_html += "    <td style=\"text-align:right\">" + load.destination + "</td>";
+				    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
+				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
+				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
 				    table_html += "</tr>";
 			    }
 			    
@@ -130,18 +130,18 @@ function mAlert(text1) {
 				   return;
 				}
 				
-			    table_html = '<table data-role="table" class="table-stripe ui-responsive">';
-			    table_html += "<thead><tr><th>מוצא</th><th>יעד</th><th>סוג מטען</th><th>מחיר</th><th>תאריך נסיעה</th></tr></thead>";
+			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
+			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
 
 				for (var i in loads) {
 				    load = loads[i];
 
 				    table_html += "<tr>";
-				    table_html += "    <td><a href='/load_details_for_trucker/" + load.id + "'>" + load.source + "</a></td>";
-				    table_html += "    <td>" + load.destination + "</td>";
-				    table_html += "    <td>" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
-				    table_html += "    <td>" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
-				    table_html += "    <td>" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
+				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source + "</a></td>";
+				    table_html += "    <td style=\"text-align:right\">" + load.destination + "</td>";
+				    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
+				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
+				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
 				    table_html += "</tr>";
 			    }
 			    
@@ -273,7 +273,7 @@ function mAlert(text1) {
 						<#else>
 							אין משאיות מאושרות 
 						</#if>
-		<div id="available_loads">
+		<div id="available_loads" style="direction:RTL">
 		</div>
 </div>
 </div>

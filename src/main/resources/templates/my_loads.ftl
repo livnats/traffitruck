@@ -74,27 +74,27 @@ $(document).ready(function() {
 
 							<#if loads?has_content>
 						
-									<table data-role="table" class="table-stripe ui-responsive">
+									<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">
 									<thead>
 										<tr>
-											<th>שם</th>
-											<th>מוצא</th>
-											<th>יעד</th>
-											<th>סוג מטען</th>
-											<th>מחיר</th>
-											<th>תאריך</th>
+											<th style="text-align:right">שם</th>
+											<th style="text-align:right">מוצא</th>
+											<th style="text-align:right">יעד</th>
+											<th style="text-align:right">סוג מטען</th>
+											<th style="text-align:right">מחיר</th>
+											<th style="text-align:right">תאריך</th>
 										</tr>
 									</thead>
 									<tbody>
 										<#list loads as load>
 										<tr id="${load.id}" class="clickableRow">
-											<td><a href="/load_details/${load.id}">${load.name!'---'}</a></td>
-											<td>${load.source}</td>
-											<td>${load.destination}</td>
-											<td class="typeConversion">${load.type!'לא נמסר'}</td>
-											<td>${load.suggestedQuote!'לא נמסר'}</td>
+											<td style="text-align:right"><a href="/load_details/${load.id}">${load.name!'---'}</a></td>
+											<td style="text-align:right">${load.source}</td>
+											<td style="text-align:right">${load.destination}</td>
+											<td style="text-align:right" class="typeConversion">${load.type!'לא נמסר'}</td>
+											<td style="text-align:right">${load.suggestedQuote!'לא נמסר'}</td>
 											<#if load.driveDate??>
-												<td>${load.driveDate?string("dd-MM-yyyy")!''}</td>
+												<td style="text-align:right">${load.driveDate?string("dd-MM-yyyy")!''}</td>
 											<#else>
 												<td></td>
 											</#if>

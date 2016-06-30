@@ -74,7 +74,7 @@ $(document).ready(function() {
 </div>
 <div class="ui-content" role="main">
 
-<table data-role="table" class="table-stroke ui-responsive">
+<table data-role="table" class="table-stroke ui-responsive" style="direction:RTL">
       <thead>
         <tr>
           <th></th>
@@ -84,33 +84,33 @@ $(document).ready(function() {
 <tbody>
 <#if loadsUser.contactPerson??>
 	<tr>
-	    <th>איש קשר:</th>
-	    <td>${loadsUser.contactPerson!''}</td>
+	    <th style="text-align:right">איש קשר:</th>
+	    <td style="text-align:right">${loadsUser.contactPerson!''}</td>
 	</tr>
 </#if>
 <tr>
-    <th>מספר ליצירת קשר:</th>
-    <td>${loadsUser.phoneNumber!''}</td>
+    <th style="text-align:right">מספר ליצירת קשר:</th>
+    <td style="text-align:right">${loadsUser.phoneNumber!''}</td>
 </tr>
 <tr>
-    <th>שם המטען:</th>
-    <td>${load.name!''}</td>
+    <th style="text-align:right">שם המטען:</th>
+    <td style="text-align:right">${load.name!''}</td>
 </tr>
 <tr>
-    <th>סוג המטען:</th>
-    <td class="typeConversion">${load.type!''}</td>
+    <th style="text-align:right">סוג המטען:</th>
+    <td style="text-align:right" class="typeConversion">${load.type!''}</td>
 </tr>
 <tr>
-    <th>משקל (ק\"ג):</th>
-    <td>${load.weight!''}</td>
+    <th style="text-align:right">משקל (ק\"ג):</th>
+    <td style="text-align:right">${load.weight!''}</td>
 </tr>
 <tr>
-    <th>נפח (קוב):</th>
-    <td>${load.volume!''}</td>
+    <th style="text-align:right">נפח (קוב):</th>
+    <td style="text-align:right">${load.volume!''}</td>
 </tr>
 <tr>
-    <th>מוצא:</th>
-    <td>
+    <th style="text-align:right">מוצא:</th>
+    <td style="text-align:right">
 		<#if load.sourceLocation??>
 			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank">${load.source!''}</a>
 		<#else>
@@ -119,12 +119,12 @@ $(document).ready(function() {
     </td>
 </tr>
 <tr>
-    <th>סוג טעינה:</th>
-	<td class="liftTypeConversion">${load.loadingType!''}</td>
+    <th style="text-align:right">סוג טעינה:</th>
+	<td style="text-align:right" class="liftTypeConversion">${load.loadingType!''}</td>
 </tr>
 <tr>
-    <th>יעד:</th>
-    <td>
+    <th style="text-align:right">יעד:</th>
+    <td style="text-align:right">
 		<#if load.destinationLocation??>
 			<a href="http://maps.google.com/maps?q=loc:${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank">${load.destination!''}</a>
 		<#else>
@@ -133,29 +133,29 @@ $(document).ready(function() {
     </td>
 </tr>
 <tr>
-    <th>סוג פריקה:</th>
+    <th style="text-align:right">סוג פריקה:</th>
 	<#if load.downloadingType??>
-		<td class="liftTypeConversion">${load.downloadingType!''}</td>
+		<td style="text-align:right" class="liftTypeConversion">${load.downloadingType!''}</td>
 	<#else>
 		<td></td>
 	</#if>
 </tr>
 <tr>
-    <th>מחיר:</th>
-    <td>${load.suggestedQuote!''}</td>
+    <th style="text-align:right">מחיר:</th>
+    <td style="text-align:right">${load.suggestedQuote!''}</td>
 </tr>
 <tr>
-    <th>זמן המתנה (שעות):</th>
-    <td>${load.waitingTime!''}</td>
+    <th style="text-align:right">זמן המתנה (שעות):</th>
+    <td style="text-align:right">${load.waitingTime!''}</td>
 </tr>
 <tr>
     <th>הערות:</th>
-    <td>${load.comments!''}</td>
+    <td style="text-align:right">${load.comments!''}</td>
 </tr>
 <#if load.hasPhoto>
 <tr>
-	<th>תמונה:</th>
-	<td><img src="/load/image/${load.id}" class="ui-li-thumb" style="width:100%; max-width:200px;"></td>
+	<th style="text-align:right">תמונה:</th>
+	<td style="text-align:right"><img src="/load/image/${load.id}" class="ui-li-thumb" style="width:100%; max-width:200px;"></td>
 </tr>
 </#if>
 

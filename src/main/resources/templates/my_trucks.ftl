@@ -50,18 +50,18 @@ $(document).ready(function() {
 
 							<#if trucks?has_content>
 						
-								<table data-role="table" class="table-stripe ui-responsive">
+								<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">
 								<thead>
 									<tr>
-										<th>מספר לוחית זיהוי</th>
-										<th>סטטוס</th>
+										<th style="text-align:right">מספר לוחית זיהוי</th>
+										<th style="text-align:right">סטטוס</th>
 									</tr>
 								</thead>
 								<tbody>
 									<#list trucks as truck>
 									<tr id="${truck.id}">
-										<th>${truck.licensePlateNumber}</th>
-										<td class="typeConversion">${truck.registrationStatus!'שגיאה'}</td>
+										<th style="text-align:right">${truck.licensePlateNumber}</th>
+										<td style="text-align:right" class="typeConversion">${truck.registrationStatus!'שגיאה'}</td>
 									</tr>
 									</#list>
 								</tbody>
