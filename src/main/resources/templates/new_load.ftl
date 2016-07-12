@@ -225,7 +225,8 @@ function ValidateForm1(theForm)
  <script type="text/javascript">
  $(function() {
        $( "#drivedate" ).datepicker();
-       $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
+       $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );
+       $( "#drivedate" ).datepicker( "option", "minDate", 0);
  });
  </script>
 
