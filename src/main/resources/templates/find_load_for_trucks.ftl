@@ -85,8 +85,8 @@ function mAlert(text1) {
 				    load = loads[i];
 
 				    table_html += "<tr>";
-				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source + "</a></td>";
-				    table_html += "    <td style=\"text-align:right\">" + load.destination + "</td>";
+				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source.split(",",2).join(", ") + "</a></td>";
+				    table_html += "    <td style=\"text-align:right\">" + load.destination.split(",",2).join(", ") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
@@ -137,8 +137,8 @@ function mAlert(text1) {
 				    load = loads[i];
 
 				    table_html += "<tr>";
-				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source + "</a></td>";
-				    table_html += "    <td style=\"text-align:right\">" + load.destination + "</td>";
+				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source.split(",",2).join(", ") + "</a></td>";
+				    table_html += "    <td style=\"text-align:right\">" + load.destination.split(",",2).join(", ") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
