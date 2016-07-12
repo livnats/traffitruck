@@ -63,8 +63,10 @@ function ValidateForm1(theForm)
    }
    if (theForm.password.value != theForm.confirm_password.value)
    {
-      mAlert("הסיסמאות חייבות להיות זהות");
-      theForm.confirm_password.focus();
+      theForm.password.value = '';
+      theForm.confirm_password.value = '';
+      mAlert("וידוא סיסמה נכשל. אנא ודא שהסיסמה ווידוא הסיסמה זהים");
+      theForm.password.focus();
       return false;
    }
    regexp = /^[a-zA-Z0-9.@_-]*$/;
