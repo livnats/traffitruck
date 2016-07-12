@@ -64,6 +64,26 @@ $(document).ready(function() {
 
 <script src="/js/jquery.mobile-1.4.5.min.js"></script>
 
+<style>
+@media ( min-width: 10em ) {
+    /* Show the table header rows and set all cells to display: table-cell */
+    .my-custom-breakpoint td,
+    .my-custom-breakpoint th,
+    .my-custom-breakpoint tbody th,
+    .my-custom-breakpoint tbody td,
+    .my-custom-breakpoint thead td,
+    .my-custom-breakpoint thead th {
+        display: table-cell;
+        margin: 0;
+    }
+    /* Hide the labels in each cell */
+    .my-custom-breakpoint td .ui-table-cell-label,
+    .my-custom-breakpoint th .ui-table-cell-label {
+        display: none;
+    }
+}
+</style>
+
 </head>
 <body dir="rtl">
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="load_details">
@@ -74,7 +94,7 @@ $(document).ready(function() {
 </div>
 <div class="ui-content" role="main">
 
-<table data-role="table" class="table-stroke ui-responsive" style="direction:RTL">
+<table data-role="table" class="table-stroke my-custom-breakpoint" style="direction:RTL">
       <thead>
         <tr>
           <th></th>
@@ -90,7 +110,11 @@ $(document).ready(function() {
 </#if>
 <tr>
     <th style="text-align:right">מספר ליצירת קשר:</th>
-    <td style="text-align:right">${loadsUser.phoneNumber!''}</td>
+	<#if loadsUser.phoneNumber??>
+	    <td style="text-align:right"><a href="tel:${loadsUser.phoneNumber}">${loadsUser.phoneNumber}</a></td>
+	<#else>
+	    <td></td>
+	</#if>
 </tr>
 <tr>
     <th style="text-align:right">שם המטען:</th>
@@ -101,7 +125,7 @@ $(document).ready(function() {
     <td style="text-align:right" class="typeConversion">${load.type!''}</td>
 </tr>
 <tr>
-    <th style="text-align:right">משקל (ק\"ג):</th>
+    <th style="text-align:right">משקל (ק"ג):</th>
     <td style="text-align:right">${load.weight!''}</td>
 </tr>
 <tr>
@@ -112,7 +136,9 @@ $(document).ready(function() {
     <th style="text-align:right">מוצא:</th>
     <td style="text-align:right">
 		<#if load.sourceLocation??>
-			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank">${load.source!''}</a>
+			${Format.address(load.source)!''}
+			<a href="waze://?ll=${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank"><img src="/images/waze_app_icon_small.png" width="30px"></a>
+			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank"><img src="/images/bottomIcon_google_map.png"></a>
 		<#else>
 		    ${load.source!''}
 		</#if>
@@ -126,7 +152,9 @@ $(document).ready(function() {
     <th style="text-align:right">יעד:</th>
     <td style="text-align:right">
 		<#if load.destinationLocation??>
-			<a href="http://maps.google.com/maps?q=loc:${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank">${load.destination!''}</a>
+			${Format.address(load.destination)!''}
+			<a href="waze://?ll=${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank"><img src="/images/waze_app_icon_small.png" width="30px"></a>
+			<a href="http://maps.google.com/maps?q=loc:${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank"><img src="/images/bottomIcon_google_map.png"></a>
 		<#else>
 		    ${load.destination!''}
 		</#if>

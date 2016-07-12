@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.traffitruck.domain.Load;
@@ -38,6 +37,8 @@ import com.traffitruck.service.DuplicateException;
 import com.traffitruck.service.MongoDAO;
 
 import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.TemplateHashModel;
+import freemarker.template.TemplateModelException;
 
 @RestController
 public class HtmlController {
@@ -53,6 +54,7 @@ public class HtmlController {
     @RequestMapping({"/loads"})
     ModelAndView showLoads() {
 	Map<String, Object> model = new HashMap<>();
+	model.put("Format", getFormatStatics());
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 	model.put("loads", dao.getLoads());
 	return new ModelAndView("show_loads", model);
@@ -120,6 +122,7 @@ public class HtmlController {
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	String username = authentication.getName();
 	Map<String, Object> model = new HashMap<>();
+	model.put("Format", getFormatStatics());
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 	model.put("loads", dao.getLoadsForUser(username));
 	return new ModelAndView("my_loads", model);
@@ -207,9 +210,22 @@ public class HtmlController {
 
     @RequestMapping(value = "/deleteLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView deleteLoad(String loadId) {
-	dao.deleteLoadById(loadId);
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	dao.deleteLoadById(loadId, username);
 	return new ModelAndView("redirect:/myLoads");
     }
+
+//    @RequestMapping(value = "/updateLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+//    ModelAndView updateLoad(String loadId) {
+//	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//	String username = authentication.getName();
+//	Load load = dao.getLoadForUserById(loadId, username);
+//	Map<String, Object> model = new HashMap<>();
+//	model.put("load", load);
+//	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+//	return new ModelAndView("update_load_details", model);
+//    }
 
     @RequestMapping(value = "/truckApproval", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView approveTruck(@ModelAttribute("truck") Truck truck) {
@@ -299,12 +315,25 @@ public class HtmlController {
     }
 
     @RequestMapping(value="/load_details/{loadId}", method=RequestMethod.GET)
-    ModelAndView getLoad(@PathVariable String loadId) {
+    ModelAndView getLoad(@PathVariable String loadId) throws TemplateModelException {
 	Load load = dao.getLoad(loadId);
 	Map<String, Object> model = new HashMap<>();
+	model.put("Format", getFormatStatics());
 	model.put("load", load);
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 	return new ModelAndView("load_details", model);
+    }
+
+    private Object getFormatStatics() {
+	BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+	TemplateHashModel staticModels = wrapper.getStaticModels();
+	TemplateHashModel formatStatics;
+	try {
+	    formatStatics = (TemplateHashModel) staticModels.get("com.traffitruck.web.TextFmt");
+	} catch (TemplateModelException e) {
+	    throw new RuntimeException(e);
+	}
+	return formatStatics;
     }
 
     @RequestMapping(value="/load_details_for_trucker/{loadId}", method=RequestMethod.GET)
@@ -312,6 +341,7 @@ public class HtmlController {
 	Load load = dao.getLoad(loadId);
 	LoadsUser loadsUser = dao.getUser(load.getUsername());
 	Map<String, Object> model = new HashMap<>();
+	model.put("Format", getFormatStatics());
 	model.put("load", load);
 	model.put("loadsUser", loadsUser);
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());

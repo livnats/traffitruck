@@ -178,8 +178,8 @@ $(document).ready(function() {
 										<#list loads as load>
 										<tr id="${load.id}" class="clickableRow">
 											<td><a href="#">${load.name!'---'}</a></td>
-											<td>${load.source}</td>
-											<td>${load.destination}</td>
+											<td>${Format.address(load.source)!''}</td>
+											<td>${Format.address(load.destination)!''}</td>
 											<td class="typeConversion">${load.type!'לא נמסר'}</td>
 											<td>${load.suggestedQuote!'לא נמסר'}</td>
 											<td>${load.creationDate?string("HH:mm dd-MM-yyyy")!''}</td>

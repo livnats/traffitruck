@@ -36,6 +36,25 @@ $(document).ready(function() {
 
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 
+<style>
+@media ( min-width: 10em ) {
+    /* Show the table header rows and set all cells to display: table-cell */
+    .my-custom-breakpoint td,
+    .my-custom-breakpoint th,
+    .my-custom-breakpoint tbody th,
+    .my-custom-breakpoint tbody td,
+    .my-custom-breakpoint thead td,
+    .my-custom-breakpoint thead th {
+        display: table-cell;
+        margin: 0;
+    }
+    /* Hide the labels in each cell */
+    .my-custom-breakpoint td .ui-table-cell-label,
+    .my-custom-breakpoint th .ui-table-cell-label {
+        display: none;
+    }
+}
+</style>
 
 </head>
 <body>
@@ -50,17 +69,17 @@ $(document).ready(function() {
 
 							<#if trucks?has_content>
 						
-								<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">
+								<table data-role="table" class="table-stripe my-custom-breakpoint" style="direction:RTL">
 								<thead>
 									<tr>
-										<th style="text-align:right">מספר לוחית זיהוי</th>
+										<th style="text-align:right">מספר לוחית זיהוי&nbsp;&nbsp;&nbsp;</th>
 										<th style="text-align:right">סטטוס</th>
 									</tr>
 								</thead>
 								<tbody>
 									<#list trucks as truck>
 									<tr id="${truck.id}">
-										<th style="text-align:right">${truck.licensePlateNumber}</th>
+										<td style="text-align:right">${truck.licensePlateNumber}</td>
 										<td style="text-align:right" class="typeConversion">${truck.registrationStatus!'שגיאה'}</td>
 									</tr>
 									</#list>

@@ -101,8 +101,11 @@ public class MongoDAO {
 	return mongoTemplate.find(findByUsername,Truck.class);
     }
 
-    public void deleteLoadById( String id ){
-	mongoTemplate.remove(new Query().addCriteria(Criteria.where("_id").is(id)),Load.class);
+    public void deleteLoadById( String id, String username ){
+	Query query = new Query()
+		.addCriteria(Criteria.where("_id").is(id))
+		.addCriteria(Criteria.where("username").is(username));
+	mongoTemplate.remove(query,Load.class);
     }
 
     //User
@@ -264,5 +267,12 @@ public class MongoDAO {
 	else {
 	    return coll;
 	}
+    }
+
+    public Load getLoadForUserById(String loadId, String username) {
+	Query query = new Query()
+		.addCriteria(Criteria.where("_id").is(loadId))
+		.addCriteria(Criteria.where("username").is(username));
+	return mongoTemplate.findOne(query,Load.class);
     }
 }
