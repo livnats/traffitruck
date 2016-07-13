@@ -88,6 +88,7 @@ public class HtmlController {
 	    @RequestParam("destinationLng") Double destinationLng, BindingResult br7
 	    ) throws IOException {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+	sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
 	load.setCreationDate(new Date());
 	try {
 	    load.setDriveDate(sdf.parse(drivedate));
