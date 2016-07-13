@@ -16,8 +16,24 @@ $(document).ready(function() {
 });
 </script>
 
+
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script>
+            var autocomplete;
+            function initialize() {
+              autocomplete_src = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('ownerAddress')),
+                  { types: ['address'] });
+
+              autocomplete_cities_src = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('ownerAddress')),
+                  { types: ['(cities)'] });
+            }
+        </script>
+
 </head>
-<body>
+<body onload="initialize()">
 <div id="main">
 	<div id="title">
 		<img src="/images/truck-blue.jpg" width="15%"/>
@@ -68,7 +84,7 @@ $(document).ready(function() {
 			    	</tr>
 			    	<tr>
 			      		<td><label for="ownerAddress">כתובת בעל הרכב:</label></td>
-			        	<td><input name="ownerAddress"/></td> 
+			        	<td><input name="ownerAddress" id="ownerAddress"/></td> 
 			    	</tr>
 				    <tr>
 				    	<td><label for="manufactureYear">שנת ייצור:</label></td>
