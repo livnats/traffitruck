@@ -269,6 +269,13 @@ public class HtmlController {
 	return Base64.getDecoder().decode(bytes);
     }
 
+    @RequestMapping(value = "/approval/truckimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getTruckImage(@PathVariable String truckId) {
+	String b64dataUrl = new String(dao.getTruckById(truckId).getTruckPhoto().getData());
+	byte[] bytes = b64dataUrl.substring(b64dataUrl.indexOf(',') + 1).getBytes();
+	return Base64.getDecoder().decode(bytes);
+    }
+
     @RequestMapping(value = "/load/image/{loadId}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getLoadImage(@PathVariable String loadId) {
 	String b64dataUrl = new String(dao.getLoadPhoto(loadId));

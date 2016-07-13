@@ -146,7 +146,7 @@ $(document).ready(function() {
 				    </tr>
 				    <tr>
 			        <td colspan="2">
-			            <input type="submit" value="עדכן פרטי משאית"/>
+			            <input type="submit" value="אשר משאית"/>
 			        </td>
 			    </tr>
 			    </table>
@@ -156,7 +156,8 @@ $(document).ready(function() {
 			</form>
 		</div>
 		<div id="load_details">
-			<img src="/approval/licenseimage/${truck.id}">
+			<img src="/approval/licenseimage/${truck.id}"><br><br><br>
+			<img src="/approval/truckimage/${truck.id}">
 		</div>
 	</div>
 </div>
