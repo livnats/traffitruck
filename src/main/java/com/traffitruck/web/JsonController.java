@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -77,6 +78,7 @@ public class JsonController {
 	Date driveDateObj = null;
 	if (drivedate != null && drivedate.length() > 0) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
 		try {
 		    driveDateObj = sdf.parse(drivedate);
 		} catch (ParseException e) {
