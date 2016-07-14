@@ -25,6 +25,7 @@ $(document).ready(function() {
 
 $( "#drivedate" ).datepicker();
 $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
+$( "#drivedate" ).datepicker( "option", "minDate", 0);
 
 function mAlert(text1) {
   $("#sure .sure-1").text(text1);

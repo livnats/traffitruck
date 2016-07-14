@@ -1,7 +1,6 @@
 package com.traffitruck.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +21,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Truck;
@@ -153,20 +150,13 @@ public class MongoDAO {
 	Update update = new Update();
 	update.set("registrationStatus", truck.getRegistrationStatus());
 	update.set("type",truck.getType());
-	update.set("fuelType", truck.getFuelType());
-	update.set("engineOutput", truck.getEngineOutput());
-	update.set("color", truck.getColor());
-	update.set("overallweight", truck.getOverallweight());
-	update.set("selfweight", truck.getSelfweight());
-	update.set("permittedweight", truck.getPermittedweight());
-	update.set("tires", truck.getTires());
-	update.set("manufactureYear", truck.getManufactureYear());
-	update.set("engineCapacity", truck.getEngineCapacity());
-	update.set("propulsion", truck.getPropulsion());
-	update.set("hasHitch", truck.isHasHitch());
 	update.set("ownerName", truck.getOwnerName());
 	update.set("ownerId", truck.getOwnerId());
 	update.set("ownerAddress", truck.getOwnerAddress());
+	update.set("maxWeight", truck.getMaxWeight());
+	update.set("maxVolume", truck.getMaxVolume());
+	update.set("acceptableLoadTypes", truck.getAcceptableLoadTypes());
+	update.set("acceptableLiftTypes", truck.getAcceptableLiftTypes());
 	mongoTemplate.upsert(findtruckToUpdate,update, Truck.class);
     }
 
@@ -200,14 +190,14 @@ public class MongoDAO {
     public List<Load> getLoadsForTruck(Truck truck) {
 	Query loadsForTruckQuery = new Query();
 	// match weight
-	if (truck.getPermittedweight() != null) {
-	    loadsForTruckQuery.addCriteria(Criteria.where("weight").exists(true).lte(truck.getPermittedweight()));
-	    loadsForTruckQuery.addCriteria(Criteria.where("driveDate").gte(new Date()));
+	if (truck.getMaxWeight() != null) {
+	    loadsForTruckQuery.addCriteria(Criteria.where("weight").exists(true).lte(truck.getMaxWeight()));
+	    loadsForTruckQuery.addCriteria(Criteria.where("volume").exists(true).lte(truck.getMaxVolume()));
+	    loadsForTruckQuery.addCriteria(Criteria.where("driveDate").exists(true).gte(new Date()));
+	    loadsForTruckQuery.addCriteria(Criteria.where("loadingType").exists(true).in(convertToInClauseStringCollection(truck.getAcceptableLiftTypes())));
+	    loadsForTruckQuery.addCriteria(Criteria.where("downloadingType").exists(true).in(convertToInClauseStringCollection(truck.getAcceptableLiftTypes())));
+	    loadsForTruckQuery.addCriteria(Criteria.where("type").exists(true).in(convertToInClauseStringCollection(truck.getAcceptableLoadTypes())));
 	}
-	// TODO match load type
-
-	// TODO match loading type
-
 	// sort results
 	loadsForTruckQuery.with(new Sort("source"));
 
@@ -230,28 +220,21 @@ public class MongoDAO {
 	    Double destinationLat, Double destinationLng, Integer destination_radius, Date drivedate) {
 	// The criteria API isn't good enough
 	String query = "{";
-	// match weight	
-//	QueryBuilder qb = QueryBuilder.start();
-//	qb.put("weight").lessThanEquals(truck.getPermittedweight());
 
-	query += "weight: { $exists: true, $lte: " + truck.getPermittedweight() + " } ";
+	query += "weight: { $exists: true, $lte: " + truck.getMaxWeight() + " } ";
+	query += ", volume: { $exists: true, $lte: " + truck.getMaxVolume() + " } ";
+	query += ", type: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLoadTypes()) + "] } ";
+	query += ", loadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
+	query += ", downloadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
 	if (sourceLat != null && sourceLng != null && source_radius != null) {
 		query += ", sourceLocation : { $near : { $geometry : { type : \"Point\" , coordinates : [" + sourceLng + ", " + sourceLat + "] }, $maxDistance : "+ source_radius * 1000 + " } }";
-//		qb.put("sourceLocation").near(sourceLng, sourceLat, source_radius * 1000);
 	}
 	if (destinationLat != null && destinationLng != null && destination_radius != null) {
 		query += ", destinationLocation : { $near : { $geometry : { type : \"Point\" , coordinates : [" + destinationLng + ", " + destinationLat + "] }, $maxDistance : "+ destination_radius * 1000 + " } }";
-//		qb.put("destinationLocation").near(destinationLng, destinationLat, destination_radius * 1000);
 	}
-	// TODO match load type
-
-	// TODO match loading type
-
 	// sort results
-//	query += "}, $orderby: { source: 1 } }";
 	query += "}";
 	BasicQuery queryobj = new BasicQuery(query);
-//	BasicQuery queryobj = new BasicQuery(qb.get());
 	List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 
 	if (drivedate != null) {
@@ -267,6 +250,19 @@ public class MongoDAO {
 	else {
 	    return coll;
 	}
+    }
+
+    private ArrayList<String> convertToInClauseStringCollection(List<?> list) {
+	ArrayList<String> strings = new ArrayList<>(list.size());
+	list.stream().forEach(item -> strings.add(item.toString()));
+	return strings;
+    }
+
+
+    private String convertToInClause(List<?> list) {
+	StringBuilder builder = new StringBuilder(128);
+	list.stream().forEach(item -> builder.append("\"").append(item.toString()).append("\","));
+	return builder.substring(0, builder.length() - 1).toString();
     }
 
     public Load getLoadForUserById(String loadId, String username) {

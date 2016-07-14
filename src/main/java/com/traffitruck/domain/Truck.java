@@ -1,17 +1,11 @@
 package com.traffitruck.domain;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.Date;
+import java.util.List;
 
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
 
 public class Truck {
 
@@ -19,7 +13,6 @@ public class Truck {
 	private String id;
 	private Date creationDate;
 	private TruckRegistrationStatus registrationStatus;
-	
 	
 	//The truck owner
 	private String username;
@@ -32,28 +25,51 @@ public class Truck {
 	
 	//information added for validation
 	private TruckType type;
-	private FuelType fuelType;
-	private String engineOutput;
-	private String color;
-	private Integer overallweight;
-	private Integer selfweight;
-	private Integer permittedweight;
-	private String tires;
-	private Integer manufactureYear;
-	private String engineCapacity;
-	private PropulsionType propulsion;
-	private boolean hasHitch;
+	private Integer maxWeight;
 	//owner as registered on the vehicle license
 	private String ownerName;
 	private String ownerId;
 	private String ownerAddress;
-	
-	
+
+	private Double maxVolume;
+	private List<LoadType> acceptableLoadTypes;
+	private List<LiftType> acceptableLiftTypes;
+
+	public Integer getMaxWeight() {
+	    return maxWeight;
+	}
+
+	public void setMaxWeight(Integer maxWeight) {
+	    this.maxWeight = maxWeight;
+	}
+
+	public Double getMaxVolume() {
+	    return maxVolume;
+	}
+
+	public void setMaxVolume(Double maxVolume) {
+	    this.maxVolume = maxVolume;
+	}
+
+	public List<LoadType> getAcceptableLoadTypes() {
+	    return acceptableLoadTypes;
+	}
+
+	public void setAcceptableLoadTypes(List<LoadType> acceptableLoadTypes) {
+	    this.acceptableLoadTypes = acceptableLoadTypes;
+	}
+
+	public List<LiftType> getAcceptableLiftTypes() {
+	    return acceptableLiftTypes;
+	}
+
+	public void setAcceptableLiftTypes(List<LiftType> acceptableLiftTypes) {
+	    this.acceptableLiftTypes = acceptableLiftTypes;
+	}
 
 	public String getId() {
 		return id;
 	}
-
 
 	public void setId(String id) {
 		this.id = id;
@@ -127,117 +143,6 @@ public class Truck {
 		this.type = type;
 	}
 
-
-	public FuelType getFuelType() {
-		return fuelType;
-	}
-
-
-	public void setFuelType(FuelType fuelType) {
-		this.fuelType = fuelType;
-	}
-
-
-	public String getEngineOutput() {
-		return engineOutput;
-	}
-
-
-	public void setEngineOutput(String engineOutput) {
-		this.engineOutput = engineOutput;
-	}
-
-
-	public String getColor() {
-		return color;
-	}
-
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
-
-	public Integer getOverallweight() {
-		return overallweight;
-	}
-
-
-	public void setOverallweight(Integer overallweight) {
-		this.overallweight = overallweight;
-	}
-
-
-	public Integer getSelfweight() {
-		return selfweight;
-	}
-
-
-	public void setSelfweight(Integer selfweight) {
-		this.selfweight = selfweight;
-	}
-
-
-	public Integer getPermittedweight() {
-		return permittedweight;
-	}
-
-
-	public void setPermittedweight(Integer permittedweight) {
-		this.permittedweight = permittedweight;
-	}
-
-
-	public String getTires() {
-		return tires;
-	}
-
-
-	public void setTires(String tires) {
-		this.tires = tires;
-	}
-
-
-	public Integer getManufactureYear() {
-		return manufactureYear;
-	}
-
-
-	public void setManufactureYear(Integer manufactureYear) {
-		this.manufactureYear = manufactureYear;
-	}
-
-
-	public String getEngineCapacity() {
-		return engineCapacity;
-	}
-
-
-	public void setEngineCapacity(String engineCapacity) {
-		this.engineCapacity = engineCapacity;
-	}
-
-
-	public PropulsionType getPropulsion() {
-		return propulsion;
-	}
-
-
-	public void setPropulsion(PropulsionType propulsion) {
-		this.propulsion = propulsion;
-	}
-
-
-	public boolean isHasHitch() {
-		return hasHitch;
-	}
-
-
-	public void setHasHitch(boolean hasHitch) {
-		this.hasHitch = hasHitch;
-	}
-
-
 	public String getOwnerName() {
 		return ownerName;
 	}
@@ -269,51 +174,11 @@ public class Truck {
 
 	@Override
 	public String toString() {
-		return "Truck [id=" + id + ", creationDate=" + creationDate
-				+ ", registrationStatus=" + registrationStatus + ", username="
-				+ username + ", licensePlateNumber=" + licensePlateNumber
-				+ ", vehicleLicensePhoto=" + vehicleLicensePhoto
-				+ ", truckPhoto=" + truckPhoto + ", type=" + type
-				+ ", fuelType=" + fuelType + ", engineOutput=" + engineOutput
-				+ ", color=" + color + ", overallweight=" + overallweight
-				+ ", selfweight=" + selfweight + ", permittedweight="
-				+ permittedweight + ", tires=" + tires + ", manufactureYear="
-				+ manufactureYear + ", engineCapacity=" + engineCapacity
-				+ ", propulsion=" + propulsion + ", hasHitch=" + hasHitch
-				+ ", ownerName=" + ownerName + ", ownerId=" + ownerId
-				+ ", ownerAddress=" + ownerAddress + "]";
+	    return "Truck [id=" + id + ", creationDate=" + creationDate + ", registrationStatus=" + registrationStatus
+		    + ", username=" + username + ", licensePlateNumber=" + licensePlateNumber + ", type=" + type
+		    + ", maxWeight=" + maxWeight + ", ownerName=" + ownerName + ", ownerId="
+		    + ownerId + ", ownerAddress=" + ownerAddress + ", maxVolume=" + maxVolume + ", acceptableLoadTypes="
+		    + acceptableLoadTypes + ", acceptableLiftTypes=" + acceptableLiftTypes + "]";
 	}
 
-
-	public static void main1(String[] args) {
-		try {
-			
-			//creating the image
-			File imageFile = new File("/home/lpeer/Documents/home-solar-panels.jpg");
-			FileInputStream f = new FileInputStream(imageFile);
-			byte b[] = new byte[f.available()];
-			f.read(b);
-			Binary data = new Binary(b);
-			Truck t = new Truck();
-			t.setVehicleLicensePhoto(data);
-			 
-			//adding to DB
-			 @SuppressWarnings("deprecation")
-			Mongo mongo = new Mongo("localhost", 27017);
-	         DB db = mongo.getDB("test");
-	         DBCollection collection = db.getCollection("truckpic");
-	         BasicDBObject o = new BasicDBObject();
-	         o.append("name","pic").append("photo",data);
-	         collection.insert(o);
-	         System.out.println("Inserted record.");
-	         f.close();
-						
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-
-
-	
 }

@@ -2,8 +2,6 @@ package com.traffitruck;
 
 import static com.traffitruck.domain.Role.ADMIN;
 
-import java.util.Arrays;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +34,6 @@ public class AdminCreator implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-	logger.info("ODED " + Arrays.asList(args));
 
 	if (args.length != 3) {
 	    logger.error("Usage: mvn spring-boot:run -P adminCreator -Drun.arguments=\"<username>,<password>\"");

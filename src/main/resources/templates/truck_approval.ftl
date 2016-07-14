@@ -87,62 +87,39 @@ $(document).ready(function() {
 			        	<td><input name="ownerAddress" id="ownerAddress"/></td> 
 			    	</tr>
 				    <tr>
-				    	<td><label for="manufactureYear">שנת ייצור:</label></td>
-			        	<td><input name="manufactureYear"/></td> 
-				    </tr>
-					<tr>
-				    	<td><label for="fuelType">סוג דלק</label></td>
-				    	<td>
-			        		<select name="fuelType">
-							  <option value="">-- בחר --</option>
-							  <option value="${enums["com.traffitruck.domain.FuelType"].DIESEL}">דיזל</option>
-							  <option value="${enums["com.traffitruck.domain.FuelType"].GASOLINE_95}">בנזין 95</option>
-							  <option value="${enums["com.traffitruck.domain.FuelType"].GASOLINE_98}">בנזין 98</option>
-							</select>
-						</td>
+				    	<td><label for="maxWeight">משקל מקסימלי להובלה (ק"ג):</label></td>
+			        	<td><input name="maxWeight"/></td> 
 				    </tr>
 				    <tr>
-				    	<td><label for="tires">צמיגים:</label></td>
-			        	<td><input name="tires"/></td> 
+				    	<td><label for="maxVolume">נפח מקסימלי להובלה (קוב):</label></td>
+			        	<td><input name="maxVolume"/></td> 
 				    </tr>
 				    <tr>
-				    	<td><label for="overallweight">משקל כולל:</label></td>
-			        	<td><input name="overallweight"/></td> 
-				    </tr>
-				    <tr>
-				    	<td><label for="selfweight">משקל עצמי:</label></td>
-			        	<td><input name="selfweight"/></td> 
-				    </tr>
-				    <tr>
-				    	<td><label for="permittedweight">משקל מורשה:</label></td>
-			        	<td><input name="permittedweight"/></td> 
-				    </tr>
-				    <tr>
-				        <td colspan='2'>
-				        	<input type="checkbox" name="hasHitch"/>יש וו גרירה
-			        	</td>
-				    </tr>
-				    <tr>
-				    	<td><label for="engineCapacity">נפח מנוע:</label></td>
-			        	<td><input name="engineCapacity"/></td> 
-				    </tr>  
-				    <tr>
-				    	<td><label for="engineOutput">תוצר מנוע:</label></td>
-			        	<td><input name="engineOutput"/></td> 
-				    </tr>  
-				    <tr>
-				    	<td><label for="color">צבע:</label></td>
-			        	<td><input name="color"/></td> 
-				    </tr>   
-				    <tr>
-				    	<td><label for="propulsion">הנעה:</label></td>
+				    	<td><label for="acceptableLiftTypes" valign="top">סוגי טעינה ופריקה אפשריים:</label></td>
 			        	<td>
-			        		<select name="propulsion">
-							  <option value="">-- בחר --</option>
-							  <option value="${enums["com.traffitruck.domain.PropulsionType"]._4X2}">4X2</option>
-							  <option value="${enums["com.traffitruck.domain.PropulsionType"]._4X4}">4X4</option>
+			        		<select multiple name="acceptableLiftTypes" size="5">
+								<option value="MANUAL">ידני</option>
+								<option value="FORKLIFT">מלגזה</option>
+								<option value="CRANE">מנוף</option>
+								<option value="RAMP">רמפה</option>
+								<option value="TROLLY">עגלה</option>
+			        		</select>
+			            </td> 
+				    </tr>
+				    <tr>
+				    	<td><label for="acceptableLoadTypes" valign="top">סוגי טעינה ופריקה אפשריים:</label></td>
+			        	<td>
+							<select multiple name="acceptableLoadTypes" size="8">
+								<option value="CONTAINER_20">מכולה 20'</option>
+								<option value="CONTAINER_40">מכולה 40'</option>
+								<option value="LIFTS">משטחים</option>
+								<option value="BAGS">שקים (באלות)</option>
+								<option value="ANIMALS">בעלי חיים</option>
+								<option value="SCATTERED">תפזורת</option>
+								<option value="HAZMAT">חומ"ס</option>
+								<option value="OTHER">אחר</option>
 							</select>
-						</td>
+			            </td> 
 				    </tr>
 				    <tr>
 			        <td colspan="2">
