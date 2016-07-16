@@ -107,7 +107,7 @@ $(document).ready(function() {
 			            </td> 
 				    </tr>
 				    <tr>
-				    	<td><label for="acceptableLoadTypes" valign="top">סוגי טעינה ופריקה אפשריים:</label></td>
+				    	<td><label for="acceptableLoadTypes" valign="top">סוגי מטענים אפשריים:</label></td>
 			        	<td>
 							<select multiple name="acceptableLoadTypes" size="8">
 								<option value="CONTAINER_20">מכולה 20'</option>
