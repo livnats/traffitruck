@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
+import com.traffitruck.domain.ResetPassword;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
@@ -111,7 +112,7 @@ public class MongoDAO {
 	String encryptedPassword = passwordEncryptor.encryptPassword(user.getPassword());
 	user.setPassword(encryptedPassword);
 	try {
-	    mongoTemplate.insert(user);
+	    mongoTemplate.save(user);
 	}
 	catch (DuplicateKeyException e) {
 	    if ( e.getMessage().contains("email") )
@@ -271,4 +272,16 @@ public class MongoDAO {
 		.addCriteria(Criteria.where("username").is(username));
 	return mongoTemplate.findOne(query,Load.class);
     }
+    
+    public ResetPassword getResetPassword( String uuid ) {
+	Query q = new Query();
+	q.addCriteria(Criteria.where("uuid").is(uuid));
+	ResetPassword rp = mongoTemplate.findOne(q,ResetPassword.class);
+	return rp;
+    }
+
+    public void newResetPassword( ResetPassword rp ) {
+	mongoTemplate.insert(rp);
+    }
+
 }

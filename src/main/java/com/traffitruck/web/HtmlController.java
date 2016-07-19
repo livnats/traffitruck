@@ -9,10 +9,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Location;
+import com.traffitruck.domain.ResetPassword;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
@@ -46,6 +52,9 @@ public class HtmlController {
     @Autowired
     private MongoDAO dao;
 
+    @Autowired
+    private JavaMailSender mailSender;
+    
     @RequestMapping("/login")
     ModelAndView login() {
 	return new ModelAndView("login");
@@ -132,6 +141,63 @@ public class HtmlController {
     @RequestMapping(value = "/registerUser", method = RequestMethod.GET)
     ModelAndView registerUser() {
 	return new ModelAndView("register_user");
+    }
+
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
+    ModelAndView forgotPassword() {
+	return new ModelAndView("forgot_password");
+    }
+
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    ModelAndView forgotPassword(@RequestParam("username") String username) {
+	if ( username != null ) {
+	    LoadsUser loadsUser = dao.getUser(username);
+	    if ( loadsUser != null ) {
+		Map<String, Object> model = new HashMap<>();
+		model.put("email", loadsUser.getEmail());
+		ResetPassword rp = new ResetPassword();
+		rp.setCreationDate(new Date());
+		rp.setUsername(username);
+		rp.setUuid(UUID.randomUUID().toString());
+		dao.newResetPassword(rp);
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(loadsUser.getEmail());
+		msg.setSubject("forgot password");
+		msg.setFrom("no-reply@traffitruck.com");
+		msg.setText("לחץ על הקישור כדי לבחור סיסמה חדשה");
+		mailSender.send(msg);
+		return new ModelAndView("forgot_password_explain", model);
+	    }
+	}
+	Map<String, Object> model = new HashMap<>();
+	model.put("error", "notfound");
+	return new ModelAndView("forgot_password", model);
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
+    ModelAndView resetPassword(@RequestParam("uuid") String uuid, HttpSession httpSession) {
+	ResetPassword rp = dao.getResetPassword(uuid);
+	Map<String, Object> model = new HashMap<>();
+	long FIFTEEN_MINUTES_IN_MILLIS = 15 * 60 * 1000;
+	if ( rp == null || ( System.currentTimeMillis() - rp.getCreationDate().getTime()) > FIFTEEN_MINUTES_IN_MILLIS ) {
+	    model.put("abort", Boolean.TRUE);
+	}
+	httpSession.setAttribute("uuid", uuid);
+	return new ModelAndView("reset_password_intro", model);
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    ModelAndView resetPassword(@RequestParam("password") String password, @RequestParam("confirm_password") String confirm_password, HttpSession httpSession) {
+	String uuid = (String)httpSession.getAttribute("uuid");
+	if (uuid == null || password == null || ! password.equals(confirm_password)) {
+	    throw new RuntimeException("Failed resetting the password");
+	}
+	ResetPassword rp = dao.getResetPassword(uuid);
+	LoadsUser user = dao.getUser(rp.getUsername());
+	user.setPassword(password);
+	dao.storeUser(user);
+	
+	return new ModelAndView("login");
     }
 
     @RequestMapping(value = "/addAvailability", method = RequestMethod.GET)

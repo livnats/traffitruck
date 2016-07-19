@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http
         .authorizeRequests()
-            .antMatchers("/css/**", "/js/**", "/images/**", "/registerUser","/registrationConfirmation").permitAll()
+            .antMatchers("/css/**", "/js/**", "/images/**", "/registerUser","/registrationConfirmation","/forgotPassword", "/resetPassword").permitAll()
             .antMatchers("/newload", "/myLoads", "/deleteLoad", "/load_details/**").hasAuthority(Role.LOAD_OWNER.name())
             .antMatchers("/truckerMenu", "/findTrucksForLoad", "/addAvailability", "/myTrucks", "/newTruck", "/load_details_for_trucker/**", "/load_for_truck_by_radius").hasAuthority(Role.TRUCK_OWNER.name())
             .antMatchers("/loads", "/trucks", "/truckApproval", "/nonApprovedTrucks", "/approval/licenseimage/**",

@@ -169,7 +169,16 @@ function ValidateForm1(theForm)
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <input type="hidden" name="form_name" value="loginform">
 <div class="ui-field-contain">
-	<label for="username">* שם הלקוח</label>
+    <fieldset data-role="controlgroup" data-type="horizontal">
+        <legend></legend>
+        <input type="radio" name="role" value="TRUCK_OWNER" id="trole" <#if (!(role??)) || (role?? && role == "TRUCK_OWNER")>checked="checked"</#if>>
+        <label for="trole">בעל משאית</label>
+        <input type="radio" name="role" value="LOAD_OWNER" id="lrole" <#if role?? && role == "LOAD_OWNER">checked="checked"</#if>>
+        <label for="lrole">בעל מטען</label>
+    </fieldset>
+</div>
+<div class="ui-field-contain">
+	<label for="username">* שם משתמש</label>
 	<input type="text" id="username" style="direction:LTR" name="username" autocapitalize="off" value="<#if username??>${username}</#if>">
 </div>
 <div class="ui-field-contain">
@@ -199,15 +208,6 @@ function ValidateForm1(theForm)
 <div class="ui-field-contain">
 	<label for="contactPerson">איש קשר</label>
 	<input type="text" id="contactPerson" style="" name="contactPerson" autocapitalize="off" value="<#if contactPerson??>${contactPerson}</#if>">
-</div>
-<div class="ui-field-contain">
-    <fieldset data-role="controlgroup" data-type="horizontal">
-        <legend></legend>
-        <input type="radio" name="role" value="TRUCK_OWNER" id="trole" <#if (!(role??)) || (role?? && role == "TRUCK_OWNER")>checked="checked"</#if>>
-        <label for="trole">בעל משאית</label>
-        <input type="radio" name="role" value="LOAD_OWNER" id="lrole" <#if role?? && role == "LOAD_OWNER">checked="checked"</#if>>
-        <label for="lrole">בעל מטען</label>
-    </fieldset>
 </div>
 <input type="submit" id="login" name="login" value="הרשם">
 </form>
