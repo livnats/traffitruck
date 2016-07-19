@@ -98,7 +98,7 @@ public class HtmlController {
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	String username = authentication.getName();
 	load.setUsername(username);
-	if (loadPhoto != null) {
+	if (loadPhoto != null && loadPhoto.length > 0) {
 	    load.setLoadPhoto(new Binary(loadPhoto));
 	}
 	if (sourceLat != null && sourceLng != null) {
