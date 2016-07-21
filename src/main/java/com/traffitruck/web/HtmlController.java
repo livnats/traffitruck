@@ -168,10 +168,10 @@ public class HtmlController {
 		msg.setSubject("forgot password");
 		msg.setFrom("no-reply@traffitruck.com");
 		String message = "התקבלה בקשה במערכת לאיפוס הסיסמה לשירות טראפי-טרק\n"
-			+ "אם אתה לא ביקשת, נא התעלם מהודעה זו .\n"
+			+ "אם לא ביקשת לאפס את הסיסמה נא התעלם מהודעה זו\n"
 			+ "הסיסמה חדשה לשירות טראפי-טרק היא " + newPassword + "\n"
 			+ "הסיסמה הזמנית תקפה ל15 דקות\n" 
-			+ "בכניסה למערכת תתבקש לבחור סיסמה חדשה.\n";
+			+ "בכניסה הבאה למערכת תתבקש לבחור סיסמה חדשה\n";
 		
 		msg.setText(message);
 		mailSender.send(msg);
