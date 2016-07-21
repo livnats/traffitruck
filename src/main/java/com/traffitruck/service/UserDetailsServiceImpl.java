@@ -42,13 +42,12 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
 	if (user == null) {
 	    return null;
 	}
-
-	logger.info(username + " login");
 	
 	String encryptedPassword = user.getPassword();
 	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 
 	if (user != null && passwordEncryptor.checkPassword(password, encryptedPassword) && user.getRole() != null) {
+	    logger.info(username + " login");
 	    return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
 		    authentication.getCredentials(),
 		    Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
@@ -59,6 +58,8 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
 	    if (rp == null || (System.currentTimeMillis() - rp.getCreationDate().getTime()) > FIFTEEN_MINUTES_IN_MILLIS) {
 		if ( rp != null )
 		    logger.info("too much time for reset password " + (System.currentTimeMillis() - rp.getCreationDate().getTime()));
+		else
+		    logger.info(username + " failed login");
 		return null;
 	    }
 	    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
