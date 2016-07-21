@@ -8,10 +8,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
-import java.util.UUID;
-
-import javax.servlet.http.HttpSession;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -153,18 +152,22 @@ public class HtmlController {
 	if ( username != null ) {
 	    LoadsUser loadsUser = dao.getUser(username);
 	    if ( loadsUser != null ) {
+		Random random = new Random();
+		StringBuilder newPassword = new StringBuilder();
+		for (int i = 0 ; i < 8 ; ++i )
+		    newPassword.append(random.nextInt(10));
 		Map<String, Object> model = new HashMap<>();
 		model.put("email", loadsUser.getEmail());
 		ResetPassword rp = new ResetPassword();
 		rp.setCreationDate(new Date());
 		rp.setUsername(username);
-		rp.setUuid(UUID.randomUUID().toString());
+		rp.setUuid(String.valueOf(newPassword));
 		dao.newResetPassword(rp);
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(loadsUser.getEmail());
 		msg.setSubject("forgot password");
 		msg.setFrom("no-reply@traffitruck.com");
-		msg.setText("לחץ על הקישור כדי לבחור סיסמה חדשה");
+		msg.setText("הסיסמה חדשה לשירות טראפי-טרק היא " + newPassword);
 		mailSender.send(msg);
 		return new ModelAndView("forgot_password_explain", model);
 	    }
@@ -175,29 +178,28 @@ public class HtmlController {
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.GET)
-    ModelAndView resetPassword(@RequestParam("uuid") String uuid, HttpSession httpSession) {
-	ResetPassword rp = dao.getResetPassword(uuid);
-	Map<String, Object> model = new HashMap<>();
-	long FIFTEEN_MINUTES_IN_MILLIS = 15 * 60 * 1000;
-	if ( rp == null || ( System.currentTimeMillis() - rp.getCreationDate().getTime()) > FIFTEEN_MINUTES_IN_MILLIS ) {
-	    model.put("abort", Boolean.TRUE);
-	}
-	httpSession.setAttribute("uuid", uuid);
-	return new ModelAndView("reset_password_intro", model);
+    ModelAndView resetPassword() {
+	return new ModelAndView("reset_password_intro");
     }
 
     @RequestMapping(value = "/resetPassword", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    ModelAndView resetPassword(@RequestParam("password") String password, @RequestParam("confirm_password") String confirm_password, HttpSession httpSession) {
-	String uuid = (String)httpSession.getAttribute("uuid");
-	if (uuid == null || password == null || ! password.equals(confirm_password)) {
+    ModelAndView resetPassword(@RequestParam("password") String password, @RequestParam("confirm_password") String confirm_password) {
+	if (password == null || ! password.equals(confirm_password)) {
 	    throw new RuntimeException("Failed resetting the password");
 	}
-	ResetPassword rp = dao.getResetPassword(uuid);
-	LoadsUser user = dao.getUser(rp.getUsername());
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	LoadsUser user = dao.getUser(username);
 	user.setPassword(password);
 	dao.storeUser(user);
 	
-	return new ModelAndView("login");
+	String resetPasswordId = null;
+	for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
+	    if (grantedAuthority.getAuthority().startsWith("resetPassword-"))
+	    	resetPasswordId = grantedAuthority.getAuthority().substring("resetPassword-".length());
+		dao.deleteResetPassword(resetPasswordId, username);
+	}
+	return new ModelAndView("redirect:" + user.getRole().getLandingUrl());
     }
 
     @RequestMapping(value = "/addAvailability", method = RequestMethod.GET)

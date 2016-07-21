@@ -1,6 +1,7 @@
 package com.traffitruck;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -47,19 +49,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(filter,CsrfFilter.class);
         
         SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler() {
-        	@Override
-        	protected void handle(HttpServletRequest request,
-        			HttpServletResponse response, Authentication authentication)
-        					throws IOException, ServletException {
-        		authentication.getAuthorities().forEach( auth -> {
-        			String url = Role.valueOf(auth.getAuthority()).getLandingUrl();
-        			try {
-						getRedirectStrategy().sendRedirect(request, response, url);
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-        		});
+            @Override
+            protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        	if (resetPasswordFlow(authentication.getAuthorities())) {
+        	    try {
+        		getRedirectStrategy().sendRedirect(request, response, "/resetPassword");
+        		return;
+        	    } catch (Exception e) {
+        		throw new RuntimeException(e);
+        	    }
         	}
+        	authentication.getAuthorities().forEach( auth -> {
+        	    String url = Role.valueOf(auth.getAuthority()).getLandingUrl();
+        	    try {
+        		getRedirectStrategy().sendRedirect(request, response, url);
+        		return;
+        	    } catch (Exception e) {
+        		throw new RuntimeException(e);
+        	    }
+        	});
+            }
+
+	    private boolean resetPasswordFlow(Collection<? extends GrantedAuthority> authorities) {
+		for (GrantedAuthority grantedAuthority : authorities) {
+		    if (grantedAuthority.getAuthority().startsWith("resetPassword-"))
+		    	return true;
+		}
+		return false;
+	    }
         };
         
         http

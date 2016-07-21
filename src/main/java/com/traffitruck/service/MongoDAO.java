@@ -273,9 +273,10 @@ public class MongoDAO {
 	return mongoTemplate.findOne(query,Load.class);
     }
     
-    public ResetPassword getResetPassword( String uuid ) {
+    public ResetPassword getResetPassword( String uuid, String username ) {
 	Query q = new Query();
-	q.addCriteria(Criteria.where("uuid").is(uuid));
+	q.addCriteria(Criteria.where("uuid").is(uuid))
+	.addCriteria(Criteria.where("username").is(username));
 	ResetPassword rp = mongoTemplate.findOne(q,ResetPassword.class);
 	return rp;
     }
@@ -283,5 +284,13 @@ public class MongoDAO {
     public void newResetPassword( ResetPassword rp ) {
 	mongoTemplate.insert(rp);
     }
+
+    public void deleteResetPassword( String uuid, String username ){
+	Query query = new Query()
+		.addCriteria(Criteria.where("uuid").is(uuid))
+		.addCriteria(Criteria.where("username").is(username));
+	mongoTemplate.remove(query,ResetPassword.class);
+    }
+
 
 }
