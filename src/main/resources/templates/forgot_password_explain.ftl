@@ -27,9 +27,12 @@ $(document).on("mobileinit", function()
 <div class="ui-content" role="main">
 <div id="wb_Form1" style="">
 
+בקשת איפוס המערכת נקלטה.
 נשלח מייל לכתובת
 ${email}
-עם הוראות שחזור סיסמה
+עם הוראות  סיסמה זמנית
+הסיסמה הזמנית תקפה ל15 דקות
+בכניסה למערכת תתבקש לבחור סיסמה חדשה.
 
 <a href="/login" data-role="button">חזרה לדף הכניסה</a>
 

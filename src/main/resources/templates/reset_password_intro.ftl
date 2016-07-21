@@ -72,14 +72,14 @@ function ValidateForm1(theForm)
 
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <div class="ui-field-contain">
-	<label for="password">* בחר סיסמה</label>
+	<label for="password">* בחר סיסמה חדשה</label>
 	<input type="password" id="password" style="direction:LTR" name="password" autocapitalize="off">
 </div>
 <div class="ui-field-contain">
 	<label for="confirm_password">* וידוא סיסמה</label>
 	<input type="password" id="confirm_password" style="direction:LTR" name="confirm_password" autocapitalize="off">
 </div>
-<input type="submit" id="login" name="login" value="הרשם">
+<input type="submit" id="login" name="login" value="עדכן סיסמה">
 </form>
 
 	</#if>
