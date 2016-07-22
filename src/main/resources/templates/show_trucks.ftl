@@ -52,12 +52,28 @@ $(document).ready(function() {
 										<th>מספר לוחית זיהוי</th>
 										<th>משתמש</th>
 										<th>סטטוס</th>
+										<th>משקל מירבי</th>
+										<th>נפח מירבי</th>
+										<th>סוגי מטען</th>
+										<th>סוגי טעינה</th>
 									</tr>
 									<#list trucks as truck>
 									<tr id="${truck.id}">
 										<td>${truck.licensePlateNumber}</td>
-										<th>${truck.username}</th>
+										<td>${truck.username}</td>
 										<td class="typeConversion">${truck.registrationStatus!'שגיאה'}</td>
+										<td>${truck.maxWeight!''}</td>
+										<td>${truck.maxVolume!''}</td>
+										<#if truck.acceptableLoadTypes??>
+											<td>${truck.acceptableLoadTypes?join(", ")!''}</td>
+										<#else>
+											<td></td>
+										</#if>
+										<#if truck.acceptableLiftTypes??>
+											<td>${truck.acceptableLiftTypes?join(", ")!''}</td>
+										<#else>
+											<td></td>
+										</#if>
 									</tr>
 									</#list>
 								</table>
