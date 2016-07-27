@@ -15,6 +15,12 @@
 	<script type="text/javascript" src="js/jquery-ui-1.11.1.js"></script>
 
 <script>
+
+// show on map markers
+var markers;
+var infoWindowContent;
+var map;
+
 $(document).on("mobileinit", function()
 {
    $.mobile.ajaxEnabled = false;
@@ -69,7 +75,6 @@ function mAlert(text1) {
 		return type;
 	}
 
-
 	$("#truckSelection").change(function () {
 			licensePlateNumber = $(this).val();
 			$.getJSON( "/load_for_truck/" + licensePlateNumber, function( loads ) {
@@ -82,6 +87,9 @@ function mAlert(text1) {
 			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
 			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
 
+				// Multiple Markers
+				markers = [];
+				infoWindowContent = [];
 				for (var i in loads) {
 				    load = loads[i];
 
@@ -92,8 +100,17 @@ function mAlert(text1) {
 				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
 				    table_html += "</tr>";
+
+					markers.push([load.name, load.sourceLocation.coordinates[1], load.sourceLocation.coordinates[0]]);
+					infoWindowContent.push(
+						['<div class="info_content" dir="rtl"><h5>יעד: ' + load.destination.split(",",2).join(", ") + '</h5>'
+						+ '<h5>סוג מטען: ' + ((load.type != null) ? convertType(load.type) : "") + '</h5>'
+						+ '<h5>מחיר: ' + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + '</h5>'
+						+ '<h5>תאריך נסיעה: ' + ((load.driveDate != null) ? load.driveDateStr : "") + '</h5>'
+						+ '<h5><a href="/load_details_for_trucker/' + load.id + '">פרטים נוספים</a></h5>'
+						+ '</div>']);
 			    }
-			    
+			    showOnMap();
 			    table_html += "</table>";
 
      		   $('#available_loads').html(table_html);
@@ -103,6 +120,9 @@ function mAlert(text1) {
 	$("#truckSelection").trigger("change");
 
 	$( "#radiusFilter" ).click(function() {
+	
+			$('#searchfilter').collapsible('collapse');
+						
 			licensePlateNumber = $("#truckSelection").val();
 			sourceLat = $("#sourceLat").val();
 			sourceLng = $("#sourceLng").val();
@@ -134,6 +154,9 @@ function mAlert(text1) {
 			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
 			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
 
+				// Multiple Markers
+				markers = [];
+				infoWindowContent = [];
 				for (var i in loads) {
 				    load = loads[i];
 
@@ -144,8 +167,18 @@ function mAlert(text1) {
 				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
 				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
 				    table_html += "</tr>";
+
+					
+					markers.push([load.name, load.sourceLocation.coordinates[1], load.sourceLocation.coordinates[0]]);
+					infoWindowContent.push(
+						['<div class="info_content" dir="rtl"><h5>יעד: ' + load.destination.split(",",2).join(", ") + '</h5>'
+						+ '<h5>סוג מטען: ' + ((load.type != null) ? convertType(load.type) : "") + '</h5>'
+						+ '<h5>מחיר: ' + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + '</h5>'
+						+ '<h5>תאריך נסיעה: ' + ((load.driveDate != null) ? load.driveDateStr : "") + '</h5>'
+						+ '<h5><a href="/load_details_for_trucker/' + load.id + '">פרטים נוספים</a></h5>'
+						+ '</div>']);
 			    }
-			    
+			    showOnMap();
 			    table_html += "</table>";
 
      		   $('#available_loads').html(table_html);
@@ -160,6 +193,51 @@ function mAlert(text1) {
         <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
         <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
         <script>
+			function showOnMap() {
+
+				var bounds = new google.maps.LatLngBounds();
+				var mapOptions = {
+					mapTypeId: 'roadmap'
+				};
+				
+				document.getElementById("map_canvas").style.height = ( $(document).height() / 2.5 ) + "px";
+
+				// Display a map on the page
+				var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				map.setTilt(45);
+					
+				// Display multiple markers on a map
+				var infoWindow = new google.maps.InfoWindow(), marker, i;
+				
+				// Loop through our array of markers & place each one on the map  
+				for( i = 0; i < markers.length; i++ ) {
+					var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+					bounds.extend(position);
+					marker = new google.maps.Marker({
+						position: position,
+						map: map,
+						title: markers[i][0]
+					});
+					
+					// Allow each marker to have an info window    
+					google.maps.event.addListener(marker, 'click', (function(marker, i) {
+						return function() {
+							infoWindow.setContent(infoWindowContent[i][0]);
+							infoWindow.open(map, marker);
+						}
+					})(marker, i));
+	
+					// Automatically center the map fitting all markers on the screen
+					map.fitBounds(bounds);
+				}
+	
+				// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+				var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+					google.maps.event.removeListener(boundsListener);
+				});
+				
+			}
+		
             var autocomplete;
             function initialize() {
               
@@ -226,7 +304,7 @@ function mAlert(text1) {
               });
             }
         </script>
-
+        
 </head>
 <body onload="initialize()">
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">
@@ -237,7 +315,9 @@ function mAlert(text1) {
 </div>
 <div class="ui-content" role="main">
 
+		<div id="searchfilter" data-role="collapsible" data-collapsed="false">
 						<#if trucks?has_content>
+							<h3>סנן תוצאות</h3>
 							<div class="ui-field-contain">
 								<#if (trucks?size > 1)>
 									<label for="truckSelection">בחר משאית</label>
@@ -251,18 +331,18 @@ function mAlert(text1) {
 								</#if>
 							</div>
 							<div class="ui-field-contain">
-								<label for="source">סנן לפי מוצא</label>
+								<label for="source_radius">מצא מטענים שיוצאים ברדיוס</label>
+								<input type="text" id="source_radius" style="" name="source_radius" value="" placeholder='רדיוס בק"מ'>
+								<label for="source">מכתובת</label>
 								<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
-								<label for="source_radius">מרחק בק"מ</label>
-								<input type="text" id="source_radius" style="" name="source_radius" value="">
 								<input type="hidden" id="sourceLat" name="sourceLat" value="">
 								<input type="hidden" id="sourceLng" name="sourceLng" value="">
 							</div>
 							<div class="ui-field-contain">
-								<label for="source">סנן לפי יעד</label>
+								<label for="destination_radius">מצא מטענים שמגיעים ברדיוס</label>
+								<input type="text" id="destination_radius" style="" name="destination_radius" value="" placeholder='רדיוס בק"מ'>
+								<label for="source">אל כתובת</label>
 								<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
-								<label for="destination_radius">מרחק בק"מ</label>
-								<input type="text" id="destination_radius" style="" name="destination_radius" value="">
 								<input type="hidden" id="destinationLat" name="destinationLat" value="">
 								<input type="hidden" id="destinationLng" name="destinationLng" value="">
 							</div>
@@ -274,9 +354,13 @@ function mAlert(text1) {
 						<#else>
 							אין משאיות מאושרות 
 						</#if>
+		</div>
 		<div id="available_loads" style="direction:RTL">
 		</div>
 </div>
+
+<div id="map_canvas" class="mapping"></div>
+
 </div>
 
 <div data-role="dialog" id="sure">

@@ -239,17 +239,24 @@ public class MongoDAO {
 	List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 
 	if (drivedate != null) {
-		return coll.stream().filter(load -> {
-		    Calendar cal = Calendar.getInstance();
-		    cal.setTime(drivedate);
-		    cal.add(Calendar.DATE, 1);
-		    Date drivedateNextDay = cal.getTime();
-		    return load.getDriveDate() != null && load.getDriveDate().compareTo(drivedateNextDay) < 0 && load.getDriveDate().compareTo(drivedate) >= 0;
-		    }).collect(Collectors.toList());
+	    return coll.stream().filter(load -> {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(drivedate);
+		cal.add(Calendar.DATE, 1);
+		Date drivedateNextDay = cal.getTime();
+		return load.getDriveDate() != null && load.getDriveDate().compareTo(drivedateNextDay) < 0 && load.getDriveDate().compareTo(drivedate) >= 0;
+	    }).collect(Collectors.toList());
 
 	}
 	else {
-	    return coll;
+	    Date now = new Date();
+	    return coll.stream().filter(load -> {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(drivedate);
+		cal.add(Calendar.DATE, 1);
+		Date drivedateNextDay = cal.getTime();
+		return load.getDriveDate().after(now);
+	    }).collect(Collectors.toList());
 	}
     }
 
