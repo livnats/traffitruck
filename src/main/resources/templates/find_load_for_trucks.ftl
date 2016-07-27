@@ -79,8 +79,11 @@ function mAlert(text1) {
 			licensePlateNumber = $(this).val();
 			$.getJSON( "/load_for_truck/" + licensePlateNumber, function( loads ) {
 
+				markers = [];
+				infoWindowContent = [];
 				if (loads.length == 0) {
 				   $('#available_loads').html("אין מטענים להובלה שמתאימים למשאית");
+				    showOnMap();
 				   return;
 				}
 				
@@ -88,8 +91,6 @@ function mAlert(text1) {
 			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
 
 				// Multiple Markers
-				markers = [];
-				infoWindowContent = [];
 				for (var i in loads) {
 				    load = loads[i];
 
@@ -146,17 +147,18 @@ function mAlert(text1) {
 				} 
 				, function( loads ) {
 
+				// Multiple Markers
+				markers = [];
+				infoWindowContent = [];
 				if (loads.length == 0) {
 				   $('#available_loads').html("אין מטענים להובלה שמתאימים למשאית");
+				    showOnMap();
 				   return;
 				}
 				
 			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
 			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
 
-				// Multiple Markers
-				markers = [];
-				infoWindowContent = [];
 				for (var i in loads) {
 				    load = loads[i];
 
