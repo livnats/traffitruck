@@ -315,7 +315,7 @@ function mAlert(text1) {
 </div>
 <div class="ui-content" role="main">
 
-		<div id="searchfilter" data-role="collapsible" data-collapsed="false">
+		<div id="searchfilter" data-role="collapsible" data-collapsed="true">
 						<#if trucks?has_content>
 							<h3>סנן תוצאות</h3>
 							<div class="ui-field-contain">
