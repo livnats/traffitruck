@@ -61,26 +61,6 @@ $(document).ready(function() {
 
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 
-<style>
-@media ( min-width: 10em ) {
-    /* Show the table header rows and set all cells to display: table-cell */
-    .my-custom-breakpoint td,
-    .my-custom-breakpoint th,
-    .my-custom-breakpoint tbody th,
-    .my-custom-breakpoint tbody td,
-    .my-custom-breakpoint thead td,
-    .my-custom-breakpoint thead th {
-        display: table-cell;
-        margin: 0;
-    }
-    /* Hide the labels in each cell */
-    .my-custom-breakpoint td .ui-table-cell-label,
-    .my-custom-breakpoint th .ui-table-cell-label {
-        display: none;
-    }
-}
-</style>
-
 </head>
 <body>
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">

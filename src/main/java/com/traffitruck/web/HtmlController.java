@@ -96,7 +96,7 @@ public class HtmlController {
 	    @RequestParam("destinationLng") Double destinationLng, BindingResult br7
 	    ) throws IOException {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
-	sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
+	sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 	load.setCreationDate(new Date());
 	try {
 	    load.setDriveDate(sdf.parse(drivedate));
@@ -237,7 +237,7 @@ public class HtmlController {
 	}
 	else{
 	    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyyHHmm");
-	    sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
+	    sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 	    Date requestedTime = sdf.parse(dateAvail+hourAvail);
 	    truckAvail.setAvailableStart(requestedTime);
 	}

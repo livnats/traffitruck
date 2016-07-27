@@ -78,7 +78,7 @@ public class JsonController {
 	Date driveDateObj = null;
 	if (drivedate != null && drivedate.length() > 0) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
-		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jerusalem"));
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		try {
 		    driveDateObj = sdf.parse(drivedate);
 		} catch (ParseException e) {
