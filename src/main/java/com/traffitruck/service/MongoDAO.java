@@ -251,10 +251,6 @@ public class MongoDAO {
 	else {
 	    Date now = new Date();
 	    return coll.stream().filter(load -> {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(drivedate);
-		cal.add(Calendar.DATE, 1);
-		Date drivedateNextDay = cal.getTime();
 		return load.getDriveDate().after(now);
 	    }).collect(Collectors.toList());
 	}
