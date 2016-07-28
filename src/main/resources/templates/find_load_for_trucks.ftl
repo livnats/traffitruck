@@ -317,21 +317,21 @@ function mAlert(text1) {
 </div>
 <div class="ui-content" role="main">
 
+		<div class="ui-field-contain">
+			<#if (trucks?size > 1)>
+				<label for="truckSelection">בחר משאית</label>
+	        	<select name="truckSelection" id="truckSelection">
+				  <#list trucks as truck>
+					  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
+				  </#list>
+				</select>
+			<#else>
+				<input type="hidden" name="truckSelection" id="truckSelection" value="${trucks[0].licensePlateNumber}">
+			</#if>
+		</div>
 		<div id="searchfilter" data-role="collapsible" data-collapsed="true">
 						<#if trucks?has_content>
 							<h3>סנן תוצאות</h3>
-							<div class="ui-field-contain">
-								<#if (trucks?size > 1)>
-									<label for="truckSelection">בחר משאית</label>
-						        	<select name="truckSelection" id="truckSelection">
-									  <#list trucks as truck>
-										  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
-									  </#list>
-									</select>
-								<#else>
-									<input type="hidden" name="truckSelection" id="truckSelection" value="${trucks[0].licensePlateNumber}">
-								</#if>
-							</div>
 							<div class="ui-field-contain">
 								<label for="source_radius">מצא מטענים שיוצאים ברדיוס</label>
 								<input type="text" id="source_radius" style="" name="source_radius" value="" placeholder='רדיוס בק"מ'>
