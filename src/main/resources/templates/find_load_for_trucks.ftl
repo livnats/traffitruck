@@ -33,14 +33,29 @@ $( "#drivedate" ).datepicker();
 $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
 $( "#drivedate" ).datepicker( "option", "minDate", 0);
 
-function mAlert(text1) {
-  $("#sure .sure-1").text(text1);
-  $("#sure .sure-do").on("click.sure", function() {
-    $(this).off("click.sure");
-  });
-  $.mobile.changePage("#sure");
-}
+	function mAlert(text1) {
+	  $("#sure .sure-1").text(text1);
+	  $("#sure .sure-do").on("click.sure", function() {
+	    $(this).off("click.sure");
+	  });
+	  $.mobile.changePage("#sure");
+	}
 
+	$("#truckSelection").change(function() {
+		fetchLoads();
+	});
+	$("#radiusFilter").click(function() {
+		fetchLoads();
+	});
+
+});
+</script>
+
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+<script>
 	function convertType(type) {
 		if ( type == "${enums["com.traffitruck.domain.LoadType"].CONTAINER_20}" )
 			return "מכולה 20'";
@@ -75,55 +90,9 @@ function mAlert(text1) {
 		return type;
 	}
 
-	$("#truckSelection").change(function () {
-			licensePlateNumber = $(this).val();
-			$.getJSON( "/load_for_truck/" + licensePlateNumber, function( loads ) {
-
-				markers = [];
-				infoWindowContent = [];
-				if (loads.length == 0) {
-				   $('#available_loads').html("אין מטענים להובלה שמתאימים למשאית");
-				    showOnMap();
-				   return;
-				}
-				
-			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
-			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
-
-				// Multiple Markers
-				for (var i in loads) {
-				    load = loads[i];
-
-				    table_html += "<tr>";
-				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source.split(",",2).join(", ") + "</a></td>";
-				    table_html += "    <td style=\"text-align:right\">" + load.destination.split(",",2).join(", ") + "</td>";
-				    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
-				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
-				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
-				    table_html += "</tr>";
-
-					markers.push([load.name, load.sourceLocation.coordinates[1], load.sourceLocation.coordinates[0]]);
-					infoWindowContent.push(
-						['<div class="info_content" dir="rtl"><h5>יעד: ' + load.destination.split(",",2).join(", ") + '</h5>'
-						+ '<h5>סוג מטען: ' + ((load.type != null) ? convertType(load.type) : "") + '</h5>'
-						+ '<h5>מחיר: ' + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + '</h5>'
-						+ '<h5>תאריך נסיעה: ' + ((load.driveDate != null) ? load.driveDateStr : "") + '</h5>'
-						+ '<h5><a href="/load_details_for_trucker/' + load.id + '">פרטים נוספים</a></h5>'
-						+ '</div>']);
-			    }
-			    showOnMap();
-			    table_html += "</table>";
-
-     		   $('#available_loads').html(table_html);
-  			});
-    });
-
-	$("#truckSelection").trigger("change");
-
-	$( "#radiusFilter" ).click(function() {
+	function fetchLoads() {
 	
 			$('#searchfilter').collapsible('collapse');
-						
 			licensePlateNumber = $("#truckSelection").val();
 			sourceLat = $("#sourceLat").val();
 			sourceLng = $("#sourceLng").val();
@@ -132,6 +101,18 @@ function mAlert(text1) {
 			source_radius = $("#source_radius").val();
 			destination_radius = $("#destination_radius").val();
 			drivedate = $("#drivedate").val();
+
+			sessionStorage['filter'] = "true";
+			sessionStorage['licensePlateNumber'] = licensePlateNumber;
+			sessionStorage['source'] = $("#source").val();
+			sessionStorage['destination'] = $("#destination").val();
+			sessionStorage['sourceLat'] = sourceLat;
+			sessionStorage['sourceLng'] = sourceLng;
+			sessionStorage['destinationLat'] = destinationLat;
+			sessionStorage['destinationLng'] = destinationLng;
+			sessionStorage['source_radius'] = source_radius;
+			sessionStorage['destination_radius'] = destination_radius;
+			sessionStorage['drivedate'] = drivedate;
 
 			$.post( "/load_for_truck_by_radius",
 				{
@@ -185,127 +166,136 @@ function mAlert(text1) {
 
      		   $('#available_loads').html(table_html);
   			}, "json");
-	});
+	}
 
-});
-</script>
 
-<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	function showOnMap() {
 
-        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-        <script>
-			function showOnMap() {
-
-				var bounds = new google.maps.LatLngBounds();
-				var mapOptions = {
-					mapTypeId: 'roadmap'
-				};
-				
-				document.getElementById("map_canvas").style.height = ( $(document).height() / 2.5 ) + "px";
-
-				// Display a map on the page
-				var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-				map.setTilt(45);
-					
-				// Display multiple markers on a map
-				var infoWindow = new google.maps.InfoWindow(), marker, i;
-				
-				// Loop through our array of markers & place each one on the map  
-				for( i = 0; i < markers.length; i++ ) {
-					var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-					bounds.extend(position);
-					marker = new google.maps.Marker({
-						position: position,
-						map: map,
-						title: markers[i][0]
-					});
-					
-					// Allow each marker to have an info window    
-					google.maps.event.addListener(marker, 'click', (function(marker, i) {
-						return function() {
-							infoWindow.setContent(infoWindowContent[i][0]);
-							infoWindow.open(map, marker);
-						}
-					})(marker, i));
-	
-					// Automatically center the map fitting all markers on the screen
-					map.fitBounds(bounds);
-				}
-	
-				// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-				var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-					google.maps.event.removeListener(boundsListener);
-				});
-				
-			}
+		var bounds = new google.maps.LatLngBounds();
+		var mapOptions = {
+			mapTypeId: 'roadmap'
+		};
 		
-            var autocomplete;
-            function initialize() {
-              
-              var geocoder = new google.maps.Geocoder();
-              
-              autocomplete_src = new google.maps.places.Autocomplete(
-                  /** @type {HTMLInputElement} */(document.getElementById('source')),
-                  { types: ['address'] });
-              google.maps.event.addListener(autocomplete_src, 'place_changed', function() {
-                 var address = document.getElementById('source').value;
-                 geocoder.geocode({'address': address}, function(results, status) {
-                   if (status === google.maps.GeocoderStatus.OK) {
-	                   $("#sourceLat").val( results[0].geometry.location.lat() );
-	                   $("#sourceLng").val( results[0].geometry.location.lng() );
-                    } else {
-                       mAlert('Geocode was not successful for the following reason: ' + status);
-                    }
-                 })
-              });
+		document.getElementById("map_canvas").style.height = ( $(document).height() / 2.5 ) + "px";
 
-              autocomplete_cities_src = new google.maps.places.Autocomplete(
-                  /** @type {HTMLInputElement} */(document.getElementById('source')),
-                  { types: ['(cities)'] });
-              google.maps.event.addListener(autocomplete_cities_src, 'place_changed', function() {
-                 var address = document.getElementById('source').value;
-                 geocoder.geocode({'address': address}, function(results, status) {
-                   if (status === google.maps.GeocoderStatus.OK) {
-	                   $("#sourceLat").val( results[0].geometry.location.lat() );
-	                   $("#sourceLng").val( results[0].geometry.location.lng() );
-                    } else {
-                       mAlert('Geocode was not successful for the following reason: ' + status);
-                    }
-                 })
-              });
+		// Display a map on the page
+		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+		map.setTilt(45);
+			
+		// Display multiple markers on a map
+		var infoWindow = new google.maps.InfoWindow(), marker, i;
+		
+		// Loop through our array of markers & place each one on the map  
+		for( i = 0; i < markers.length; i++ ) {
+			var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+			bounds.extend(position);
+			marker = new google.maps.Marker({
+				position: position,
+				map: map,
+				title: markers[i][0]
+			});
+			
+			// Allow each marker to have an info window    
+			google.maps.event.addListener(marker, 'click', (function(marker, i) {
+				return function() {
+					infoWindow.setContent(infoWindowContent[i][0]);
+					infoWindow.open(map, marker);
+				}
+			})(marker, i));
 
-              autocomplete_dest = new google.maps.places.Autocomplete(
-                  /** @type {HTMLInputElement} */(document.getElementById('destination')),
-                  { types: ['address'] });
-              google.maps.event.addListener(autocomplete_dest, 'place_changed', function() {
-                 var address = document.getElementById('destination').value;
-                 geocoder.geocode({'address': address}, function(results, status) {
-                   if (status === google.maps.GeocoderStatus.OK) {
-	                   $("#destinationLat").val( results[0].geometry.location.lat() );
-	                   $("#destinationLng").val( results[0].geometry.location.lng() );
-                    } else {
-                       mAlert('Geocode was not successful for the following reason: ' + status);
-                    }
-                  })
-              });
+			// Automatically center the map fitting all markers on the screen
+			map.fitBounds(bounds);
+		}
 
-              autocomplete_cities_dest = new google.maps.places.Autocomplete(
-                  /** @type {HTMLInputElement} */(document.getElementById('destination')),
-                  { types: ['(cities)'] });
-              google.maps.event.addListener(autocomplete_cities_dest, 'place_changed', function() {
-                 var address = document.getElementById('destination').value;
-                 geocoder.geocode({'address': address}, function(results, status) {
-                   if (status === google.maps.GeocoderStatus.OK) {
-	                   $("#destinationLat").val( results[0].geometry.location.lat() );
-	                   $("#destinationLng").val( results[0].geometry.location.lng() );
-                    } else {
-                       mAlert('Geocode was not successful for the following reason: ' + status);
-                    }
-                  })
-              });
+		// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+		var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+			google.maps.event.removeListener(boundsListener);
+		});
+		
+	}
+		
+    var autocomplete;
+    function initialize() {
+
+		if ( sessionStorage['filter'] == "true" ) {
+		    $("#truckSelection option[value='" + sessionStorage['licensePlateNumber'] + "']").prop("selected", "selected").change();
+			$("#source").val(sessionStorage['source']);
+			$("#sourceLat").val(sessionStorage['sourceLat']);
+			$("#sourceLng").val(sessionStorage['sourceLng']);
+			$("#destination").val(sessionStorage['destination']);
+			$("#destinationLat").val(sessionStorage['destinationLat']);
+			$("#destinationLng").val(sessionStorage['destinationLng']);
+			$("#source_radius").val(sessionStorage['source_radius']);
+			$("#destination_radius").val(sessionStorage['destination_radius']);
+			$("#drivedate").val(sessionStorage['drivedate']);
+			$( "#radiusFilter" ).click();
+		}
+		fetchLoads();
+
+      var geocoder = new google.maps.Geocoder();
+      
+      autocomplete_src = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('source')),
+          { types: ['address'] });
+      google.maps.event.addListener(autocomplete_src, 'place_changed', function() {
+         var address = document.getElementById('source').value;
+         geocoder.geocode({'address': address}, function(results, status) {
+           if (status === google.maps.GeocoderStatus.OK) {
+               $("#sourceLat").val( results[0].geometry.location.lat() );
+               $("#sourceLng").val( results[0].geometry.location.lng() );
+            } else {
+               mAlert('Geocode was not successful for the following reason: ' + status);
             }
-        </script>
+         })
+      });
+
+      autocomplete_cities_src = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('source')),
+          { types: ['(cities)'] });
+      google.maps.event.addListener(autocomplete_cities_src, 'place_changed', function() {
+         var address = document.getElementById('source').value;
+         geocoder.geocode({'address': address}, function(results, status) {
+           if (status === google.maps.GeocoderStatus.OK) {
+               $("#sourceLat").val( results[0].geometry.location.lat() );
+               $("#sourceLng").val( results[0].geometry.location.lng() );
+            } else {
+               mAlert('Geocode was not successful for the following reason: ' + status);
+            }
+         })
+      });
+
+      autocomplete_dest = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('destination')),
+          { types: ['address'] });
+      google.maps.event.addListener(autocomplete_dest, 'place_changed', function() {
+         var address = document.getElementById('destination').value;
+         geocoder.geocode({'address': address}, function(results, status) {
+           if (status === google.maps.GeocoderStatus.OK) {
+               $("#destinationLat").val( results[0].geometry.location.lat() );
+               $("#destinationLng").val( results[0].geometry.location.lng() );
+            } else {
+               mAlert('Geocode was not successful for the following reason: ' + status);
+            }
+          })
+      });
+
+      autocomplete_cities_dest = new google.maps.places.Autocomplete(
+          /** @type {HTMLInputElement} */(document.getElementById('destination')),
+          { types: ['(cities)'] });
+      google.maps.event.addListener(autocomplete_cities_dest, 'place_changed', function() {
+         var address = document.getElementById('destination').value;
+         geocoder.geocode({'address': address}, function(results, status) {
+           if (status === google.maps.GeocoderStatus.OK) {
+               $("#destinationLat").val( results[0].geometry.location.lat() );
+               $("#destinationLng").val( results[0].geometry.location.lng() );
+            } else {
+               mAlert('Geocode was not successful for the following reason: ' + status);
+            }
+          })
+      });
+    }
+
+</script>
         
 </head>
 <body onload="initialize()">
