@@ -26,7 +26,9 @@ $(document).on("mobileinit", function()
 </div>
 <div class="ui-content" role="main">
 <a href="/myTrucks" class="linkbutton"><input type="button" id="Button1" name="" value="המשאיות שלי"></a>
-<a href="/findTrucksForLoad" class="linkbutton"><input type="button" id="Button2" name="" value="חפש מטענים להובלה"></a>
+<#if (trucks?? && trucks?size > 0)>
+	<a href="/findTrucksForLoad" class="linkbutton"><input type="button" id="Button2" name="" value="חפש מטענים להובלה"></a>
+</#if>
 </div>
 </div>
 </body>

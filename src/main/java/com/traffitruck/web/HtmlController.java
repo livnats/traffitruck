@@ -321,7 +321,11 @@ public class HtmlController {
 
     @RequestMapping(value = "/truckerMenu")
     ModelAndView truckerMenu() {
-	return new ModelAndView("trucker_menu");
+	Map<String, Object> model = new HashMap<>();
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
+	return new ModelAndView("trucker_menu", model);
     }
 
     @RequestMapping(value = "/adminMenu")
