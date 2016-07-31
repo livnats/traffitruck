@@ -324,7 +324,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 							<h3>סנן תוצאות</h3>
 							<div class="ui-field-contain">
 								<label for="source_radius">מצא מטענים שיוצאים ברדיוס</label>
-								<input type="text" id="source_radius" style="" name="source_radius" value="" placeholder='רדיוס בק"מ'>
+								<input type="number" id="source_radius" style="" name="source_radius" value="" placeholder='רדיוס בק"מ'>
 								<label for="source">מכתובת</label>
 								<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
 								<input type="hidden" id="sourceLat" name="sourceLat" value="">
@@ -332,7 +332,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 							</div>
 							<div class="ui-field-contain">
 								<label for="destination_radius">מצא מטענים שמגיעים ברדיוס</label>
-								<input type="text" id="destination_radius" style="" name="destination_radius" value="" placeholder='רדיוס בק"מ'>
+								<input type="number" id="destination_radius" style="" name="destination_radius" value="" placeholder='רדיוס בק"מ'>
 								<label for="source">אל כתובת</label>
 								<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
 								<input type="hidden" id="destinationLat" name="destinationLat" value="">
