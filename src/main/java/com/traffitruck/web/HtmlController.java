@@ -291,6 +291,18 @@ public class HtmlController {
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
 	user.setUsername(user.getUsername().toLowerCase());
+	
+	boolean isLoadsOwner = false;
+	boolean isTruckOwner = false;
+	for ( Role role : user.getRoles() ) {
+	    if ( Role.LOAD_OWNER.equals(role) ) {
+		isLoadsOwner = true;
+	    }
+	    if ( Role.TRUCK_OWNER.equals(role) ) {
+		isTruckOwner = true;
+	    }
+	}
+
 	try {
 	    dao.storeUser(user);
 	}
@@ -302,7 +314,10 @@ public class HtmlController {
 		model.put("cellNumber", user.getCellNumber());
 		model.put("email", user.getEmail());
 		model.put("phoneNumber", user.getPhoneNumber());
-		model.put("roles", user.getRoles());
+		if ( isTruckOwner )
+		    model.put("trole", Boolean.TRUE);
+		if ( isLoadsOwner )
+		    model.put("lrole", Boolean.TRUE);
 		model.put("contactPerson", user.getContactPerson());
 		return new ModelAndView("register_user", model);
 	}
@@ -314,7 +329,10 @@ public class HtmlController {
 		model.put("cellNumber", user.getCellNumber());
 		model.put("email", user.getEmail());
 		model.put("phoneNumber", user.getPhoneNumber());
-		model.put("role", user.getRoles());
+		if ( isTruckOwner )
+		    model.put("trole", Boolean.TRUE);
+		if ( isLoadsOwner )
+		    model.put("lrole", Boolean.TRUE);
 		model.put("contactPerson", user.getContactPerson());
 		return new ModelAndView("register_user", model);
 	}

@@ -16,8 +16,11 @@ $(document).on("mobileinit", function()
 });
 
 $(document).ready(function() {
-	<#if role??>
-		$("#role").val("${role}");
+	<#if trole??>
+		$("#trole").prop("checked", true);
+	</#if>
+	<#if lrole??>
+		$("#lrole").prop("checked", true);
 	</#if>
 });
 
