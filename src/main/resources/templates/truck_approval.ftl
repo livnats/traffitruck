@@ -64,17 +64,6 @@ $(document).ready(function() {
 			        	</td>
 				    </tr>
 				    <tr>
-				    	<td><label for="type">סוג :</label></td> 
-				        <td>
-				        	<select name="type">
-							  <option value="">-- בחר --</option>
-							  <option value="${enums["com.traffitruck.domain.TruckType"].N1}">N1 פחות מ 3500 ק"ג</option>
-							  <option value="${enums["com.traffitruck.domain.TruckType"].N2}">N2 בין 3500 ל 12000 ק"ג</option>
-							  <option value="${enums["com.traffitruck.domain.TruckType"].N3}">N3 מעל 12000 ק"ג</option>
-							</select>
-						</td>
-				    </tr>
-				    <tr>
 			      		<td><label for="ownerName">שם בעל הרכב:</label></td>
 			        	<td><input name="ownerName"/></td> 
 			    	</tr>
@@ -135,6 +124,7 @@ $(document).ready(function() {
 		<div id="load_details">
 			<img src="/approval/licenseimage/${truck.id}"><br><br><br>
 			<img src="/approval/truckimage/${truck.id}">
+			<img src="/approval/driverlicenseimage/${truck.id}">
 		</div>
 	</div>
 </div>

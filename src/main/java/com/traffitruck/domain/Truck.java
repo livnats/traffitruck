@@ -22,6 +22,7 @@ public class Truck {
 	private String licensePlateNumber;
 	private Binary vehicleLicensePhoto;
 	private Binary truckPhoto;
+	private Binary driverLicensePhoto;
 	
 	//information added for validation
 	private TruckType type;
@@ -105,7 +106,14 @@ public class Truck {
 		this.truckPhoto = truckPhoto;
 	}
 	
-	
+	public Binary getDriverLicensePhoto() {
+	    return driverLicensePhoto;
+	}
+
+	public void setDriverLicensePhoto(Binary driverLicensePhoto) {
+	    this.driverLicensePhoto = driverLicensePhoto;
+	}
+
 	public String getUsername() {
 		return username;
 	}

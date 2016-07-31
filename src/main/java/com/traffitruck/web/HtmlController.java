@@ -403,6 +403,13 @@ public class HtmlController {
 	return Base64.getDecoder().decode(bytes);
     }
 
+    @RequestMapping(value = "/approval/driverlicenseimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getDriverLicenseImage(@PathVariable String truckId) {
+	String b64dataUrl = new String(dao.getTruckById(truckId).getDriverLicensePhoto().getData());
+	byte[] bytes = b64dataUrl.substring(b64dataUrl.indexOf(',') + 1).getBytes();
+	return Base64.getDecoder().decode(bytes);
+    }
+
     @RequestMapping(value = "/approval/truckimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getTruckImage(@PathVariable String truckId) {
 	String b64dataUrl = new String(dao.getTruckById(truckId).getTruckPhoto().getData());
@@ -433,11 +440,13 @@ public class HtmlController {
     @RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView newTruck(@RequestParam("licensePlateNumber") String licensePlateNumber,
 	    @RequestParam("truckPhoto") byte[] truckPhoto,
-	    @RequestParam("vehicleLicensePhoto") byte[] vehicleLicensePhoto) throws IOException{
+	    @RequestParam("vehicleLicensePhoto") byte[] vehicleLicensePhoto,
+	    @RequestParam("driverLicensePhoto") byte[] driverLicensePhoto) throws IOException{
 
 	Truck truck = new Truck();
 	truck.setLicensePlateNumber(licensePlateNumber);
 	truck.setVehicleLicensePhoto(new Binary(vehicleLicensePhoto));
+	truck.setDriverLicensePhoto(new Binary(driverLicensePhoto));
 	truck.setTruckPhoto(new Binary(truckPhoto));
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	String username = authentication.getName();

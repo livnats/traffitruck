@@ -23,7 +23,7 @@ $(document).ready(function() {
 	    var type = file.type;
 
         if ( file != "" && ! type.startsWith("image/") ) {
-           mAlert("חובה לבחור תמונה");
+           mAlert("חובה לספק רשיון רכב");
            this.val("");
            this.focus();
            return false;
@@ -57,6 +57,47 @@ $(document).ready(function() {
         oFReader.readAsDataURL(file);
 	});
 
+	$('#driverLicensePhoto1').change(function(){
+	    var file = this.files[0];
+	    var name = file.name;
+	    var size = file.size;
+	    var type = file.type;
+
+        if ( file != "" && ! type.startsWith("image/") ) {
+           mAlert("חובה לספק רשיון נהיגה");
+           this.val("");
+           this.focus();
+           return false;
+        }
+        
+        ratio = 1;
+        if ( size > 1000000 ) {
+            ratio = size / 400000;
+        }
+
+        oFReader = new FileReader(); 
+		oFReader.onload = function (oFREvent) {
+		  var img=new Image();
+		  img.onload=function(){
+              if ( ratio != 1 ) {
+		         var canvas=document.createElement("canvas");
+		         var ctx=canvas.getContext("2d");
+		         canvas.width=img.width/ratio;
+		         canvas.height=img.height/ratio;
+		         ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
+		         var imageData = canvas.toDataURL();
+                 $('#driverLicensePhoto').val(imageData);
+              }
+              else {
+		         var imageData = oFReader.result;
+                 $('#driverLicensePhoto').val(imageData);
+              }
+		  }
+		  img.src=oFREvent.target.result;
+		};
+        oFReader.readAsDataURL(file);
+	});
+
 	$('#truckPhoto1').change(function(){
 	    var file = this.files[0];
 	    var name = file.name;
@@ -64,7 +105,7 @@ $(document).ready(function() {
 	    var type = file.type;
 
         if ( file != "" && ! type.startsWith("image/") ) {
-           mAlert("חובה לבחור תמונה");
+           mAlert("חובה לספק תמונת משאית");
            this.val("");
            this.focus();
            return false;
@@ -140,6 +181,7 @@ function ValidateForm1(theForm)
    }
    
    $('#vehicleLicensePhoto1').val("");
+   $('#driverLicensePhoto1').val("");
    $('#truckPhoto1').val("");
    
    return true;
@@ -171,6 +213,11 @@ function ValidateForm1(theForm)
 				<label for="vehicleLicensePhoto1">צילום רשיון רכב</label>
 				<input type="file" id="vehicleLicensePhoto1" style="" name="vehicleLicensePhoto1">
                 <input type="hidden" id="vehicleLicensePhoto" name="vehicleLicensePhoto">
+			</div>
+			<div class="ui-field-contain">
+				<label for="driverLicensePhoto1">צילום רשיון נהיגה</label>
+				<input type="file" id="driverLicensePhoto1" style="" name="driverLicensePhoto1">
+                <input type="hidden" id="driverLicensePhoto" name="driverLicensePhoto">
 			</div>
 			<div class="ui-field-contain">
 				<label for="truckPhoto1">צילום משאית</label>
