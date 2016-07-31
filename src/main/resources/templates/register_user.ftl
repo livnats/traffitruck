@@ -35,6 +35,11 @@ function mAlert(text1) {
 
 function ValidateForm1(theForm)
 {
+   if ( ! $('#trole').is(":checked") && ! $('#lrole').is(":checked") )
+   {
+		mAlert("חובה לבחור סוג משתמש");
+		return false;
+   }
    var regexp;
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
    if (!regexp.test(theForm.username.value))
@@ -169,12 +174,12 @@ function ValidateForm1(theForm)
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <input type="hidden" name="form_name" value="loginform">
 <div class="ui-field-contain">
-    <fieldset data-role="controlgroup" data-type="horizontal">
+    <fieldset data-role="controlgroup" data-iconpos="right">
         <legend></legend>
-        <input type="radio" name="role" value="TRUCK_OWNER" id="trole" <#if (!(role??)) || (role?? && role == "TRUCK_OWNER")>checked="checked"</#if>>
-        <label for="trole">בעל משאית</label>
-        <input type="radio" name="role" value="LOAD_OWNER" id="lrole" <#if role?? && role == "LOAD_OWNER">checked="checked"</#if>>
-        <label for="lrole">בעל מטען</label>
+        <input type="checkbox" name="roles" value="TRUCK_OWNER" id="trole" <#if (role?? && role == "TRUCK_OWNER")>checked="checked"</#if>>
+        <label for="trole" style="text-align:right">בעל משאית</label>
+        <input type="checkbox" name="roles" value="LOAD_OWNER" id="lrole" <#if role?? && role == "LOAD_OWNER">checked="checked"</#if>>
+        <label for="lrole" style="text-align:right">בעל מטען</label>
     </fieldset>
 </div>
 <div class="ui-field-contain">

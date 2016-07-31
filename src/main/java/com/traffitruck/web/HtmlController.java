@@ -3,8 +3,9 @@ package com.traffitruck.web;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,7 @@ import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Location;
 import com.traffitruck.domain.ResetPassword;
+import com.traffitruck.domain.Role;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
@@ -119,6 +121,40 @@ public class HtmlController {
 	return new ModelAndView("redirect:/myLoads");
     }
 
+    @RequestMapping(value = "/truckerMenu")
+    ModelAndView truckerMenu() {
+	Map<String, Object> model = new HashMap<>();
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
+	return new ModelAndView("trucker_menu", model);
+    }
+
+    @RequestMapping(value = "/menu")
+    ModelAndView menu() {
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	boolean isLoadsOwner = false;
+	boolean isTruckOwner = false;
+	for ( GrantedAuthority auth : authentication.getAuthorities() ) {
+	    if ( Role.LOAD_OWNER.toString().equals(auth.getAuthority()) ) {
+		isLoadsOwner = true;
+	    }
+	    if ( Role.TRUCK_OWNER.toString().equals(auth.getAuthority()) ) {
+		isTruckOwner = true;
+	    }
+	}
+	if ( isLoadsOwner && ! isTruckOwner ) {
+	    return new ModelAndView("redirect:/myLoads");
+	}
+	Map<String, Object> model = new HashMap<>();
+	String username = authentication.getName();
+	model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
+	if ( isLoadsOwner ) {
+	    model.put("isLoadsOwner", Boolean.TRUE);
+	}
+	return new ModelAndView("trucker_menu", model);
+    }
+
     @RequestMapping("/newload")
     ModelAndView newLoad() {
 	Map<String, Object> model = new HashMap<>();
@@ -130,7 +166,14 @@ public class HtmlController {
     ModelAndView myLoads() {
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	String username = authentication.getName();
+
 	Map<String, Object> model = new HashMap<>();
+
+	for ( GrantedAuthority auth : authentication.getAuthorities() ) {
+	    if ( Role.TRUCK_OWNER.toString().equals(auth.getAuthority()) ) {
+		model.put("back", "/menu");
+	    }
+	}
 	model.put("Format", getFormatStatics());
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 	model.put("loads", dao.getLoadsForUser(username));
@@ -205,7 +248,7 @@ public class HtmlController {
 	    	resetPasswordId = grantedAuthority.getAuthority().substring("resetPassword-".length());
 		dao.deleteResetPassword(resetPasswordId, username);
 	}
-	return new ModelAndView("redirect:" + user.getRole().getLandingUrl());
+	return new ModelAndView("redirect:" + user.getRoles().get(0).getLandingUrl());
     }
 
     @RequestMapping(value = "/addAvailability", method = RequestMethod.GET)
@@ -259,7 +302,7 @@ public class HtmlController {
 		model.put("cellNumber", user.getCellNumber());
 		model.put("email", user.getEmail());
 		model.put("phoneNumber", user.getPhoneNumber());
-		model.put("role", user.getRole().toString());
+		model.put("roles", user.getRoles());
 		model.put("contactPerson", user.getContactPerson());
 		return new ModelAndView("register_user", model);
 	}
@@ -271,16 +314,19 @@ public class HtmlController {
 		model.put("cellNumber", user.getCellNumber());
 		model.put("email", user.getEmail());
 		model.put("phoneNumber", user.getPhoneNumber());
-		model.put("role", user.getRole().toString());
+		model.put("role", user.getRoles());
 		model.put("contactPerson", user.getContactPerson());
 		return new ModelAndView("register_user", model);
 	}
+	Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+	user.getRoles().stream().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.toString())));
+
 	SecurityContextHolder.getContext().setAuthentication(
 		new UsernamePasswordAuthenticationToken(
 			user.getUsername(),
 			"",
-			Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()))));
-	return new ModelAndView("redirect:" + user.getRole().getLandingUrl());
+			authorities));
+	return new ModelAndView("redirect:" + user.getRoles().get(0).getLandingUrl());
     }
 
     @RequestMapping(value = "/deleteLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -317,15 +363,6 @@ public class HtmlController {
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 	model.put("trucks", dao.getTrucksForUser(username));
 	return new ModelAndView("my_trucks", model);
-    }
-
-    @RequestMapping(value = "/truckerMenu")
-    ModelAndView truckerMenu() {
-	Map<String, Object> model = new HashMap<>();
-	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	String username = authentication.getName();
-	model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
-	return new ModelAndView("trucker_menu", model);
     }
 
     @RequestMapping(value = "/adminMenu")

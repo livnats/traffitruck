@@ -66,15 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         		throw new RuntimeException(e);
         	    }
         	}
-        	authentication.getAuthorities().forEach( auth -> {
-        	    String url = Role.valueOf(auth.getAuthority()).getLandingUrl();
-        	    try {
-        		getRedirectStrategy().sendRedirect(request, response, url);
-        		return;
-        	    } catch (Exception e) {
-        		throw new RuntimeException(e);
-        	    }
-        	});
+        	
+        	String url = Role.valueOf(authentication.getAuthorities().iterator().next().getAuthority()).getLandingUrl();
+        	getRedirectStrategy().sendRedirect(request, response, url);
             }
 
 	    private boolean resetPasswordFlow(Collection<? extends GrantedAuthority> authorities) {

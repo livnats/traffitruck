@@ -302,7 +302,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">
 <div data-role="header" id="Header1">
 <h1>חיפוש מטען</h1>
-<a href="/truckerMenu" data-role="button" class="ui-btn-left">חזרה</a>
+<a href="/menu" data-role="button" class="ui-btn-left">חזרה</a>
 <a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">

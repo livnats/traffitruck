@@ -21,13 +21,15 @@ $(document).on("mobileinit", function()
 <div data-role="page" data-theme="a" data-title="תפריט" id="trucker_menu">
 <div data-role="header" id="Header1">
 <h1>תפריט</h1>
-<a href="#" data-role="button" class="ui-btn-left">חזרה</a>
 <a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
 <a href="/myTrucks" class="linkbutton"><input type="button" id="Button1" name="" value="המשאיות שלי"></a>
 <#if (trucks?? && trucks?size > 0)>
 	<a href="/findTrucksForLoad" class="linkbutton"><input type="button" id="Button2" name="" value="חפש מטענים להובלה"></a>
+</#if>
+<#if (isLoadsOwner??)>
+	<a href="/myLoads" class="linkbutton"><input type="button" id="Button3" name="" value="המטענים שלי"></a>
 </#if>
 </div>
 </div>

@@ -1,7 +1,8 @@
 package com.traffitruck.service;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.ResetPassword;
+import com.traffitruck.domain.Role;
 
 @Component
 public class UserDetailsServiceImpl implements AuthenticationProvider {
@@ -42,15 +44,15 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
 	if (user == null) {
 	    return null;
 	}
-	
+
 	String encryptedPassword = user.getPassword();
 	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 
-	if (user != null && passwordEncryptor.checkPassword(password, encryptedPassword) && user.getRole() != null) {
+	if (passwordEncryptor.checkPassword(password, encryptedPassword)) {
 	    logger.info(username + " login");
 	    return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
 		    authentication.getCredentials(),
-		    Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
+		    rolesToAuthorities(user.getRoles()));
 	} else {
 	    // check for reset password
 	    ResetPassword rp = dao.getResetPassword(password, username);
@@ -62,11 +64,19 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
 		    logger.info(username + " failed login");
 		return null;
 	    }
+	    Collection<SimpleGrantedAuthority> authorities = rolesToAuthorities(user.getRoles());
+	    authorities.add(new SimpleGrantedAuthority("resetPassword-" + password)); // hack to retain the temp password
 	    UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),
 		    authentication.getCredentials(),
-		    Arrays.asList(new SimpleGrantedAuthority(user.getRole().toString()), new SimpleGrantedAuthority("resetPassword-" + password))); // hack to retain the temp password
+		    authorities);
 	    return token;
 	}
+    }
+
+    private Collection<SimpleGrantedAuthority> rolesToAuthorities(List<Role> roles) {
+	Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+	roles.stream().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.toString())));
+	return authorities;
     }
 
     @Override

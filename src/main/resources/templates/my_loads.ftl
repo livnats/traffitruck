@@ -66,7 +66,9 @@ $(document).ready(function() {
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">
 <div data-role="header" id="Header1">
 <h1>המטענים שלי</h1>
-<a href="/login" data-role="button" class="ui-btn-left">חזרה</a>
+<#if (back??)>
+	<a href="${back}" data-role="button" class="ui-btn-left">חזרה</a>
+</#if>
 <a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">

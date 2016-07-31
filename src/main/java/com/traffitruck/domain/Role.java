@@ -3,8 +3,8 @@ package com.traffitruck.domain;
 public enum Role {
 	
 	ADMIN("/adminMenu"),
-	TRUCK_OWNER("/truckerMenu"),
-	LOAD_OWNER("/myLoads");
+	TRUCK_OWNER("/menu"),
+	LOAD_OWNER("/menu");
 
 	private String landingUrl;
 	

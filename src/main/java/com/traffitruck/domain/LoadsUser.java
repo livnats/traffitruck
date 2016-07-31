@@ -1,5 +1,7 @@
 package com.traffitruck.domain;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -16,7 +18,7 @@ public class LoadsUser{
 	@Indexed(unique=true)
 	private String username;
 	private String password;
-	private Role role;
+	private List<Role> roles;
 	
 
 	public String getAddress() {
@@ -61,11 +63,11 @@ public class LoadsUser{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Role getRole() {
-		return role;
+	public List<Role> getRoles() {
+	    return roles;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(List<Role> roles) {
+	    this.roles = roles;
 	}
 	
 	@Override
@@ -73,7 +75,7 @@ public class LoadsUser{
 		return "LoadsUser [email=" + email + ", address=" + address
 				+ ", contactPerson=" + contactPerson + ", phoneNumber="
 				+ phoneNumber + ", cellNumber=" + cellNumber + ", username="
-				+ username + ", Role=" + role + "]";
+				+ username + ", Roles=" + roles + "]";
 	}
 
 	
