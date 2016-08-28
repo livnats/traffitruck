@@ -405,9 +405,13 @@ public class HtmlController {
 
     @RequestMapping(value = "/approval/driverlicenseimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getDriverLicenseImage(@PathVariable String truckId) {
-	String b64dataUrl = new String(dao.getTruckById(truckId).getDriverLicensePhoto().getData());
-	byte[] bytes = b64dataUrl.substring(b64dataUrl.indexOf(',') + 1).getBytes();
-	return Base64.getDecoder().decode(bytes);
+    	Binary photo = dao.getTruckById(truckId).getDriverLicensePhoto();
+    	if ( photo == null ) {
+    		return null;
+    	}
+    	String b64dataUrl = new String(photo.getData());
+    	byte[] bytes = b64dataUrl.substring(b64dataUrl.indexOf(',') + 1).getBytes();
+    	return Base64.getDecoder().decode(bytes);
     }
 
     @RequestMapping(value = "/approval/truckimage/{truckId}", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
