@@ -362,7 +362,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
   </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&language=iw"></script>
 
 </body>
 </html>
