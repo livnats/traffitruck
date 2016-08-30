@@ -66,14 +66,8 @@ function ValidateForm(theForm)
 		<form name="loginform" method="post" action="/login" id="loginform" onsubmit="return ValidateForm(this)">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<input type="hidden" name="form_name" value="loginform">
-			<div class="ui-field-contain">
-				<label for="username">שם משתמש</label>
-				<input type="text" id="username" style="direction:LTR" name="username" value="" autocapitalize="off">
-			</div>
-			<div class="ui-field-contain">
-				<label for="password">סיסמה</label>
-				<input type="password" id="password" style="direction:LTR" name="password" value="">
-			</div>
+				<input type="text" id="username" name="username" value="" autocapitalize="off" placeholder='שם משתמש'>
+				<input type="password" id="password" name="password" value="" placeholder='סיסמה'>
 			<div id="rememberme">
 				<!--
 				<fieldset data-role="controlgroup" data-shadow="true">
@@ -82,10 +76,10 @@ function ValidateForm(theForm)
 				</fieldset>
 				-->
 			</div>
-			<input type="submit" id="login" name="login" value="כניסה">
+			<input type="submit" id="login" name="login" value="התחבר">
 		</form>
-		<a href="/registerUser" style="text-decoration: none"><input type="submit" value="רישום"></a>
-		<a href="/forgotPassword" data-role="button" class="ui-btn">שכחתי סיסמה</a>
+		<a href="/registerUser" data-role="button" data-inline="true" data-theme="b">רישום משתמש חדש</a>
+		<div><a href="/forgotPassword" data-role="none" style="font-weight:normal; font-size:0.8em;">שכחתי סיסמה</a></div>
 	</div>
 </div>
 

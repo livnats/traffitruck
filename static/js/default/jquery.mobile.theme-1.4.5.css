@@ -174,7 +174,7 @@ html .ui-alt-icon .ui-radio-off:after {
 html .ui-bar-a .ui-bar-inherit,
 html .ui-body-a .ui-bar-inherit,
 html body .ui-group-theme-a .ui-bar-inherit {
-   background-color: #E9EAEB;
+   background-color: white;
    border-color: #B3B3B3;
    color: #3E3E3E;
    text-shadow: 0 1px 0 #FFFFFF;
@@ -187,7 +187,7 @@ html body .ui-group-theme-a .ui-bar-inherit {
 .ui-overlay-a,
 .ui-page-theme-a,
 .ui-page-theme-a .ui-panel-wrapper {
-   background-color: #F5F5F5;
+   background-color: white;
    border-color: #B3B3B3;
    color: #333333;
    text-shadow: 0 1px 0 #FFFFFF;
@@ -242,10 +242,10 @@ html .ui-bar-a .ui-btn:visited,
 html .ui-body-a .ui-btn:visited,
 html body .ui-group-theme-a .ui-btn:visited,
 html head + body .ui-btn.ui-btn-a:visited {
-   background-color: #EEEEEE;
-   border-color: #CCCCCC;
-   color: #2F3E46;
-   text-shadow: 0 1px 0 #F6F6F6;
+   background-color: rgb(0,128,255);
+   border-color: #222222;
+   color: #FFFFFF;
+   text-shadow: 0 1px 0 #000000;
 }
 .ui-page-theme-a .ui-btn:hover,
 html .ui-bar-a .ui-btn:hover,
@@ -387,8 +387,8 @@ html .ui-bar-b .ui-btn:visited,
 html .ui-body-b .ui-btn:visited,
 html body .ui-group-theme-b .ui-btn:visited,
 html head + body .ui-btn.ui-btn-b:visited {
-   background-color: #333333;
-   border-color: #222222;
+   background-color: #99CCFF;
+   border-color: #66CCFF;
    color: #FFFFFF;
    text-shadow: 0 1px 0 #000000;
 }
