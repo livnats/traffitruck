@@ -342,7 +342,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 								<label for="drivedate">סנן לפי תאריך הובלה</label>
 								<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
 							</div>
-							<button type="button" data-role="button" class="ui-btn" id="radiusFilter" name="radiusFilter">סנן תוצאות</button>
+							<button type="button" data-role="button" id="radiusFilter" name="radiusFilter">סנן תוצאות</button>
 						<#else>
 							אין משאיות מאושרות 
 						</#if>

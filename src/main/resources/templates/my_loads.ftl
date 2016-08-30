@@ -72,7 +72,7 @@ $(document).ready(function() {
 <a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
-<a href="/newload" data-role="button" class="ui-btn">הוספת מטען חדש</a>
+<a href="/newload" data-role="button">הוספת מטען חדש</a>
 
 							<#if loads?has_content>
 						

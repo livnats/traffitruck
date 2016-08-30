@@ -47,7 +47,7 @@ function ValidateForm(theForm)
 <body>
 <div data-role="page" data-theme="a" data-title="טראפי-טראק כניסה" id="page1">
 	<div data-role="header" id="Header1">
-		<img src="/images/logo.jpg" width="20%" style="margin-bottom:10"/>
+		<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
 		<img src="/images/truck-blue.jpg" width="15%"/>
 	</div>
 	<div class="ui-content" role="main">

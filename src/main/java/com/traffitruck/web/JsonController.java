@@ -84,6 +84,13 @@ public class JsonController {
 		    throw new RuntimeException(e);
 		}
 	}
+	// set default value for radius if not set
+	if ( sourceLat != null && sourceLng != null && source_radius == null ) {
+		source_radius = 10;
+	}
+	if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
+		destination_radius = 10;
+	}
 	
 	return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);
     }

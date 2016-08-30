@@ -180,9 +180,9 @@ function ValidateForm1(theForm)
     <fieldset data-role="controlgroup" data-iconpos="right">
         <legend></legend>
         <input type="checkbox" name="roles" value="TRUCK_OWNER" id="trole" <#if (role?? && role == "TRUCK_OWNER")>checked="checked"</#if>>
-        <label for="trole" style="text-align:right">בעל משאית</label>
+        <label for="trole" style="text-align:right; background-color:white; color: #333333; text-shadow: 0 1px 0 #ffffff; border:0 none;">בעל משאית</label>
         <input type="checkbox" name="roles" value="LOAD_OWNER" id="lrole" <#if role?? && role == "LOAD_OWNER">checked="checked"</#if>>
-        <label for="lrole" style="text-align:right">בעל מטען</label>
+        <label for="lrole" style="text-align:right; background-color:white; color: #333333; text-shadow: 0 1px 0 #ffffff; border:0 none;">בעל מטען</label>
     </fieldset>
 </div>
 <div class="ui-field-contain">

@@ -65,7 +65,7 @@ $(document).ready(function() {
 <a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
-<a href="/newTruck" data-role="button" class="ui-btn">הוספת משאית חדש</a>
+<a href="/newTruck" data-role="button">הוספת משאית חדש</a>
 
 							<#if trucks?has_content>
 						
