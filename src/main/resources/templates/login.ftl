@@ -84,7 +84,7 @@ function ValidateForm(theForm)
 			</div>
 			<input type="submit" id="login" name="login" value="כניסה">
 		</form>
-		<a href="/registerUser" data-role="button" class="ui-btn">רישום</a>
+		<a href="/registerUser" style="text-decoration: none"><input type="submit" value="רישום"></a>
 		<a href="/forgotPassword" data-role="button" class="ui-btn">שכחתי סיסמה</a>
 	</div>
 </div>
