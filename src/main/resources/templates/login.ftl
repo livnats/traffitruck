@@ -47,7 +47,7 @@ function ValidateForm(theForm)
 <body>
 <div data-role="page" data-theme="a" data-title="טראפי-טראק כניסה" id="page1">
 	<div data-role="header" id="Header1">
-		<img src="/images/logo.jpg" width="20%"/>
+		<img src="/images/logo.jpg" width="20%" style="margin-bottom:10"/>
 		<img src="/images/truck-blue.jpg" width="15%"/>
 	</div>
 	<div class="ui-content" role="main">
@@ -66,8 +66,8 @@ function ValidateForm(theForm)
 		<form name="loginform" method="post" action="/login" id="loginform" onsubmit="return ValidateForm(this)">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<input type="hidden" name="form_name" value="loginform">
-				<input type="text" id="username" name="username" value="" autocapitalize="off" placeholder='שם משתמש'>
-				<input type="password" id="password" name="password" value="" placeholder='סיסמה'>
+				<input type="text" id="username" name="username" value="" style="text-align:right" autocapitalize="off" placeholder='שם משתמש'>
+				<input type="password" id="password" name="password" value="" style="text-align:right" placeholder='סיסמה'>
 			<div id="rememberme">
 				<!--
 				<fieldset data-role="controlgroup" data-shadow="true">
