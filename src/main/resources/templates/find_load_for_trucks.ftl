@@ -9,6 +9,8 @@
 <link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
 <link href="css/mobile.css" rel="stylesheet">
 <link href="css/loads.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
 <script src="js/jquery-1.11.3.min.js"></script>
 
      <link rel="stylesheet" href="css/jquery-ui-1.11.1.css">
@@ -52,8 +54,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 </script>
 
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
-<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
 <script>
 	function convertType(type) {
@@ -127,7 +127,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 					${_csrf.parameterName}: "${_csrf.token}"
 				} 
 				, function( loads ) {
-
+	
 				// Multiple Markers
 				markers = [];
 				infoWindowContent = [];
@@ -161,10 +161,10 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 						+ '<h5><a href="/load_details_for_trucker/' + load.id + '">פרטים נוספים</a></h5>'
 						+ '</div>']);
 			    }
-			    showOnMap();
 			    table_html += "</table>";
-
      		   $('#available_loads').html(table_html);
+     		   showOnMap();
+     		   
   			}, "json");
 	}
 
@@ -361,6 +361,8 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
     <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
   </div>
 </div>
+
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
 </body>
 </html>
