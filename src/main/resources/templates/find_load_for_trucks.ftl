@@ -352,6 +352,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 							</div>
 							<div>
 								<a href="#" onclick="clearForm()" data-role="none" style="font-weight:bold; font-size:0.8em;">נקה פילטר</a>
+								<a href="#" onclick="return createAlert()" data-role="none" style="font-weight:bold; font-size:0.8em; margin-right: 50px;">צור התראה</a>
 							</div>
 							<button type="button" data-role="button" id="radiusFilter" name="radiusFilter">הצג תוצאות</button>
 						<#else>
