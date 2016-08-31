@@ -63,8 +63,8 @@ public class JsonController {
 	    @RequestParam("sourceLng") Double sourceLng,
 	    @RequestParam("destinationLat") Double destinationLat,
 	    @RequestParam("destinationLng") Double destinationLng,
-	    @RequestParam("source_radius") Integer source_radius,
-	    @RequestParam("destination_radius") Integer destination_radius,
+	    @RequestParam(value="source_radius", required=false) Integer source_radius,
+	    @RequestParam(value="destination_radius", required=false) Integer destination_radius,
 	    @RequestParam("drivedate") String drivedate
 	    ) {
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -86,10 +86,10 @@ public class JsonController {
 	}
 	// set default value for radius if not set
 	if ( sourceLat != null && sourceLng != null && source_radius == null ) {
-		source_radius = 10;
+		source_radius = 20;
 	}
 	if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
-		destination_radius = 10;
+		destination_radius = 20;
 	}
 	
 	return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);

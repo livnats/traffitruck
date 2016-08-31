@@ -98,8 +98,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			sourceLng = $("#sourceLng").val();
 			destinationLat = $("#destinationLat").val();
 			destinationLng = $("#destinationLng").val();
-			source_radius = $("#source_radius").val();
-			destination_radius = $("#destination_radius").val();
 			drivedate = $("#drivedate").val();
 
 			sessionStorage['filter'] = "true";
@@ -110,8 +108,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			sessionStorage['sourceLng'] = sourceLng;
 			sessionStorage['destinationLat'] = destinationLat;
 			sessionStorage['destinationLng'] = destinationLng;
-			sessionStorage['source_radius'] = source_radius;
-			sessionStorage['destination_radius'] = destination_radius;
 			sessionStorage['drivedate'] = drivedate;
 
 			$.post( "/load_for_truck_by_radius",
@@ -121,8 +117,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 					sourceLng: sourceLng,
 					destinationLat: destinationLat,
 					destinationLng: destinationLng,
-					source_radius: source_radius, 
-					destination_radius: destination_radius,
 					drivedate: drivedate,
 					${_csrf.parameterName}: "${_csrf.token}"
 				} 
@@ -213,6 +207,17 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 		});
 		
 	}
+
+	function clearForm() {
+		$("#source").val('');
+		$("#sourceLat").val('');
+		$("#sourceLng").val('');
+		$("#destination").val('');
+		$("#destinationLat").val('');
+		$("#destinationLng").val('');
+		$("#drivedate").val('');
+	}
+	
 		
     var autocomplete;
     function initialize() {
@@ -225,8 +230,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			$("#destination").val(sessionStorage['destination']);
 			$("#destinationLat").val(sessionStorage['destinationLat']);
 			$("#destinationLng").val(sessionStorage['destinationLng']);
-			$("#source_radius").val(sessionStorage['source_radius']);
-			$("#destination_radius").val(sessionStorage['destination_radius']);
 			$("#drivedate").val(sessionStorage['drivedate']);
 			$( "#radiusFilter" ).click();
 		}
@@ -323,24 +326,23 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 						<#if trucks?has_content>
 							<h3>סנן תוצאות</h3>
 							<div class="ui-field-contain">
-								<label for="source_radius">מצא מטענים שיוצאים ברדיוס</label>
-								<input type="number" id="source_radius" style="" name="source_radius" value="" placeholder='רדיוס בק"מ'>
-								<label for="source">מכתובת</label>
-								<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
+								<label for="source">מטענים שיוצאים מאיזור</label>
+								<input type="text" id="source" name="source" value="" placeholder="הכנס כתובת" style="text-align:right">
 								<input type="hidden" id="sourceLat" name="sourceLat" value="">
 								<input type="hidden" id="sourceLng" name="sourceLng" value="">
 							</div>
 							<div class="ui-field-contain">
-								<label for="destination_radius">מצא מטענים שמגיעים ברדיוס</label>
-								<input type="number" id="destination_radius" style="" name="destination_radius" value="" placeholder='רדיוס בק"מ'>
-								<label for="source">אל כתובת</label>
-								<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
+								<label for="source">מטענים שמגיעים לאיזור</label>
+								<input type="text" id="destination" name="destination" value="" placeholder="הכנס כתובת" style="text-align:right">
 								<input type="hidden" id="destinationLat" name="destinationLat" value="">
 								<input type="hidden" id="destinationLng" name="destinationLng" value="">
 							</div>
 							<div class="ui-field-contain">
 								<label for="drivedate">סנן לפי תאריך הובלה</label>
-								<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
+								<input type="text" id="drivedate" name="drivedate" value="" onfocus="blur();" style="text-align:right">
+							</div>
+							<div>
+								<a href="#" onclick="clearForm()" data-role="none" style="font-weight:bold; font-size:0.8em;">נקה פילטר</a>
 							</div>
 							<button type="button" data-role="button" id="radiusFilter" name="radiusFilter">סנן תוצאות</button>
 						<#else>
