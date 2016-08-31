@@ -44,7 +44,17 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 	}
 
 	$("#truckSelection").change(function() {
-		fetchLoads();
+	    if ( $("#truckSelection").val() != "000" ) {
+	       $("#searchfilter").show();
+	       $("#available_loads").show();
+	       $("#map_canvas").show();
+		   fetchLoads();
+		}
+		else {
+	       $("#searchfilter").hide();
+	       $("#available_loads").hide();
+	       $("#map_canvas").hide();
+		}
 	});
 	$("#radiusFilter").click(function() {
 		fetchLoads();
@@ -233,7 +243,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			$("#drivedate").val(sessionStorage['drivedate']);
 			$( "#radiusFilter" ).click();
 		}
-		fetchLoads();
 
       var geocoder = new google.maps.Geocoder();
       
@@ -312,8 +321,9 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 
 		<div class="ui-field-contain">
 			<#if (trucks?size > 1)>
-				<label for="truckSelection">בחר משאית</label>
+				<label for="truckSelection"></label>
 	        	<select name="truckSelection" id="truckSelection">
+	        	  <option value="000">בחר משאית</option>
 				  <#list trucks as truck>
 					  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
 				  </#list>
@@ -344,7 +354,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 							<div>
 								<a href="#" onclick="clearForm()" data-role="none" style="font-weight:bold; font-size:0.8em;">נקה פילטר</a>
 							</div>
-							<button type="button" data-role="button" id="radiusFilter" name="radiusFilter">סנן תוצאות</button>
+							<button type="button" data-role="button" id="radiusFilter" name="radiusFilter">הצג תוצאות</button>
 						<#else>
 							אין משאיות מאושרות 
 						</#if>
