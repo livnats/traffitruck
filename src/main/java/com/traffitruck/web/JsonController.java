@@ -28,6 +28,8 @@ import com.traffitruck.service.MongoDAO;
 @RestController
 public class JsonController {
 
+	public static final int DEFAULT_RADIUS_FOR_SEARCHES = 20;
+	
 	@Autowired
 	private MongoDAO dao;
 
@@ -80,10 +82,10 @@ public class JsonController {
 
 		// set default value for radius if not set
 		if ( sourceLat != null && sourceLng != null && source_radius == null ) {
-			source_radius = 20;
+			source_radius = DEFAULT_RADIUS_FOR_SEARCHES;
 		}
 		if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
-			destination_radius = 20;
+			destination_radius = DEFAULT_RADIUS_FOR_SEARCHES;
 		}
 
 		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);

@@ -1,9 +1,11 @@
 package com.traffitruck.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -32,7 +34,8 @@ import com.traffitruck.domain.TruckRegistrationStatus;
 @Component
 public class MongoDAO {
 
-    private final MongoTemplate mongoTemplate;
+    private static final double EARTH_RADIUS_IN_RADIANS = 6378.1;
+	private final MongoTemplate mongoTemplate;
 
     @Autowired
     public MongoDAO(MongoTemplate mongoTemplate) {
@@ -56,8 +59,40 @@ public class MongoDAO {
     	return mongoTemplate.find(q, Alert.class);
     }
 
-    public List<Alert> getAllAlerts( String username ) {
+    public List<Alert> getAllAlerts() {
     	return mongoTemplate.findAll(Alert.class);
+    }
+
+    public List<Alert> getAlertsByFilter(Double sourceLat, Double sourceLng, Integer source_radius,
+    		Double destinationLat, Double destinationLng, Integer destination_radius, Date drivedate) {
+    	// The criteria API isn't good enough
+    	String query = "{";
+    	if (sourceLat != null && sourceLng != null && source_radius != null) {
+    		if ( query.length() > 1 ) {
+    			query += ", ";
+    		}
+    		query += "sourceLocation : { $geoWithin : { $centerSphere: [ [" + sourceLng + ", " + sourceLat + "], "+ source_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+    	}
+    	if (destinationLat != null && destinationLng != null && destination_radius != null) {
+    		if ( query.length() > 1 ) {
+    			query += ", ";
+    		}
+    		query += "destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+    	}
+    	// sort results
+    	query += "}";
+    	BasicQuery queryobj = new BasicQuery(query);
+    	List<Alert> coll = mongoTemplate.find(queryobj, Alert.class);
+
+		return coll.stream().filter(alert -> alert.getDriveDate() == null || datesEqual( alert.getDriveDate(), drivedate ) ).collect(Collectors.toList());
+    }
+    
+    private boolean datesEqual( Date d1, Date d2 ) {
+    	Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+    	Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+    	c1.setTime(d1);
+    	c2.setTime(d2);
+    	return c1.get(Calendar.DATE) == c1.get(Calendar.DATE) && c1.get(Calendar.MONTH) == c1.get(Calendar.MONTH) && c1.get(Calendar.YEAR) == c1.get(Calendar.YEAR);
     }
 
     //Load
@@ -234,42 +269,42 @@ public class MongoDAO {
     }
 
     public List<Load> getLoadsForTruckByFilter(Truck truck, Double sourceLat, Double sourceLng, Integer source_radius,
-	    Double destinationLat, Double destinationLng, Integer destination_radius, Date drivedate) {
-	// The criteria API isn't good enough
-	String query = "{";
+    		Double destinationLat, Double destinationLng, Integer destination_radius, Date drivedate) {
+    	// The criteria API isn't good enough
+    	String query = "{";
 
-	query += "weight: { $exists: true, $lte: " + truck.getMaxWeight() + " } ";
-	query += ", volume: { $exists: true, $lte: " + truck.getMaxVolume() + " } ";
-	query += ", type: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLoadTypes()) + "] } ";
-	query += ", loadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
-	query += ", downloadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
-	if (sourceLat != null && sourceLng != null && source_radius != null) {
-		query += ", sourceLocation : { $near : { $geometry : { type : \"Point\" , coordinates : [" + sourceLng + ", " + sourceLat + "] }, $maxDistance : "+ source_radius * 1000 + " } }";
-	}
-	if (destinationLat != null && destinationLng != null && destination_radius != null) {
-		query += ", destinationLocation : { $near : { $geometry : { type : \"Point\" , coordinates : [" + destinationLng + ", " + destinationLat + "] }, $maxDistance : "+ destination_radius * 1000 + " } }";
-	}
-	// sort results
-	query += "}";
-	BasicQuery queryobj = new BasicQuery(query);
-	List<Load> coll = mongoTemplate.find(queryobj, Load.class);
+    	query += "weight: { $exists: true, $lte: " + truck.getMaxWeight() + " } ";
+    	query += ", volume: { $exists: true, $lte: " + truck.getMaxVolume() + " } ";
+    	query += ", type: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLoadTypes()) + "] } ";
+    	query += ", loadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
+    	query += ", downloadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
+    	if (sourceLat != null && sourceLng != null && source_radius != null) {
+    		query += ", sourceLocation : { $geoWithin : { $centerSphere: [ [" + sourceLng + ", " + sourceLat + "], "+ source_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+    	}
+    	if (destinationLat != null && destinationLng != null && destination_radius != null) {
+    		query += ", destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+    	}
+    	// sort results
+    	query += "}";
+    	BasicQuery queryobj = new BasicQuery(query);
+    	List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 
-	if (drivedate != null) {
-	    return coll.stream().filter(load -> {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(drivedate);
-		cal.add(Calendar.DATE, 1);
-		Date drivedateNextDay = cal.getTime();
-		return load.getDriveDate() != null && load.getDriveDate().compareTo(drivedateNextDay) < 0 && load.getDriveDate().compareTo(drivedate) >= 0;
-	    }).collect(Collectors.toList());
+    	if (drivedate != null) {
+    		return coll.stream().filter(load -> {
+    			Calendar cal = Calendar.getInstance();
+    			cal.setTime(drivedate);
+    			cal.add(Calendar.DATE, 1);
+    			Date drivedateNextDay = cal.getTime();
+    			return load.getDriveDate() != null && load.getDriveDate().compareTo(drivedateNextDay) < 0 && load.getDriveDate().compareTo(drivedate) >= 0;
+    		}).collect(Collectors.toList());
 
-	}
-	else {
-	    Date now = new Date();
-	    return coll.stream().filter(load -> {
-		return load.getDriveDate().after(now);
-	    }).collect(Collectors.toList());
-	}
+    	}
+    	else {
+    		Date now = new Date();
+    		return coll.stream().filter(load -> {
+    			return load.getDriveDate().after(now);
+    		}).collect(Collectors.toList());
+    	}
     }
 
     private ArrayList<String> convertToInClauseStringCollection(List<?> list) {

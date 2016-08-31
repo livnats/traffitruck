@@ -40,6 +40,7 @@ import com.traffitruck.domain.Role;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.domain.TruckAvailability;
 import com.traffitruck.domain.TruckRegistrationStatus;
+import com.traffitruck.service.AsyncServices;
 import com.traffitruck.service.DuplicateEmailException;
 import com.traffitruck.service.DuplicateException;
 import com.traffitruck.service.MongoDAO;
@@ -53,6 +54,9 @@ public class HtmlController {
 
 	@Autowired
 	private MongoDAO dao;
+
+	@Autowired
+	private AsyncServices asyncServices;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -119,6 +123,7 @@ public class HtmlController {
 			load.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
 		}
 		dao.storeLoad(load);
+		asyncServices.triggerAlerts(load);
 		return new ModelAndView("redirect:/myLoads");
 	}
 
