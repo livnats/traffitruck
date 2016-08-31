@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.traffitruck.domain.Alert;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadAndUser;
 import com.traffitruck.domain.LoadsUser;
+import com.traffitruck.domain.Location;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.service.MongoDAO;
 
@@ -56,22 +58,6 @@ public class JsonController {
 		return dao.getLoadsForTruck(truck);
 	}
 
-	@RequestMapping(value="/create_alert", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String createAlert(
-			@RequestParam("licensePlateNumber") String licensePlateNumber,
-			@RequestParam("sourceLat") Double sourceLat,
-			@RequestParam("sourceLng") Double sourceLng,
-			@RequestParam("destinationLat") Double destinationLat,
-			@RequestParam("destinationLng") Double destinationLng,
-			@RequestParam(value="source_radius", required=false) Integer source_radius,
-			@RequestParam(value="destination_radius", required=false) Integer destination_radius,
-			@RequestParam("drivedate") String drivedate
-			) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
-		return null;
-	}
-
 	@RequestMapping(value="/load_for_truck_by_radius", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Load> getLoadsForTruckByDistance(
 			@RequestParam("licensePlateNumber") String licensePlateNumber,
@@ -90,6 +76,20 @@ public class JsonController {
 		if (truck == null) { // the logged in user does not have a truck with this license plate number
 			return Collections.emptyList();
 		}
+		Date driveDateObj = convertDriveDate(drivedate);
+
+		// set default value for radius if not set
+		if ( sourceLat != null && sourceLng != null && source_radius == null ) {
+			source_radius = 20;
+		}
+		if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
+			destination_radius = 20;
+		}
+
+		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);
+	}
+
+	public static Date convertDriveDate(String drivedate) {
 		Date driveDateObj = null;
 		if (drivedate != null && drivedate.length() > 0) {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
@@ -100,14 +100,6 @@ public class JsonController {
 				throw new RuntimeException(e);
 			}
 		}
-		// set default value for radius if not set
-		if ( sourceLat != null && sourceLng != null && source_radius == null ) {
-			source_radius = 20;
-		}
-		if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
-			destination_radius = 20;
-		}
-
-		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);
+		return driveDateObj;
 	}
 }

@@ -21,6 +21,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import com.traffitruck.domain.Alert;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.ResetPassword;
@@ -42,6 +43,21 @@ public class MongoDAO {
 	mongoTemplate.indexOps(Truck.class).ensureIndex(new Index("licensePlateNumber", Direction.ASC).unique());
 	mongoTemplate.indexOps(LoadsUser.class).ensureIndex(new Index("username", Direction.ASC).unique());
 	mongoTemplate.indexOps(LoadsUser.class).ensureIndex(new Index("email", Direction.ASC).unique());
+    }
+
+    //Load
+    public void storeAlert( Alert alert ) {
+    	mongoTemplate.insert(alert);
+    }
+
+    public List<Alert> getUserAlerts( String username ) {
+    	Query q = new Query()
+		.addCriteria(Criteria.where("username").is(username));
+    	return mongoTemplate.find(q, Alert.class);
+    }
+
+    public List<Alert> getAllAlerts( String username ) {
+    	return mongoTemplate.findAll(Alert.class);
     }
 
     //Load

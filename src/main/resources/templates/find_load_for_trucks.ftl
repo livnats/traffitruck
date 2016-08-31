@@ -44,7 +44,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 	}
 
 	$("#truckSelection").change(function() {
-	    if ( $("#truckSelection").val() != "000" ) {
+	    if ( $("#truckSelection").val() != "" ) {
 	       $("#searchfilter").show();
 	       $("#available_loads").show();
 	       $("#map_canvas").show();
@@ -321,9 +321,8 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 
 		<div class="ui-field-contain">
 			<#if (trucks?size > 1)>
-				<label for="truckSelection"></label>
 	        	<select name="truckSelection" id="truckSelection">
-	        	  <option value="000">בחר משאית</option>
+	        	  <option value="">בחר משאית</option>
 				  <#list trucks as truck>
 					  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
 				  </#list>
@@ -348,7 +347,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 								<input type="hidden" id="destinationLng" name="destinationLng" value="">
 							</div>
 							<div class="ui-field-contain">
-								<label for="drivedate">סנן לפי תאריך הובלה</label>
+								<label for="drivedate">תאריך הובלה</label>
 								<input type="text" id="drivedate" name="drivedate" value="" onfocus="blur();" style="text-align:right">
 							</div>
 							<div>

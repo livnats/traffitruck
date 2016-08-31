@@ -28,6 +28,7 @@ $(document).on("mobileinit", function()
 <#if (trucks?? && trucks?size > 0)>
 	<a href="/findTrucksForLoad" class="linkbutton"><input type="button" id="Button2" name="" value="חפש מטענים להובלה"></a>
 </#if>
+<a href="/myAlerts" class="linkbutton"><input type="button" id="Button1" name="" value="ההתראות שלי"></a>
 <#if (isLoadsOwner??)>
 	<a href="/myLoads" class="linkbutton"><input type="button" id="Button3" name="" value="המטענים שלי"></a>
 </#if>
