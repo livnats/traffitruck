@@ -76,8 +76,16 @@ $(document).on("mobileinit", function()
 								<tbody>
 									<#list alerts as alert>
 									<tr id="${alert.id}">
-										<td style="text-align:right">${alert.source}</td>
-										<td style="text-align:right">${alert.destination}</td>
+										<#if (alert.source??)>
+											<td style="text-align:right">${alert.source}</td>
+										<#else>
+											<td style="text-align:right"></td>
+										</#if>
+										<#if (alert.destination??)>
+											<td style="text-align:right">${alert.destination}</td>
+										<#else>
+											<td style="text-align:right"></td>
+										</#if>
 										<#if (alert.driveDate??)>
 											<td style="text-align:right" class="typeConversion">${alert.driveDateStr}</td>
 										<#else>
