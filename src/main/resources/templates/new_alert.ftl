@@ -180,7 +180,7 @@ function ValidateForm1(theForm)
   </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&language=iw&region=IL"></script>
+<script src="/mapsapis"></script>
 
 </body>
 </html>

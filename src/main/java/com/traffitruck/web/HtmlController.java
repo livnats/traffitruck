@@ -44,6 +44,7 @@ import com.traffitruck.service.AsyncServices;
 import com.traffitruck.service.DuplicateEmailException;
 import com.traffitruck.service.DuplicateException;
 import com.traffitruck.service.MongoDAO;
+import com.traffitruck.service.RestServices;
 
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateHashModel;
@@ -61,6 +62,23 @@ public class HtmlController {
 	@Autowired
 	private JavaMailSender mailSender;
 
+	@Autowired
+	private RestServices restServices;
+
+	private String cachedGoogleMapsResponse;
+	private long googleMapscachingTimestamp;
+	@RequestMapping(path="/mapsapis", produces="application/javascript;charset=UTF-8")
+	ModelAndView googleMapsProxy() {
+		long now = System.currentTimeMillis();
+		if ( cachedGoogleMapsResponse == null || ( now - googleMapscachingTimestamp > 3600_000 ) ) {
+			cachedGoogleMapsResponse = restServices.getGoogleJavascriptAPI();
+			googleMapscachingTimestamp = now;
+		}
+		Map<String, Object> model = new HashMap<>();
+		model.put("content", cachedGoogleMapsResponse);
+		return new ModelAndView("proxy", model);
+	}
+	
 	@RequestMapping("/login")
 	ModelAndView login() {
 		return new ModelAndView("login");
