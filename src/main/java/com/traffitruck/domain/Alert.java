@@ -22,6 +22,9 @@ public class Alert {
     	return sdf.format(driveDate);
     }
 
+    public String getId() {
+		return id;
+	}
 	public String getUsername() {
 		return username;
 	}

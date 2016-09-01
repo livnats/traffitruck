@@ -37,18 +37,22 @@ $(document).on("mobileinit", function()
 										<th style="text-align:right">מוצא</th>
 										<th style="text-align:right">יעד</th>
 										<th style="text-align:right">תאריך</th>
+										<th style="text-align:right">מחק</th>
 									</tr>
 								</thead>
 								<tbody>
 									<#list alerts as alert>
-									<tr>
+									<tr id="${alert.id}">
 										<td style="text-align:right">${alert.source}</td>
 										<td style="text-align:right">${alert.destination}</td>
 										<#if (alert.driveDate??)>
-											<td style="text-align:right">${alert.driveDateStr}</td>
+											<td style="text-align:right" class="typeConversion">${alert.driveDateStr}</td>
 										<#else>
 											<td style="text-align:right"></td>
 										</#if>
+										<td style="text-align:right">
+											<a href="#" onclick="return deleteAlert()" data-role="none"><img src="/images/remove-icon-png-26.png"  width="20px" ></a>
+										</td>
 									</tr>
 									</#list>
 								</tbody>
