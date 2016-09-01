@@ -35,6 +35,20 @@ $(document).on("mobileinit", function()
    $.mobile.ajaxEnabled = false;
 });
 </script>
+<script>
+
+	function deleteAlert(alertId){
+		$.post(
+			"/deleteAlert",
+			{
+				alertId: alertId,
+				${_csrf.parameterName}: "${_csrf.token}"
+			} 
+		);
+		$("#"+alertId).remove();
+	}
+	
+</script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 
 </head>
@@ -70,7 +84,7 @@ $(document).on("mobileinit", function()
 											<td style="text-align:right"></td>
 										</#if>
 										<td style="text-align:right">
-											<a href="#" onclick="return deleteAlert()" data-role="none"><img src="/images/remove-icon-png-26.png"  width="20px" ></a>
+											<a href="#" onclick="return deleteAlert('${alert.id}')" data-role="none"><img src="/images/remove-icon-png-26.png"  width="20px" ></a>
 										</td>
 									</tr>
 									</#list>

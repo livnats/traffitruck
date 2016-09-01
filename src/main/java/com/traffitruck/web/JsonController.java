@@ -131,5 +131,12 @@ public class JsonController {
 		dao.storeAlert(alert);
 		return "Success!";
 	}
-
+	
+	@RequestMapping(value = "/deleteAlert", method = RequestMethod.POST)
+	String deleteAlert(@RequestParam("alertId") String alertId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		dao.deleteAlert(alertId,username);
+		return "Success!";
+	}
 }
