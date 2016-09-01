@@ -9,6 +9,50 @@
 	
 $(document).ready(function() {
 
+	function convertLoadType(typesStr) {
+		types = typesStr.split(" ");
+		res = "";
+		for (var i = 0; i < types.length; i++) {
+			type = types[i];
+	   		if ( type == "${enums["com.traffitruck.domain.LoadType"].CONTAINER_20}" )
+				res += "מכולה 20', ";
+			if ( type == "${enums["com.traffitruck.domain.LoadType"].CONTAINER_40}" )
+				res += "מכולה 40', ";
+			if ( type == "${enums["com.traffitruck.domain.LoadType"].LIFTS}" )
+				res += "משטחים, ";
+			if ( type == "${enums["com.traffitruck.domain.LoadType"].BAGS}" )
+				res += "שקים (באלות), ";
+			if ( type == "${enums["com.traffitruck.domain.LoadType"].ANIMALS}" )
+				res += "בעלי חיים, ";
+			if ( type == "${enums["com.traffitruck.domain.LoadType"].SCATTERED}" )
+				res += "תפזורת, ";
+			if ( type == "${enums["com.traffitruck.domain.LoadType"].HAZMAT}" )
+				res += 'חומ"ס, ';
+			if ( type == "${enums["com.traffitruck.domain.LoadType"].OTHER}" )
+				res += "אחר, ";
+		}
+		return res.slice(0, -2);
+	}
+
+	function convertLiftType(typesStr) {
+		types = typesStr.split(" ");
+		res = "";
+		for (var i = 0; i < types.length; i++) {
+			type = types[i];
+			if ( type == "${enums["com.traffitruck.domain.LiftType"].MANUAL}" )
+				res += "ידני, ";
+			if ( type == "${enums["com.traffitruck.domain.LiftType"].FORKLIFT}" )
+				res += "מלגזה, ";
+			if ( type == "${enums["com.traffitruck.domain.LiftType"].CRANE}" )
+				res += "מנוף, ";
+			if ( type == "${enums["com.traffitruck.domain.LiftType"].RAMP}" )
+				res += "רמפה, ";
+			if ( type == "${enums["com.traffitruck.domain.LiftType"].TROLLY}" )
+				res += "עגלה, ";
+		}
+		return res.slice(0, -2);
+	}
+
 	function convertType(type) {
 		if ( type == "${enums["com.traffitruck.domain.TruckRegistrationStatus"].REGISTERED}" )
 			return "ממתין לאישור";
@@ -19,6 +63,14 @@ $(document).ready(function() {
 	
 	$( ".typeConversion" ).each(function() {
 	  $(this).html(convertType($(this).html()));
+	});
+
+	$( ".loadConversion" ).each(function() {
+	  $(this).html(convertLoadType($(this).html()));
+	});
+
+	$( ".liftConversion" ).each(function() {
+	  $(this).html(convertLiftType($(this).html()));
 	});
 
 });
@@ -65,12 +117,12 @@ $(document).ready(function() {
 										<td>${truck.maxWeight!''}</td>
 										<td>${truck.maxVolume!''}</td>
 										<#if truck.acceptableLoadTypes??>
-											<td>${truck.acceptableLoadTypes?join(", ")!''}</td>
+											<td class="loadConversion">${truck.acceptableLoadTypes?join(" ")!''}</td>
 										<#else>
 											<td></td>
 										</#if>
 										<#if truck.acceptableLiftTypes??>
-											<td>${truck.acceptableLiftTypes?join(", ")!''}</td>
+											<td class="liftConversion">${truck.acceptableLiftTypes?join(" ")!''}</td>
 										<#else>
 											<td></td>
 										</#if>
