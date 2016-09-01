@@ -135,15 +135,15 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			destinationLng = $("#destinationLng").val();
 			drivedate = $("#drivedate").val();
 
-			sessionStorage['filter'] = "true";
-			sessionStorage['licensePlateNumber'] = licensePlateNumber;
-			sessionStorage['source'] = $("#source").val();
-			sessionStorage['destination'] = $("#destination").val();
-			sessionStorage['sourceLat'] = sourceLat;
-			sessionStorage['sourceLng'] = sourceLng;
-			sessionStorage['destinationLat'] = destinationLat;
-			sessionStorage['destinationLng'] = destinationLng;
-			sessionStorage['drivedate'] = drivedate;
+			localStorage['filter'] = "true";
+			localStorage['licensePlateNumber'] = licensePlateNumber;
+			localStorage['source'] = $("#source").val();
+			localStorage['destination'] = $("#destination").val();
+			localStorage['sourceLat'] = sourceLat;
+			localStorage['sourceLng'] = sourceLng;
+			localStorage['destinationLat'] = destinationLat;
+			localStorage['destinationLng'] = destinationLng;
+			localStorage['drivedate'] = drivedate;
 
 			$.post( "/load_for_truck_by_radius",
 				{
@@ -256,17 +256,24 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
     var autocomplete;
     function initialize() {
 
-		if ( sessionStorage['filter'] == "true" ) {
-		    $("#truckSelection option[value='" + sessionStorage['licensePlateNumber'] + "']").prop("selected", "selected").change();
-			$("#source").val(sessionStorage['source']);
-			$("#sourceLat").val(sessionStorage['sourceLat']);
-			$("#sourceLng").val(sessionStorage['sourceLng']);
-			$("#destination").val(sessionStorage['destination']);
-			$("#destinationLat").val(sessionStorage['destinationLat']);
-			$("#destinationLng").val(sessionStorage['destinationLng']);
-			$("#drivedate").val(sessionStorage['drivedate']);
+		if ( localStorage['filter'] == "true" ) {
+			$("#source").val(localStorage['source']);
+			$("#sourceLat").val(localStorage['sourceLat']);
+			$("#sourceLng").val(localStorage['sourceLng']);
+			$("#destination").val(localStorage['destination']);
+			$("#destinationLat").val(localStorage['destinationLat']);
+			$("#destinationLng").val(localStorage['destinationLng']);
+			$("#drivedate").val(localStorage['drivedate']);
+		    $("#truckSelection option[value='" + localStorage['licensePlateNumber'] + "']").prop("selected", "selected").change();
 			$( "#radiusFilter" ).click();
 		}
+		else if ( $("#truckSelection").val() != "" ) {
+			$( "#radiusFilter" ).click();
+		}
+		else {
+			$("#truckSelection").change();
+		}
+		
 
       var geocoder = new google.maps.Geocoder();
       

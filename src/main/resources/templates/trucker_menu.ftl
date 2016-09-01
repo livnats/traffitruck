@@ -16,6 +16,9 @@ $(document).on("mobileinit", function()
 });
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script>
+localStorage['filter'] = "false";
+</script>
 </head>
 <body>
 <div data-role="page" data-theme="a" data-title="תפריט" id="trucker_menu">
