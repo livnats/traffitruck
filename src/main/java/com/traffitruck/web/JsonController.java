@@ -104,4 +104,32 @@ public class JsonController {
 		}
 		return driveDateObj;
 	}
+	
+	@RequestMapping(value = "/alertFromFilter", method = RequestMethod.POST)
+	String newAlert(
+			@RequestParam("source") String source,
+			@RequestParam("sourceLat") Double sourceLat,
+			@RequestParam("sourceLng") Double sourceLng,
+			@RequestParam("destination") String destination,
+			@RequestParam("destinationLat") Double destinationLat,
+			@RequestParam("destinationLng") Double destinationLng,
+			@RequestParam("drivedate") String drivedate
+			) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Alert alert = new Alert();
+		alert.setUsername(username);
+		if (source != null && sourceLat != null && sourceLng != null) {
+			alert.setSource(source);
+			alert.setSourceLocation(new Location(new double[] { sourceLng, sourceLat}));
+		}
+		if (destination != null && destinationLat != null && destinationLng != null) {
+			alert.setDestination(destination);
+			alert.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
+		}
+		alert.setDriveDate(JsonController.convertDriveDate(drivedate));
+		dao.storeAlert(alert);
+		return "Success!";
+	}
+
 }

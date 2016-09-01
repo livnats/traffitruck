@@ -35,14 +35,6 @@ $( "#drivedate" ).datepicker();
 $( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
 $( "#drivedate" ).datepicker( "option", "minDate", 0);
 
-	function mAlert(text1) {
-	  $("#sure .sure-1").text(text1);
-	  $("#sure .sure-do").on("click.sure", function() {
-	    $(this).off("click.sure");
-	  });
-	  $.mobile.changePage("#sure");
-	}
-
 	$("#truckSelection").change(function() {
 	    if ( $("#truckSelection").val() != "" ) {
 	       $("#searchfilter").show();
@@ -66,6 +58,39 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 
 <script>
+	function mAlert(text1) {
+	  $("#sure .sure-1").text(text1);
+	  $("#sure .sure-do").on("click.sure", function() {
+	    $(this).off("click.sure");
+	  });
+	  $.mobile.changePage("#sure");
+	}
+
+	function createAlert() {
+		source = $("#source").val();
+		sourceLat = $("#sourceLat").val();
+		sourceLng = $("#sourceLng").val();
+		destination = $("#destination").val();
+		destinationLat = $("#destinationLat").val();
+		destinationLng = $("#destinationLng").val();
+		drivedate = $("#drivedate").val();
+		$.post(
+			"/alertFromFilter",
+			{
+				source: source,
+				sourceLat: sourceLat,
+				sourceLng: sourceLng,
+				destination: destination,
+				destinationLat: destinationLat,
+				destinationLng: destinationLng,
+				drivedate: drivedate,
+				${_csrf.parameterName}: "${_csrf.token}"
+			}, 
+			function() {
+				mAlert("ההתראה נוצרה בהצלחה")
+  			});
+	}
+	
 	function convertType(type) {
 		if ( type == "${enums["com.traffitruck.domain.LoadType"].CONTAINER_20}" )
 			return "מכולה 20'";
@@ -228,7 +253,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 		$("#drivedate").val('');
 	}
 	
-		
     var autocomplete;
     function initialize() {
 
