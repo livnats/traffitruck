@@ -66,16 +66,9 @@ function ValidateForm(theForm)
 		<form name="loginform" method="post" action="/login" id="loginform" onsubmit="return ValidateForm(this)">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<input type="hidden" name="form_name" value="loginform">
-				<input type="text" id="username" name="username" value="" style="text-align:right" autocapitalize="off" placeholder='שם משתמש'>
-				<input type="password" id="password" name="password" value="" style="text-align:right" placeholder='סיסמה'>
-			<div id="rememberme">
-				<!--
-				<fieldset data-role="controlgroup" data-shadow="true">
-				<input type="checkbox" id="rememberme-0" name="rememberme" value="on" checked>
-				<label for="rememberme-0">זכור אותי</label>
-				</fieldset>
-				-->
-			</div>
+			<input type="text" id="username" name="username" value="" style="text-align:right" autocapitalize="off" placeholder='שם משתמש'>
+			<input type="password" id="password" name="password" value="" style="text-align:right" placeholder='סיסמה'>
+			<input type="hidden" id="remember-me" name="remember-me" value="on">
 			<input type="submit" id="login" name="login" value="התחבר">
 		</form>
 		<a href="/registerUser" data-role="button" data-inline="true" data-theme="b">רישום משתמש חדש</a>

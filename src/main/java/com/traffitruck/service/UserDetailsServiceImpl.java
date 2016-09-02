@@ -15,6 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.traffitruck.domain.LoadsUser;
@@ -22,7 +26,7 @@ import com.traffitruck.domain.ResetPassword;
 import com.traffitruck.domain.Role;
 
 @Component
-public class UserDetailsServiceImpl implements AuthenticationProvider {
+public class UserDetailsServiceImpl implements AuthenticationProvider, UserDetailsService {
 
     private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
 
@@ -83,5 +87,12 @@ public class UserDetailsServiceImpl implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
 	return true;
     }
+
+	@Override
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
+		LoadsUser user = dao.getUser(username);
+		return new User(username, "dummy", rolesToAuthorities(user.getRoles()));
+	}
 
 }
