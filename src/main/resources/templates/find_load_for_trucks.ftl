@@ -344,10 +344,21 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 <body onload="initialize()">
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">
 <div data-role="header" id="Header1">
-<h1>חיפוש מטען</h1>
-<a href="/menu" data-role="button" class="ui-btn-left">חזרה</a>
-<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
-</div>
+	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+	<img src="/images/truck-blue.jpg" width="15%"/>
+	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+	<div data-role="navbar">
+	  <ul>
+   		<li><a href="/myAlerts">ההתראות שלי</a></li>
+  		<li><a href="/myTrucks">המשאיות שלי</a></li>
+    	<li><a href="/findTrucksForLoad" class="ui-btn-active ui-state-persist"> חפש מטענים להובלה</a></li>
+	  	<#if (isLoadsOwner??)>
+	    	<li><a href="/myLoads">המטענים שלי</a></li>
+		</#if>
+	  </ul>
+	</div> <!--/navbar-->
+</div> <!--/header-->
+
 <div class="ui-content" role="main">
 
 		<div class="ui-field-contain">

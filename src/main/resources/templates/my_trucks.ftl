@@ -60,7 +60,6 @@ $(document).ready(function() {
 <body>
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="trucks">
 <div data-role="header" id="Header1">
-	<a href="/menu" data-role="button" class="ui-btn-left">חזרה</a>
 	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
 	<img src="/images/truck-blue.jpg" width="15%"/>
 	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
@@ -76,7 +75,7 @@ $(document).ready(function() {
 	    	<li><a href="#" class="ui-disabled"> חפש מטענים להובלה</a></li>
 	    </#if>
 	    <#if (isLoadsOwner??)>
-	    	<li><a href="/myLoads" class="ui-btn-active ui-state-persist">המטענים שלי</a></li>
+	    	<li><a href="/myLoads">המטענים שלי</a></li>
 		</#if>
 	  </ul>
 	</div> <!--/navbar-->
