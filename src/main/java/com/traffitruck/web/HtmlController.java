@@ -167,11 +167,12 @@ public class HtmlController {
 				isTruckOwner = true;
 			}
 		}
-		if ( isLoadsOwner && ! isTruckOwner ) {
-			return new ModelAndView("redirect:/myLoads");
-		}
 		Map<String, Object> model = new HashMap<>();
 		String username = authentication.getName();
+		if ( isLoadsOwner && ! isTruckOwner ) {
+			model.put("isTruckOwner", Boolean.FALSE);
+			return new ModelAndView("redirect:/myLoads", model);
+		}
 		model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
 		if ( isLoadsOwner ) {
 			model.put("isLoadsOwner", Boolean.TRUE);
@@ -195,7 +196,7 @@ public class HtmlController {
 
 		for ( GrantedAuthority auth : authentication.getAuthorities() ) {
 			if ( Role.TRUCK_OWNER.toString().equals(auth.getAuthority()) ) {
-				model.put("back", "/menu");
+				model.put("isTruckOwner", Boolean.TRUE);
 			}
 		}
 		model.put("Format", getFormatStatics());
