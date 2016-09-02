@@ -43,10 +43,18 @@ function ValidateForm1(theForm)
 </head>
 <body dir="rtl">
 <div data-role="page" data-theme="a" data-title="שחזור סיסמה" id="add_truck">
+
 <div data-role="header" id="Header1">
-<h1>שחזור סיסמה</h1>
-<a href="/login" data-role="button" class="ui-btn-left">חזרה</a>
-</div>
+	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+	<img src="/images/truck-blue.jpg" width="15%"/>
+	<a href="/login" data-role="button" class="ui-btn-left">חזרה</a>
+	<div data-role="navbar">
+	  <ul>
+   		<li><a href="#" class="ui-btn-active ui-state-persist">שחזור סיסמה</a></li>
+	  </ul>
+	</div> <!--/navbar-->
+</div> <!--/header-->
+
 <div class="ui-content" role="main">
 <div id="wb_Form1" style="">
 
