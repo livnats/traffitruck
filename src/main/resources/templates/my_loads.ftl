@@ -68,13 +68,10 @@ $(document).ready(function() {
 <div data-role="header" id="Header1">
 	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
 	<img src="/images/truck-blue.jpg" width="15%"/>
-	<#if (isTruckOwner??)>
-		<a href="${back}" data-role="button" class="ui-btn-left">חזרה</a>
-	</#if>
 	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 	<div data-role="navbar">
 	  <ul>
-	  	<#if (isTruckOwner??)>
+	  	<#if (isTruckOwner)>
 	  	  	<#if (trucks?? && trucks?size > 0)>
 		   		<li><a href="/myAlerts">ההתראות שלי</a></li>
 		  		<li><a href="/myTrucks">המשאיות שלי</a></li>

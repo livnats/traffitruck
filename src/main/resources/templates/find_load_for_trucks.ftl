@@ -352,7 +352,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
    		<li><a href="/myAlerts">ההתראות שלי</a></li>
   		<li><a href="/myTrucks">המשאיות שלי</a></li>
     	<li><a href="/findTrucksForLoad" class="ui-btn-active ui-state-persist"> חפש מטענים להובלה</a></li>
-	  	<#if (isLoadsOwner??)>
+	  	<#if (isLoadsOwner)>
 	    	<li><a href="/myLoads">המטענים שלי</a></li>
 		</#if>
 	  </ul>

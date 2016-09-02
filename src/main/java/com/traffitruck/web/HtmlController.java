@@ -8,6 +8,7 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
@@ -105,6 +106,7 @@ public class HtmlController {
 	ModelAndView findTrucksForLoad() {
 		Map<String, Object> model = new HashMap<>();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		updateModelWithRoles(model);
 		String username = authentication.getName();
 		model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 		model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
@@ -153,9 +155,8 @@ public class HtmlController {
 		model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
 		return new ModelAndView("trucker_menu", model);
 	}
-
-	@RequestMapping(value = "/menu")
-	ModelAndView menu() {
+	
+	private void updateModelWithRoles (Map<String, Object> model){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		boolean isLoadsOwner = false;
 		boolean isTruckOwner = false;
@@ -167,17 +168,38 @@ public class HtmlController {
 				isTruckOwner = true;
 			}
 		}
+		model.put("isLoadsOwner", isLoadsOwner);
+		model.put("isTruckOwner", isTruckOwner);
+	}
+
+	@RequestMapping(value = "/menu")
+	ModelAndView menu() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Map<String, Object> model = new HashMap<>();
+		
+		boolean isLoadsOwner = false;
+		boolean isTruckOwner = false;
+		for ( GrantedAuthority auth : authentication.getAuthorities() ) {
+			if ( Role.LOAD_OWNER.toString().equals(auth.getAuthority()) ) {
+				isLoadsOwner = true;
+			}
+			if ( Role.TRUCK_OWNER.toString().equals(auth.getAuthority()) ) {
+				isTruckOwner = true;
+			}
+		}
 		String username = authentication.getName();
 		if ( isLoadsOwner && ! isTruckOwner ) {
-			model.put("isTruckOwner", Boolean.FALSE);
 			return new ModelAndView("redirect:/myLoads", model);
 		}
-		model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
-		if ( isLoadsOwner ) {
-			model.put("isLoadsOwner", Boolean.TRUE);
+		List<Truck> trucks = dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED);
+		if ( trucks != null && trucks.size() > 0 ) {
+			return new ModelAndView("redirect:/findTrucksForLoad", model);
+		} 
+		else {
+			return new ModelAndView("redirect:/myTrucks", model);
 		}
-		return new ModelAndView("trucker_menu", model);
+			
+		
 	}
 
 	@RequestMapping("/newload")
@@ -193,12 +215,8 @@ public class HtmlController {
 		String username = authentication.getName();
 
 		Map<String, Object> model = new HashMap<>();
-
-		for ( GrantedAuthority auth : authentication.getAuthorities() ) {
-			if ( Role.TRUCK_OWNER.toString().equals(auth.getAuthority()) ) {
-				model.put("isTruckOwner", Boolean.TRUE);
-			}
-		}
+		updateModelWithRoles(model);
+		
 		model.put("Format", getFormatStatics());
 		model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 		model.put("loads", dao.getLoadsForUser(username));
@@ -403,6 +421,7 @@ public class HtmlController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Map<String, Object> model = new HashMap<>();
+		updateModelWithRoles(model);
 		model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 		model.put("trucks", dao.getTrucksForUser(username));
 		return new ModelAndView("my_trucks", model);

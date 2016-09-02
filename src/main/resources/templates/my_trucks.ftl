@@ -75,7 +75,7 @@ $(document).ready(function() {
 	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist">המשאיות שלי</a></li>
 	    	<li><a href="#" class="ui-disabled"> חפש מטענים להובלה</a></li>
 	    </#if>
-	    <#if (isLoadsOwner??)>
+	    <#if (isLoadsOwner)>
 	    	<li><a href="/myLoads">המטענים שלי</a></li>
 		</#if>
 	  </ul>
@@ -83,6 +83,7 @@ $(document).ready(function() {
 </div> <!--/header-->
 	
 <div class="ui-content" role="main">
+
 
 							<#if trucks?has_content>
 						
