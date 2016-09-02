@@ -60,10 +60,28 @@ $(document).ready(function() {
 <body>
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="trucks">
 <div data-role="header" id="Header1">
-<h1>המשאיות שלי</h1>
-<a href="/menu" data-role="button" class="ui-btn-left">חזרה</a>
-<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
-</div>
+	<a href="/menu" data-role="button" class="ui-btn-left">חזרה</a>
+	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+	<img src="/images/truck-blue.jpg" width="15%"/>
+	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+	<div data-role="navbar">
+	  <ul>
+	  	<#if (trucks?? && trucks?size > 0)>
+	   		<li><a href="/myAlerts">ההתראות שלי</a></li>
+	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist">המשאיות שלי</a></li>
+	    	<li><a href="/findTrucksForLoad"> חפש מטענים להובלה</a></li>
+	    <#else>
+	    	<li><a href="#" class="ui-disabled">ההתראות שלי</a></li>
+	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist">המשאיות שלי</a></li>
+	    	<li><a href="#" class="ui-disabled"> חפש מטענים להובלה</a></li>
+	    </#if>
+	    <#if (isLoadsOwner??)>
+	    	<li><a href="/myLoads" class="ui-btn-active ui-state-persist">המטענים שלי</a></li>
+		</#if>
+	  </ul>
+	</div> <!--/navbar-->
+</div> <!--/header-->
+	
 <div class="ui-content" role="main">
 <a href="/newTruck" data-role="button">הוספת משאית חדש</a>
 
