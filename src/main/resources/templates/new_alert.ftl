@@ -141,11 +141,19 @@ function ValidateForm1(theForm)
 </head>
 <body onload="initialize()">
 <div data-role="page" data-theme="a" data-title="צור התראה" id="add_alert">
-	<div data-role="header" id="Header1">
-		<h1>צור התראה</h1>
-		<a href="/myAlerts" data-role="button" class="ui-btn-left">חזרה</a>
-		<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
-	</div>
+
+<div data-role="header" id="Header1">
+	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+	<img src="/images/truck-blue.jpg" width="15%"/>
+	<a href="/myAlerts" data-role="button" class="ui-btn-left">חזרה</a>
+	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+	<div data-role="navbar">
+	  <ul>
+   		<li><a href="#" class="ui-btn-active ui-state-persist">צור התראה</a></li>
+	  </ul>
+	</div> <!--/navbar-->
+</div> <!--/header-->
+
 	<div class="ui-content" role="main">
 		<div id="wb_Form1" style="">
 			
