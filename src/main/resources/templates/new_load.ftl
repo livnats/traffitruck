@@ -304,11 +304,19 @@ function ValidateForm1(theForm)
 </head>
 <body onload="initialize()" dir="rtl">
 <div data-role="page" data-theme="a" data-title="הוספת מטען" id="add_load">
+
 <div data-role="header" id="Header1">
-<h1>הוסף מטען</h1>
-<a href="/menu" data-role="button" class="ui-btn-left">חזרה</a>
-<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
-</div>
+	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+	<img src="/images/truck-blue.jpg" width="15%"/>
+	<a href="/myLoads" data-role="button" class="ui-btn-left">חזרה</a>
+	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+	<div data-role="navbar">
+	  <ul>
+   		<li><a href="#" class="ui-btn-active ui-state-persist">הוספת מטען</a></li>
+	  </ul>
+	</div> <!--/navbar-->
+</div> <!--/header-->
+
 <div class="ui-content" role="main">
 <div id="wb_Form1" style="">
 <form name="newloadForm" method="post" action="newload" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newloadForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
