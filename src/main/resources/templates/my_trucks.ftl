@@ -9,6 +9,7 @@
 <link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
 <link href="css/mobile.css" rel="stylesheet">
 <link href="css/trucks.css" rel="stylesheet">
+<link rel="stylesheet" href="css/icono.min.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script>
 $(document).on("mobileinit", function()
@@ -82,7 +83,6 @@ $(document).ready(function() {
 </div> <!--/header-->
 	
 <div class="ui-content" role="main">
-<a href="/newTruck" data-role="button">הוספת משאית חדש</a>
 
 							<#if trucks?has_content>
 						
@@ -107,6 +107,9 @@ $(document).ready(function() {
 								אין משאיות רשומות
 							</#if>
 
+							<div id="createNew" style="margin-top:30px; text-align:right">
+								<a href="/newTruck"><i class="icono-plusCircle"></i></a>
+							</div>
 </div>
 </div>
 </body>
