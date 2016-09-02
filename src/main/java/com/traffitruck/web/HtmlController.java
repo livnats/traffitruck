@@ -172,7 +172,7 @@ public class HtmlController {
 		model.put("isTruckOwner", isTruckOwner);
 	}
 
-	@RequestMapping(value = "/menu")
+	@RequestMapping(value = {"/menu", "/"})
 	ModelAndView menu() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Map<String, Object> model = new HashMap<>();
