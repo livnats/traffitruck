@@ -198,7 +198,7 @@ function ValidateForm1(theForm)
 	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 	<div data-role="navbar">
 	  <ul>
-   		<li><a href="#" class="ui-btn-active ui-state-persist">הוספת משאית</a></li>
+   		<li><a href="#" class="ui-btn-active ui-state-persist" style= "background-color:rgb(0,128,255);">הוספת משאית</a></li>
 	  </ul>
 	</div> <!--/navbar-->
 </div> <!--/header-->

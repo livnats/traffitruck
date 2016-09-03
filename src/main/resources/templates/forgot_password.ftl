@@ -50,7 +50,7 @@ function ValidateForm1(theForm)
 	<a href="/login" data-role="button" class="ui-btn-left">חזרה</a>
 	<div data-role="navbar">
 	  <ul>
-   		<li><a href="#" class="ui-btn-active ui-state-persist">שחזור סיסמה</a></li>
+   		<li><a href="#" class="ui-btn-active ui-state-persist" style= "background-color:rgb(0,128,255);">שחזור סיסמה</a></li>
 	  </ul>
 	</div> <!--/navbar-->
 </div> <!--/header-->
