@@ -127,7 +127,7 @@ function ValidateForm1(theForm)
       theForm.volume.focus();
       return false;
    }
-   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-,"]*$/;
+   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ '\t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.source.value))
    {
       mAlert("המוצא יכול להכיל אותיות ספרות ורווחים");
@@ -136,7 +136,7 @@ function ValidateForm1(theForm)
    }
    if (theForm.source.value == "")
    {
-      mAlert("המוצא יכול להכיל אותיות ספרות ורווחים");
+      mAlert("חובה לספק מוצא");
       theForm.source.focus();
       return false;
    }
@@ -164,7 +164,7 @@ function ValidateForm1(theForm)
       theForm.downloadingType.focus();
       return false;
    }
-   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-,"]*$/;
+   regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ '\t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.destination.value))
    {
       mAlert("היעד יכול להכיל אותיות ספרות ורווחים");
@@ -173,7 +173,7 @@ function ValidateForm1(theForm)
    }
    if (theForm.destination.value == "")
    {
-      mAlert("היעד יכול להכיל אותיות ספרות ורווחים");
+      mAlert("חובה לספק יעד");
       theForm.destination.focus();
       return false;
    }
@@ -193,6 +193,12 @@ function ValidateForm1(theForm)
    if (theForm.suggestedQuote.value != "" && !(theForm.suggestedQuote.value > 0))
    {
       mAlert("המחיר חייב להכיל רק ספרות");
+      theForm.suggestedQuote.focus();
+      return false;
+   }
+   if (theForm.drivedate.value == "")
+   {
+      mAlert("חובה לספק תאריך");
       theForm.suggestedQuote.focus();
       return false;
    }
