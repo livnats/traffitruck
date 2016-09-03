@@ -350,7 +350,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 	}
 	
 	.ui-btn-active{
-		background:rgb(0,128,255) !important;
+		background-color:rgb(0,128,255) !important;
 		border-color:white !important;
 	}
 		

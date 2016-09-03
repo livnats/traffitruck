@@ -64,7 +64,7 @@ $(document).ready(function() {
 	}
 	
 	.ui-btn-active{
-		background:rgb(0,128,255) !important;
+		background-color:rgb(0,128,255) !important;
 		border-color:white !important;
 	}
 
