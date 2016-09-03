@@ -42,11 +42,11 @@
 		border-color:white !important;
 	}
 
-	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 30% no-repeat; background-size: 16px 14px;}
+	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 25% no-repeat; background-size: 18px 18px;}
+	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 25% no-repeat; background-size: 18px 18px;}
+	.ui-icon-search { 50% 50% no-repeat; background-size: 18px 18px;}
 	.ui-icon-notifications:hover {border-color:white !important;}
-	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 50% no-repeat; background-size: 24px 22px;}
 	.ui-icon-truck:hover {border-color:#DADADA !important;}
-	.ui-icon-search { 50% 50% no-repeat; background-size: 24px 22px;}
 	.ui-icon-search:hover {border-color:#DADADA!important;}
 	
 	
@@ -78,13 +78,13 @@ $(document).on("mobileinit", function()
 <div data-role="page" data-theme="a" data-title="ההתראות שלי" id="alerts">
 <div data-role="header" id="Header1">
 	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
-	<img src="/images/truck-blue.jpg" width="15%"/>
+	<img src="/images/truck-blue.jpg" width="15%"/>	
 	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 	<div data-role="navbar">
 	  <ul>
-   		<li><a href="/myAlerts" class="ui-btn-active ui-state-persist" data-icon="notifications" >התראות</a></li>
-  		<li><a href="/myTrucks" data-icon="truck">משאיות</a></li>
-    	<li><a href="/findTrucksForLoad" data-icon="search">חפש מטען</a></li>
+   		<li><a href="/myAlerts" class="ui-nodisc-icon ui-btn-active ui-state-persist" data-icon="notifications" >התראות</a></li>
+  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck">משאיות</a></li>
+    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search">חפש מטען</a></li>
 	  	<#if (isLoadsOwner??)>
 	    	<li><a href="/myLoads">מטענים</a></li>
 		</#if>

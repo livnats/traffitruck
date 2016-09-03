@@ -68,11 +68,11 @@ $(document).ready(function() {
 		border-color:white !important;
 	}
 
-	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 30% no-repeat; background-size: 16px 14px;}
+	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 25% no-repeat; background-size: 18px 18px;}
+	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 25% no-repeat; background-size: 18px 18px;}
+	.ui-icon-search { 50% 50% no-repeat; background-size: 18px 18px;}
 	.ui-icon-notifications:hover {border-color:#DADADA !important;}
-	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 50% no-repeat; background-size: 24px 22px;}
 	.ui-icon-truck:hover {border-color:white !important;}
-	.ui-icon-search { 50% 50% no-repeat; background-size: 24px 22px;}
 	.ui-icon-search:hover {border-color:#DADADA!important;}
 
 </style>
