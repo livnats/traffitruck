@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 
         <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script src="/mapsapis"></script>
         <script>
             var autocomplete;
             function initialize() {
