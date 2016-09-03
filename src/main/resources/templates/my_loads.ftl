@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <title>טראפי-טראק - מטענים</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=	1.0">
 <link href="js/default/jquery.mobile.theme-1.4.5.css" rel="stylesheet">
 <link href="js/default/jquery.mobile.icons-1.4.5.min.css" rel="stylesheet">
 <link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
 <link href="css/mobile.css" rel="stylesheet">
 <link href="css/loads.css" rel="stylesheet">
+<link rel="stylesheet" href="css/icono.min.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script>
 $(document).on("mobileinit", function()
@@ -90,7 +91,6 @@ $(document).ready(function() {
 </div> <!--/header-->
 
 <div class="ui-content" role="main">
-<a href="/newload" data-role="button">הוספת מטען חדש</a>
 
 							<#if loads?has_content>
 						
@@ -127,6 +127,10 @@ $(document).ready(function() {
 								אין מטענים להציג :(
 							</#if>
 
+
+							<div id="createNew" class="podbar">
+								<a href="/newload"><i class="icono-plusCircle"></i></a>
+							</div>
 </div>
 </div>
 </body>

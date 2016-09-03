@@ -87,3 +87,16 @@ h6
 .ui-datepicker.ui-widget {
 z-index: 100 !important;
 }
+
+.podbar {
+    bottom:0;
+    position:fixed;
+    z-index:150;
+    _position:absolute;
+    _top:expression(eval(document.documentElement.scrollTop+
+        (document.documentElement.clientHeight-this.offsetHeight)));
+    height:50px;
+    padding-left:30px;
+    padding-bottom:30px;
+    text-align:left;
+}

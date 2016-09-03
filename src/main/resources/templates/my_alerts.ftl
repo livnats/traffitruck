@@ -9,6 +9,7 @@
 <link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
 <link href="css/mobile.css" rel="stylesheet">
 <link href="css/alerts.css" rel="stylesheet">
+<link rel="stylesheet" href="css/icono.min.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <style>
 @media ( min-width: 10em ) {
@@ -71,7 +72,6 @@ $(document).on("mobileinit", function()
 </div> <!--/header-->
 
 <div class="ui-content" role="main">
-<a href="/newAlert" data-role="button">צור התראה חדש</a>
 
 							<#if alerts?has_content>
 						
@@ -113,6 +113,10 @@ $(document).on("mobileinit", function()
 							<#else>
 								אין התראות
 							</#if>
+
+							<div id="createNew" class="podbar">
+								<a href="/newAlert"><i class="icono-plusCircle"></i></a>
+							</div>
 
 </div>
 </div>

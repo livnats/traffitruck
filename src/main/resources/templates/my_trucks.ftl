@@ -108,7 +108,7 @@ $(document).ready(function() {
 								אין משאיות רשומות
 							</#if>
 
-							<div id="createNew" style="margin-top:30px; text-align:right">
+							<div id="createNew" class="podbar">
 								<a href="/newTruck"><i class="icono-plusCircle"></i></a>
 							</div>
 </div>
