@@ -220,6 +220,7 @@ public class HtmlController {
 		model.put("Format", getFormatStatics());
 		model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 		model.put("loads", dao.getLoadsForUser(username));
+		model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
 		return new ModelAndView("my_loads", model);
 	}
 
@@ -424,6 +425,7 @@ public class HtmlController {
 		updateModelWithRoles(model);
 		model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
 		model.put("trucks", dao.getTrucksForUser(username));
+		model.put("registeredTrucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
 		return new ModelAndView("my_trucks", model);
 	}
 
@@ -432,6 +434,7 @@ public class HtmlController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Map<String, Object> model = new HashMap<>();
+		updateModelWithRoles(model);
 		model.put("alerts", dao.getUserAlerts(username));
 		return new ModelAndView("my_alerts", model);
 	}

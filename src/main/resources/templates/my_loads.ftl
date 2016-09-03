@@ -62,6 +62,31 @@ $(document).ready(function() {
 
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 
+<style>
+	
+	.ui-btn {
+		border-bottom-width: 2px !important; 
+		border-left-width: 0px !important; 
+		border-right-width: 0px !important; 
+		border-color:rgb(0,128,255) !important;
+	}
+	
+	.ui-btn-active{
+		background-color:rgb(0,128,255) !important;
+		border-color:white !important;
+	}
+		
+	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 25% no-repeat; background-size: 18px 18px;}
+	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 25% no-repeat; background-size: 18px 18px;}
+	.ui-icon-search { 50% 50% no-repeat; background-size: 18px 18px;}
+	.ui-icon-loads {background:  url(/images/trolley.png) 50% 25% no-repeat; background-size: 18px 18px;}
+	.ui-icon-notifications:hover {border-color:#DADADA !important;}
+	.ui-icon-truck:hover {border-color:#DADADA !important;}
+	.ui-icon-search:hover {border-color:#DADADA !important;}
+	.ui-icon-loads:hover {border-color:white !important;}
+	
+</style>
+
 </head>
 <body>
 <div data-role="page" data-theme="a" data-title="המטענים שלי" id="loads">
@@ -74,17 +99,17 @@ $(document).ready(function() {
 	  <ul>
 	  	<#if (isTruckOwner)>
 	  	  	<#if (trucks?? && trucks?size > 0)>
-		   		<li><a href="/myAlerts">ההתראות שלי</a></li>
-		  		<li><a href="/myTrucks">המשאיות שלי</a></li>
-		    	<li><a href="/findTrucksForLoad"> חפש מטענים להובלה</a></li>
+		   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" >התראות</a></li>
+		  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" >משאיות</a></li>
+		    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search">חפש מטען</a></li>
 		    <#else>
-		    	<li><a href="#" class="ui-disabled">ההתראות שלי</a></li>
-		  		<li><a href="/myTrucks">המשאיות שלי</a></li>
-		    	<li><a href="#" class="ui-disabled"> חפש מטענים להובלה</a></li>
+		    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" >התראות</a></li>
+		  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" >משאיות</a></li>
+		    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search">חפש מטען</a></li>
 		    </#if>
-		    <li><a href="/myLoads" class="ui-btn-active ui-state-persist">המטענים שלי</a></li>
+		    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads">מטענים</a></li>
 		<#else>
-		  <li><a href="#" class="ui-btn-active ui-state-persist">המטענים שלי</a></li>
+		  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads">מטענים</a></li>
 		</#if>
 	  </ul>
 	</div> <!--/navbar-->

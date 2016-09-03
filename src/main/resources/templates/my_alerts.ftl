@@ -45,9 +45,11 @@
 	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-search { 50% 50% no-repeat; background-size: 18px 18px;}
+	.ui-icon-loads {background:  url(/images/trolley.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-notifications:hover {border-color:white !important;}
 	.ui-icon-truck:hover {border-color:#DADADA !important;}
 	.ui-icon-search:hover {border-color:#DADADA!important;}
+	.ui-icon-loads:hover {border-color:#DADADA!important;}
 	
 	
 </style>
@@ -85,8 +87,8 @@ $(document).on("mobileinit", function()
    		<li><a href="/myAlerts" class="ui-nodisc-icon ui-btn-active ui-state-persist" data-icon="notifications" >התראות</a></li>
   		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck">משאיות</a></li>
     	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search">חפש מטען</a></li>
-	  	<#if (isLoadsOwner??)>
-	    	<li><a href="/myLoads">מטענים</a></li>
+	  	<#if (isLoadsOwner)>
+	    	<li><a href="/myLoads" class="ui-nodisc-icon" data-icon="loads">מטענים</a></li>
 		</#if>
 	  </ul>
 	</div> <!--/navbar-->

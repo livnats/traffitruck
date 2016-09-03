@@ -71,10 +71,13 @@ $(document).ready(function() {
 	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-search { 50% 50% no-repeat; background-size: 18px 18px;}
+	.ui-icon-loads {background:  url(/images/trolley.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-notifications:hover {border-color:#DADADA !important;}
 	.ui-icon-truck:hover {border-color:white !important;}
 	.ui-icon-search:hover {border-color:#DADADA!important;}
+	.ui-icon-loads:hover {border-color:#DADADA!important;}
 
+	.ui-disabled {background-color:rgb(0,128,255) !important;}
 </style>
 
 </head>
@@ -88,17 +91,17 @@ $(document).ready(function() {
 	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 	<div data-role="navbar">
 	  <ul>
-	  	<#if (trucks?? && trucks?size > 0)>
+	  	<#if (registeredTrucks?? && registeredTrucks?size > 0)>
 	   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications">התראות</a></li>
 	  		<li><a href="/myTrucks" class="ui-nodisc-icon ui-btn-active ui-state-persist" data-icon="truck"> משאיות</a></li>
 	    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search">חפש מטען</a></li>
 	    <#else>
-	    	<li><a href="#" class="ui-disabled">התראות</a></li>
-	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist">משאיות</a></li>
-	    	<li><a href="#" class="ui-disabled">חפש מטען</a></li>
+	    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications">התראות</a></li>
+	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="truck">משאיות</a></li>
+	    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search">חפש מטען</a></li>
 	    </#if>
 	    <#if (isLoadsOwner)>
-	    	<li><a href="/myLoads">מטענים</a></li>
+	    	<li><a href="/myLoads" class="ui-nodisc-icon" data-icon="loads">מטענים</a></li>
 		</#if>
 	  </ul>
 	</div> <!--/navbar-->
