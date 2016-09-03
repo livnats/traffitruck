@@ -185,8 +185,8 @@ function ValidateForm1(theForm)
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <input type="hidden" name="form_name" value="loginform">
 <div class="ui-field-contain">
+	<label for="roles">* סוג משתמש</label>
     <fieldset data-role="controlgroup" data-iconpos="right">
-        <legend></legend>
         <input type="checkbox" name="roles" value="TRUCK_OWNER" id="trole" <#if (role?? && role == "TRUCK_OWNER")>checked="checked"</#if>>
         <label for="trole" style="text-align:right; background-color:white; color: #333333; text-shadow: 0 1px 0 #ffffff; border:0 none;">בעל משאית</label>
         <input type="checkbox" name="roles" value="LOAD_OWNER" id="lrole" <#if role?? && role == "LOAD_OWNER">checked="checked"</#if>>
