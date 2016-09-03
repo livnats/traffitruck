@@ -89,9 +89,9 @@ $(document).ready(function() {
 	<div data-role="navbar">
 	  <ul>
 	  	<#if (trucks?? && trucks?size > 0)>
-	   		<li><a href="/myAlerts" data-icon="notifications">התראות</a></li>
-	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist" data-icon="truck"> משאיות</a></li>
-	    	<li><a href="/findTrucksForLoad" data-icon="search">חפש מטען</a></li>
+	   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications">התראות</a></li>
+	  		<li><a href="/myTrucks" class="ui-nodisc-icon ui-btn-active ui-state-persist" data-icon="truck"> משאיות</a></li>
+	    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search">חפש מטען</a></li>
 	    <#else>
 	    	<li><a href="#" class="ui-disabled">התראות</a></li>
 	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist">משאיות</a></li>
