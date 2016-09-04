@@ -187,6 +187,14 @@ function ValidateForm1(theForm)
    return true;
 }
 </script>
+
+<style>
+
+label{
+text-align: right;
+}
+</style>
+
 </head>
 <body>
 <div data-role="page" data-theme="a" data-title="הוסף משאית" id="add_truck">

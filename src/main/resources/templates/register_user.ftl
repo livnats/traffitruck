@@ -151,6 +151,12 @@ function ValidateForm1(theForm)
             }
         </script>
 
+<style>
+
+label{
+text-align: right;
+}
+</style>
 </head>
 <body onload="initialize()" dir="rtl">
 <div data-role="page" data-theme="a" data-title="רישום משתמש" id="add_truck">

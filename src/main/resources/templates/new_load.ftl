@@ -306,6 +306,12 @@ function ValidateForm1(theForm)
 
             }
         </script>
+<style>
+
+label{
+text-align: right;
+}
+</style>
 
 </head>
 <body onload="initialize()" dir="rtl">
