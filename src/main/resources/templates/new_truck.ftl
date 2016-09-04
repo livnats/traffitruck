@@ -207,28 +207,28 @@ function ValidateForm1(theForm)
 		<div id="wb_Form1" style="">
 			<#if error??>
 				<div id="wb_Text1">
-					<span style="color:#FF0000;font-family:Arial;font-size:13px;">מספר לוחית רישוי קיים במערכת</span>
+					<span style="color:#FF0000;font-family:serif;font-size:13px;">מספר לוחית רישוי קיים במערכת</span>
 				</div>
 			</#if>
 			
 			<form name="newTruckForm" method="post" action="newTruck" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newTruckForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="ui-field-contain">
-				<label for="licensePlateNumber">מספר לוחית רישוי</label>
+				<label for="licensePlateNumber">* מספר לוחית רישוי</label>
 				<input type="number" id="licensePlateNumber" style="" name="licensePlateNumber" value="" maxlength="7">
 			</div>
 			<div class="ui-field-contain">
-				<label for="vehicleLicensePhoto1">צילום רשיון רכב</label>
+				<label for="vehicleLicensePhoto1">* צילום רשיון רכב</label>
 				<input type="file" id="vehicleLicensePhoto1" style="" name="vehicleLicensePhoto1">
                 <input type="hidden" id="vehicleLicensePhoto" name="vehicleLicensePhoto">
 			</div>
 			<div class="ui-field-contain">
-				<label for="driverLicensePhoto1">צילום רשיון נהיגה</label>
+				<label for="driverLicensePhoto1">* צילום רשיון נהיגה</label>
 				<input type="file" id="driverLicensePhoto1" style="" name="driverLicensePhoto1">
                 <input type="hidden" id="driverLicensePhoto" name="driverLicensePhoto">
 			</div>
 			<div class="ui-field-contain">
-				<label for="truckPhoto1">צילום משאית</label>
+				<label for="truckPhoto1">* צילום משאית</label>
 				<input type="file" id="truckPhoto1" style="" name="truckPhoto1">
                 <input type="hidden" id="truckPhoto" name="truckPhoto">
 			</div>
