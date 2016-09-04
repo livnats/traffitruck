@@ -150,13 +150,13 @@ function ValidateForm1(theForm)
 			<span style="font-size:0.8em; font-weight:bold; color:#005599"> אף שדה אינו חובה אך צריך למלא לפחות שדה אחד</span>
 			<div class="ui-field-contain">
 				<label for="source">מטענים שיוצאים מאיזור</label>
-				<input type="text" id="source" name="source" value="" placeholder="הכנס כתובת" style="text-align:right">
+				<input type="text" id="source" name="source" value="" placeholder="הכנס כתובת" style="text-align:right; direction:rtl">
 				<input type="hidden" id="sourceLat" name="sourceLat" value="">
 				<input type="hidden" id="sourceLng" name="sourceLng" value="">
 			</div>
 			<div class="ui-field-contain">
 				<label for="source">מטענים שמגיעים לאיזור</label>
-				<input type="text" id="destination" name="destination" value="" placeholder="הכנס כתובת" style="text-align:right">
+				<input type="text" id="destination" name="destination" value="" placeholder="הכנס כתובת" style="text-align:right; direction:rtl">
 				<input type="hidden" id="destinationLat" name="destinationLat" value="">
 				<input type="hidden" id="destinationLng" name="destinationLng" value="">
 			</div>

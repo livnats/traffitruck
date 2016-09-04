@@ -403,13 +403,13 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 							<h3>סנן תוצאות</h3>
 							<div class="ui-field-contain">
 								<label for="source">מטענים שיוצאים מאיזור</label>
-								<input type="text" id="source" name="source" value="" placeholder="הכנס כתובת" style="text-align:right">
+								<input type="text" id="source" name="source" value="" placeholder="הכנס כתובת" style="text-align:right; direction:rtl">
 								<input type="hidden" id="sourceLat" name="sourceLat" value="">
 								<input type="hidden" id="sourceLng" name="sourceLng" value="">
 							</div>
 							<div class="ui-field-contain">
 								<label for="source">מטענים שמגיעים לאיזור</label>
-								<input type="text" id="destination" name="destination" value="" placeholder="הכנס כתובת" style="text-align:right">
+								<input type="text" id="destination" name="destination" value="" placeholder="הכנס כתובת" style="text-align:right; direction:rtl">
 								<input type="hidden" id="destinationLat" name="destinationLat" value="">
 								<input type="hidden" id="destinationLng" name="destinationLng" value="">
 							</div>
