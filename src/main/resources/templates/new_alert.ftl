@@ -38,24 +38,11 @@ function mAlert(text1) {
 
 function ValidateForm1(theForm)
 {
-   var regexp;
-   regexp = /^\d*$/;
-   if (!regexp.test(theForm.licensePlateNumber.value))
+   if ((theForm.drivedate.value == "") && (theForm.source.value == "") && (theForm.destination.value == ""))
    {
-      mAlert("לוחית רישוי יכולה להכיל רק ספרות");
-      theForm.licensePlateNumber.focus();
+      mAlert("חובה למלא שדה אחד לפחות כדי לצור התראה");
       return false;
    }
-   if (theForm.licensePlateNumber.value == "")
-   {
-      mAlert("חובה לספק מספר לוחית רישוי");
-      theForm.licensePlateNumber.focus();
-      return false;
-   }
-   
-   $('#vehicleLicensePhoto1').val("");
-   $('#driverLicensePhoto1').val("");
-   $('#truckPhoto1').val("");
    
    return true;
 }
@@ -159,6 +146,8 @@ function ValidateForm1(theForm)
 			
 			<form name="newAlertForm" method="post" action="newAlert" data-ajax="false" data-transition="pop" id="newAlertForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<span style="font-size:0.8em;">התראה מתקבלת לטלפון כאשר יש מטען חדש העונה להגדרות מוצא, יעד ותאריך, כפי שהוגדרו בהתראה. </span><br/><br/>
+			<span style="font-size:0.8em; font-weight:bold; color:#005599"> אף שדה אינו חובה אך צריך למלא לפחות שדה אחד</span>
 			<div class="ui-field-contain">
 				<label for="source">מטענים שיוצאים מאיזור</label>
 				<input type="text" id="source" name="source" value="" placeholder="הכנס כתובת" style="text-align:right">
