@@ -157,6 +157,12 @@ public class MongoDAO {
 		mongoTemplate.remove(query,Load.class);
 	}
 
+	public void deleteLoadByAdmin( String id ){
+		Query query = new Query()
+				.addCriteria(Criteria.where("_id").is(id));
+		mongoTemplate.remove(query,Load.class);
+	}
+
 	//User
 	public void storeUser( LoadsUser user ) {
 		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();

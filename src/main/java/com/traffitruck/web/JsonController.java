@@ -4,26 +4,34 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.traffitruck.domain.Alert;
 import com.traffitruck.domain.Load;
 import com.traffitruck.domain.LoadAndUser;
 import com.traffitruck.domain.LoadsUser;
 import com.traffitruck.domain.Location;
+import com.traffitruck.domain.Role;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.service.MongoDAO;
+
+import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.TemplateModelException;
 
 @RestController
 public class JsonController {
@@ -91,6 +99,11 @@ public class JsonController {
 		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);
 	}
 
+	@RequestMapping(value="/load_details_json/{loadId}", method=RequestMethod.GET)
+	Load getLoad(@PathVariable String loadId) throws TemplateModelException {
+		return dao.getLoad(loadId);
+	}
+
 	public static Date convertDriveDate(String drivedate) {
 		Date driveDateObj = null;
 		if (drivedate != null && drivedate.length() > 0) {
@@ -137,6 +150,18 @@ public class JsonController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		dao.deleteAlert(alertId,username);
+		return "Success!";
+	}
+
+	@RequestMapping(value = "/deleteLoadAdmin", method = RequestMethod.POST)
+	String deleteLoad(@RequestParam("loadId") String loadId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		for ( GrantedAuthority auth : authentication.getAuthorities() ) {
+			if ( Role.ADMIN.toString().equals(auth.getAuthority()) ) {
+				dao.deleteLoadByAdmin(loadId);
+			}
+		}
 		return "Success!";
 	}
 }

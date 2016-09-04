@@ -5,6 +5,22 @@
 		<link rel="stylesheet" type="text/css" href="/css/traffitruck.css">
 		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
 
+<script>
+
+	function deleteLoad(loadId){
+		$.post(
+			"/deleteLoadAdmin",
+			{
+				loadId: loadId,
+				${_csrf.parameterName}: "${_csrf.token}"
+			} 
+		);
+		$('#load_details').html("");
+		$("#"+loadId).remove();
+	}
+	
+</script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -61,7 +77,7 @@ $(document).ready(function() {
 			
 			// get the load details
 			loadId = $(this).attr('id');
-			$.getJSON( "/load_details/" + loadId, function( load ) {
+			$.getJSON( "/load_details_json/" + loadId, function( load ) {
 
 			    table_html = "<table border='1'>";
 
@@ -132,10 +148,18 @@ $(document).ready(function() {
 				    table_html += "</tr>";
 			    }
 			    
+			    table_html += "<tr>";
+			    table_html += "    <td>הסר</td>";
+			    table_html += "    <td style='text-align:right'>";
+			    table_html += "       <a href='#' onclick=\"return deleteLoad('" + load.id + "')\"><img src='/images/remove-icon-png-26.png' width='20px' ></a>";
+			    table_html += "    </td>";
+			    table_html += "</tr>";
+   										
+			    
 			    table_html += "</table>";
 
      		   $('#load_details').html(table_html);
-  			});
+  			}, "json");
 
 			// return false so the location won't change
 			return false;
