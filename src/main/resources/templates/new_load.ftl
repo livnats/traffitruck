@@ -328,10 +328,10 @@ function ValidateForm1(theForm)
 <form name="newloadForm" method="post" action="newload" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newloadForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <div class="ui-field-contain">
-	<label for="name">שם המטען</label>
+	<label for="name">* שם המטען</label>
 	<input type="text" id="name" style="" name="name" value="">
 </div><div class="ui-field-contain">
-	<label for="type">סוג המטען</label>
+	<label for="type">* סוג המטען</label>
 	<select name="type" size="1" id="type">
 	<option>-- בחר --</option>
 	<option value="CONTAINER_20">מכולה 20'</option>
@@ -344,18 +344,18 @@ function ValidateForm1(theForm)
 	<option value="OTHER">אחר</option>
 	</select>
 </div><div class="ui-field-contain">
-	<label for="weight">משקל (ק"ג)</label>
+	<label for="weight">* משקל (ק"ג)</label>
 	<input type="number" id="weight" style="" name="weight" value="">
 </div><div class="ui-field-contain">
-	<label for="volume">נפח (קוב)</label>
+	<label for="volume">* נפח (קוב)</label>
 	<input type="number" id="volume" style="" name="volume" value="">
 </div><div class="ui-field-contain">
-	<label for="source">מוצא</label>
+	<label for="source">* מוצא</label>
 	<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
 	<input type="hidden" id="sourceLat" name="sourceLat" value="">
 	<input type="hidden" id="sourceLng" name="sourceLng" value="">
 </div><div class="ui-field-contain">
-	<label for="loadingType">סוג טעינה</label>
+	<label for="loadingType">* סוג טעינה</label>
 	<select name="loadingType" size="1" id="loadingType">
 	<option>-- בחר --</option>
 	<option value="MANUAL">ידני</option>
@@ -365,12 +365,12 @@ function ValidateForm1(theForm)
 	<option value="TROLLY">עגלה</option>
 	</select>
 </div><div class="ui-field-contain">
-	<label for="destination">יעד</label>
+	<label for="destination">* יעד</label>
 	<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
 	<input type="hidden" id="destinationLat" name="destinationLat" value="">
 	<input type="hidden" id="destinationLng" name="destinationLng" value="">
 </div><div class="ui-field-contain">
-	<label for="downloadingType">סוג פריקה</label>
+	<label for="downloadingType">* סוג פריקה</label>
 	<select name="downloadingType" size="1" id="downloadingType">
 	<option>-- בחר --</option>
 	<option value="MANUAL">ידני</option>
@@ -380,19 +380,19 @@ function ValidateForm1(theForm)
 	<option value="TROLLY">עגלה</option>
 	</select>
 </div><div class="ui-field-contain">
-	<label for="drivedate">תאריך הובלה</label>
+	<label for="drivedate">* תאריך הובלה</label>
 	<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
 </div><div class="ui-field-contain">
-	<label for="suggestedQuote">מחיר (שקלים)</label>
+	<label for="suggestedQuote">* מחיר (שקלים)</label>
 	<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
 </div><div class="ui-field-contain">
-	<label for="waitingTime">זמן המתנה (שעות)</label>
+	<label for="waitingTime">* זמן המתנה (שעות)</label>
 	<input type="number" id="waitingTime" style="" name="waitingTime" value="">
 </div><div class="ui-field-contain">
-	<label for="comments">הערות</label>
+	<label for="comments">* הערות</label>
 	<input type="text" id="comments" style="" name="comments" value="">
 </div><div class="ui-field-contain">
-	<label for="loadPhoto1">צילום המטען</label>
+	<label for="loadPhoto1">* צילום המטען</label>
 	<input type="file" id="loadPhoto1" style="" name="loadPhoto1">
 	<input type="hidden" id="loadPhoto" name="loadPhoto">
 </div>
