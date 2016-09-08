@@ -9,6 +9,7 @@
 <link href="css/jquery.mobile.structure-1.4.5.min.css" rel="stylesheet">
 <link href="css/mobile.css" rel="stylesheet">
 <link href="css/loads.css" rel="stylesheet">
+<link rel="stylesheet" href="css/icono.min.css">
 <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 
 <script src="js/jquery-1.11.3.min.js"></script>
@@ -371,7 +372,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 <div data-role="header" id="Header1">
 	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
 	<img src="/images/truck-blue.jpg" width="15%"/>
-	<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
+	<a href="#mypanel" data-role="button" class="ui-btn-right" style="width:17px; height:17px"><i class="icono-hamburger" style="margin:auto"></i></a>
 	<div data-role="navbar">
 	  <ul>
    		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications">התראות</a></li>
@@ -429,6 +430,16 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 		</div>
 		<div id="available_loads" style="direction:RTL">
 		</div>
+
+		<div data-role="panel" id="mypanel" data-display="overlay" data-position="right">
+			<ul>
+		    	<li>panel content goes here</li>
+		    	<li>lorem ipsum</li>
+		    </ul>
+			<a href="#my-header" data-rel="close">Close panel</a>
+		</div><!-- /panel -->
+		
+
 </div>
 
 <div id="map_canvas" class="mapping"></div>
