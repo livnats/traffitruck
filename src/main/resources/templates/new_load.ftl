@@ -448,8 +448,10 @@ text-align: right;
 </div>
 	
 	<div data-role="panel" id="mypanel" data-display="overlay" data-position="left">
-		<a href="/logout">התנתק</a>
-	</div><!-- /panel -->
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
+	</div><!-- /panel -->	
 	
 </div> <!--page -->
 

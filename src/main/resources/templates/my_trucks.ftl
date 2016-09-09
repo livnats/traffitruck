@@ -139,7 +139,9 @@ $(document).ready(function() {
 								<a href="/newTruck"><i class="icono-plusCircle"></i></a>
 							</div>
 	<div data-role="panel" id="mypanel" data-display="overlay" data-position="left">
-		<a href="/logout">התנתק</a>
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
 	</div><!-- /panel -->
 </div>
 </div>

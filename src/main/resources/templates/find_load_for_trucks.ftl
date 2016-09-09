@@ -434,8 +434,10 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 
 </div> <!-- main -->
 
-	<div data-role="panel" id="mypanel" data-display="overlay" data-position="left">
-		<a href="/logout">התנתק</a>
+		<div data-role="panel" id="mypanel" data-display="overlay" data-position="left">
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
 	</div><!-- /panel -->	
 	
 <div id="map_canvas" class="mapping"></div>
