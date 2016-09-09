@@ -71,10 +71,12 @@ $(document).ready(function() {
 	.ui-icon-notifications {background:  url(/images/Bell.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-truck {background:  url(/images/truck-navbar.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-search { 50% 50% no-repeat; background-size: 18px 18px;}
+	.ui-icon-bars { 50% 50% no-repeat; background-size: 18px 18px;}
 	.ui-icon-loads {background:  url(/images/trolley.png) 50% 25% no-repeat; background-size: 18px 18px;}
 	.ui-icon-notifications:hover {border-color:#DADADA !important;}
 	.ui-icon-truck:hover {border-color:white !important;}
 	.ui-icon-search:hover {border-color:#DADADA!important;}
+	.ui-icon-bars:hover {border-color:#DADADA!important;}
 	.ui-icon-loads:hover {border-color:#DADADA!important;}
 
 	.ui-disabled {background-color:rgb(0,128,255) !important;}
@@ -101,7 +103,7 @@ $(document).ready(function() {
 	    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
 	    </#if>
 	    <#if (isLoadsOwner)>
-	    	<li><a href="/myLoads" class="ui-nodisc-icon" data-icon="loads">מטענים</a></li>
+	    	<li><a href="/myLoads" class="ui-nodisc-icon" data-icon="loads"></a></li>
 		</#if>
 	  </ul>
 	</div> <!--/navbar-->
@@ -111,7 +113,7 @@ $(document).ready(function() {
 
 
 							<#if trucks?has_content>
-						
+								<span style="color:#3388cc;" > <b> משאיות </b></span>
 								<table data-role="table" class="table-stripe my-custom-breakpoint" style="direction:RTL">
 								<thead>
 									<tr>
@@ -137,7 +139,7 @@ $(document).ready(function() {
 								<a href="/newTruck"><i class="icono-plusCircle"></i></a>
 							</div>
 	<div data-role="panel" id="mypanel" data-display="overlay" data-position="left">
-		<a href="/logout" data-role="button">התנתק</a>
+		<a href="/logout">התנתק</a>
 	</div><!-- /panel -->
 </div>
 </div>

@@ -363,6 +363,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 	.ui-icon-truck:hover {border-color:#DADADA !important;}
 	.ui-icon-search:hover {border-color:white !important;}
 	.ui-icon-loads:hover {border-color:#DADADA!important;}
+	.ui-icon-bars:hover {border-color:#DADADA!important;}
 </style>
     
 </head>
@@ -372,21 +373,21 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 <div data-role="header" id="Header1">
 	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
 	<img src="/images/truck-blue.jpg" width="15%"/>
-	<a href="#mypanel" data-role="button" class="ui-btn-right" style="width:17px; height:17px"><i class="icono-hamburger" style="margin:auto"></i></a>
 	<div data-role="navbar">
 	  <ul>
-   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications">התראות</a></li>
-  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck">משאיות</a></li>
-    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon ui-btn-active ui-state-persist" data-icon="search">חפש מטען</a></li>
+	    <li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications"></a></li>
+  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck"></a></li>
+    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon ui-btn-active ui-state-persist" data-icon="search"></a></li>
 	  	<#if (isLoadsOwner)>
-	    	<li><a href="/myLoads" class="ui-nodisc-icon" data-icon="loads" >מטענים</a></li>
+	    	<li><a href="/myLoads" class="ui-nodisc-icon" data-icon="loads" ></a></li>
 		</#if>
 	  </ul>
 	</div> <!--/navbar-->
 </div> <!--/header-->
 
 <div class="ui-content" role="main">
-
+		<span style="color:#3388cc;" > <b> חפש מטען </b></span>
 		<div class="ui-field-contain">
 			<#if (trucks?size > 1)>
 	        	<select name="truckSelection" id="truckSelection">
@@ -431,27 +432,21 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 		<div id="available_loads" style="direction:RTL">
 		</div>
 
-		<div data-role="panel" id="mypanel" data-display="overlay" data-position="right">
-			<ul>
-		    	<li>panel content goes here</li>
-		    	<li>lorem ipsum</li>
-		    </ul>
-			<a href="#my-header" data-rel="close">Close panel</a>
-		</div><!-- /panel -->
-		
+</div> <!-- main -->
 
-</div>
-
+	<div data-role="panel" id="mypanel" data-display="overlay" data-position="left">
+		<a href="/logout">התנתק</a>
+	</div><!-- /panel -->	
+	
 <div id="map_canvas" class="mapping"></div>
-
-</div>
+</div> <!--page -->
 
 <div data-role="dialog" id="sure">
   <div data-role="content">
     <h3 class="sure-1">???</h3>
     <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
   </div>
-</div>
+</div> 
 
 <script src="/mapsapis"></script>
 
