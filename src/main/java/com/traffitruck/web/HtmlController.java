@@ -204,8 +204,12 @@ public class HtmlController {
 
 	@RequestMapping("/newload")
 	ModelAndView newLoad() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
 		Map<String, Object> model = new HashMap<>();
 		model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+		updateModelWithRoles(model);
+		model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
 		return new ModelAndView("new_load", model );
 	}
 
@@ -494,7 +498,9 @@ public class HtmlController {
 
 	@RequestMapping("/newAlert")
 	ModelAndView newAlert() {
-		return new ModelAndView("new_alert");
+		Map<String, Object> model = new HashMap<>();
+		updateModelWithRoles(model);
+		return new ModelAndView("new_alert", model);
 	}
 	
 	@RequestMapping(value = "/newAlert", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -521,7 +527,12 @@ public class HtmlController {
 
 	@RequestMapping("/newTruck")
 	ModelAndView newTruck() {
-		return new ModelAndView("new_truck");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Map<String, Object> model = new HashMap<>();
+		updateModelWithRoles(model);
+		model.put("registeredTrucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
+		return new ModelAndView("new_truck", model);
 	}
 
 	@RequestMapping(value = "/newTruck", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
