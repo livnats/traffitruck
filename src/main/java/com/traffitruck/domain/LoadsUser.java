@@ -1,6 +1,7 @@
 package com.traffitruck.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -19,6 +20,7 @@ public class LoadsUser{
 	private String username;
 	private String password;
 	private List<Role> roles;
+	private Set<String> registrationIds;
 	
 
 	public String getAddress() {
@@ -69,7 +71,12 @@ public class LoadsUser{
 	public void setRoles(List<Role> roles) {
 	    this.roles = roles;
 	}
-	
+	public Set<String> getRegistrationIds() {
+	    return registrationIds;
+	}
+	public void setRegistrationIds(Set<String> registrationIds) {
+	    this.registrationIds = registrationIds;
+	}
 	@Override
 	public String toString() {
 		return "LoadsUser [email=" + email + ", address=" + address

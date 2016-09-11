@@ -183,6 +183,13 @@ public class MongoDAO {
 		Query sortByName = new Query().with(new Sort("name"));
 		return mongoTemplate.find(sortByName,LoadsUser.class);
 	}
+	
+	public void addDevice( String username, String regid ) {
+	    Query findByUsername = new Query().addCriteria(Criteria.where("username").is(username));
+	    Update update = new Update();
+	    update.addToSet("registrationIds", regid);
+	    mongoTemplate.upsert(findByUsername, update, LoadsUser.class);
+	}
 
 	///Truck
 	public void storeTruck( Truck truck ) {
