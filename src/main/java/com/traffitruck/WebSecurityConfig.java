@@ -2,7 +2,6 @@ package com.traffitruck;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -22,8 +21,9 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -50,6 +50,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return factory.createMultipartConfig();
 	}
 
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+	    SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler() {
+		@Override
+		protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+		    if (resetPasswordFlow(authentication.getAuthorities())) {
+			try {
+			    getRedirectStrategy().sendRedirect(request, response, "/resetPassword");
+			    return;
+			} catch (Exception e) {
+			    throw new RuntimeException(e);
+			}
+		    }
+
+		    String url = Role.valueOf(authentication.getAuthorities().iterator().next().getAuthority()).getLandingUrl();
+		    getRedirectStrategy().sendRedirect(request, response, url);
+		}
+
+		private boolean resetPasswordFlow(Collection<? extends GrantedAuthority> authorities) {
+		    for (GrantedAuthority grantedAuthority : authorities) {
+			if (grantedAuthority.getAuthority().startsWith("resetPassword-"))
+			    return true;
+		    }
+		    return false;
+		}
+	    };
+	    return handler;
+	}
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		super.configure(web);
@@ -64,31 +93,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter,CsrfFilter.class);
 
-		SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler() {
-			@Override
-			protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-				if (resetPasswordFlow(authentication.getAuthorities())) {
-					try {
-						getRedirectStrategy().sendRedirect(request, response, "/resetPassword");
-						return;
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-
-				String url = Role.valueOf(authentication.getAuthorities().iterator().next().getAuthority()).getLandingUrl();
-				getRedirectStrategy().sendRedirect(request, response, url);
-			}
-
-			private boolean resetPasswordFlow(Collection<? extends GrantedAuthority> authorities) {
-				for (GrantedAuthority grantedAuthority : authorities) {
-					if (grantedAuthority.getAuthority().startsWith("resetPassword-"))
-						return true;
-				}
-				return false;
-			}
-		};
-
 		http
 		.authorizeRequests()
 		.antMatchers("/css/**", "/js/**", "/images/**", "/registerUser","/registrationConfirmation","/forgotPassword", "/resetPassword").permitAll()
@@ -98,10 +102,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/loads", "/trucks", "/truckApproval", "/nonApprovedTrucks", "/approval/licenseimage/**",
 				"/truckApproval", "/load_details_json/**", "/deleteLoadAdmin").hasAuthority(Role.ADMIN.name())
 				.anyRequest().authenticated();
+		
 		http
 		.formLogin()
 		.loginPage("/login")
-		.successHandler(handler)
+		.successHandler(successHandler())
 		.permitAll()
 		.and()
 		.logout()
