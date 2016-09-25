@@ -17,6 +17,8 @@ $(document).on("mobileinit", function()
 
 $(document).ready(function() {
 
+	var conversions = 0;
+	
 	function calculateRatio(size) {
 		ratio = 1;
 	    if ( size > 1000000 ) {
@@ -69,6 +71,10 @@ $(document).ready(function() {
 		         var imageData = oFReader.result;
                  $('#vehicleLicensePhoto').val(imageData);
               }
+              conversions++;
+              if ( conversions == 3 ) {
+                 $('#Button1').button( "enable" );
+              }
 		  }
 		  img.src=oFREvent.target.result;
 		};
@@ -107,6 +113,10 @@ $(document).ready(function() {
 		         var imageData = oFReader.result;
                  $('#driverLicensePhoto').val(imageData);
               }
+              conversions++;
+              if ( conversions == 3 ) {
+                 $('#Button1').button( "enable" );
+              }
 		  }
 		  img.src=oFREvent.target.result;
 		};
@@ -144,6 +154,10 @@ $(document).ready(function() {
               else {
 		         var imageData = oFReader.result;
                  $('#truckPhoto').val(imageData);
+              }
+              conversions++;
+              if ( conversions == 3 ) {
+                 $('#Button1').button( "enable" );
               }
 		  }
 		  img.src=oFREvent.target.result;
@@ -291,7 +305,7 @@ text-align: right;
 				<input type="file" id="truckPhoto1" style="" name="truckPhoto1">
                 <input type="hidden" id="truckPhoto" name="truckPhoto">
 			</div>
-			<input type="submit" id="Button1" name="" value="הוסף משאית">
+			<input type="submit" id="Button1" name="Button1" value="הוסף משאית" disabled="disabled">
 			</form>
 		</div>
 	
