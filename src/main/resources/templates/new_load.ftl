@@ -450,13 +450,13 @@ text-align: right;
 	<label for="suggestedQuote">* מחיר (שקלים)</label>
 	<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
 </div><div class="ui-field-contain">
-	<label for="waitingTime">* זמן המתנה (שעות)</label>
+	<label for="waitingTime">זמן המתנה (שעות)</label>
 	<input type="number" id="waitingTime" style="" name="waitingTime" value="">
 </div><div class="ui-field-contain">
-	<label for="comments">* הערות</label>
+	<label for="comments">הערות</label>
 	<input type="text" id="comments" style="" name="comments" value="">
 </div><div class="ui-field-contain">
-	<label for="loadPhoto1">* צילום המטען</label>
+	<label for="loadPhoto1">צילום המטען</label>
 	<input type="file" id="loadPhoto1" style="" name="loadPhoto1">
 	<input type="hidden" id="loadPhoto" name="loadPhoto">
 </div>
