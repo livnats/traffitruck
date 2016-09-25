@@ -16,6 +16,27 @@ $(document).on("mobileinit", function()
 });
 
 $(document).ready(function() {
+
+	function calculateRatio(size) {
+		ratio = 1;
+	    if ( size > 1000000 ) {
+	        ratio = 0.8;
+	    }
+	    if ( size > 2000000 ) {
+	        ratio = 0.7;
+	    }
+	    if ( size > 3000000 ) {
+	        ratio = 0.5;
+	    }
+	    if ( size > 4000000 ) {
+	        ratio = 0.3;
+	    }
+	    if ( size > 6000000 ) {
+	        ratio = 0.2;
+	    }
+	    return ratio;
+	}
+   
 	$('#vehicleLicensePhoto1').change(function(){
 	    var file = this.files[0];
 	    var name = file.name;
@@ -29,10 +50,7 @@ $(document).ready(function() {
            return false;
         }
         
-        ratio = 1;
-        if ( size > 1000000 ) {
-            ratio = size / 400000;
-        }
+        ratio = calculateRatio(size);
 
         oFReader = new FileReader(); 
 		oFReader.onload = function (oFREvent) {
@@ -41,10 +59,10 @@ $(document).ready(function() {
               if ( ratio != 1 ) {
 		         var canvas=document.createElement("canvas");
 		         var ctx=canvas.getContext("2d");
-		         canvas.width=img.width/ratio;
-		         canvas.height=img.height/ratio;
+		         canvas.width=img.width/(1/ratio);
+		         canvas.height=img.height/(1/ratio);
 		         ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
-		         var imageData = canvas.toDataURL();
+		         var imageData = canvas.toDataURL("image/jpeg", 0.5);
                  $('#vehicleLicensePhoto').val(imageData);
               }
               else {
@@ -70,10 +88,7 @@ $(document).ready(function() {
            return false;
         }
         
-        ratio = 1;
-        if ( size > 1000000 ) {
-            ratio = size / 400000;
-        }
+        ratio = calculateRatio(size);
 
         oFReader = new FileReader(); 
 		oFReader.onload = function (oFREvent) {
@@ -82,10 +97,10 @@ $(document).ready(function() {
               if ( ratio != 1 ) {
 		         var canvas=document.createElement("canvas");
 		         var ctx=canvas.getContext("2d");
-		         canvas.width=img.width/ratio;
-		         canvas.height=img.height/ratio;
+		         canvas.width=img.width/(1/ratio);
+		         canvas.height=img.height/(1/ratio);
 		         ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
-		         var imageData = canvas.toDataURL();
+		         var imageData = canvas.toDataURL("image/jpeg", 0.5);
                  $('#driverLicensePhoto').val(imageData);
               }
               else {
@@ -111,10 +126,8 @@ $(document).ready(function() {
            return false;
         }
         
-        ratio = 1;
-        if ( size > 1000000 ) {
-            ratio = size / 400000;
-        }
+		ratio = calculateRatio(size);
+		
         oFReader = new FileReader(); 
 		oFReader.onload = function (oFREvent) {
 		  var img=new Image();
@@ -122,10 +135,10 @@ $(document).ready(function() {
               if ( ratio != 1 ) {
 			      var canvas=document.createElement("canvas");
 			      var ctx=canvas.getContext("2d");
-			      canvas.width=img.width/ratio;
-			      canvas.height=img.height/ratio;
-			      ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
-			      var imageData = canvas.toDataURL();
+		         canvas.width=img.width/(1/ratio);
+		         canvas.height=img.height/(1/ratio);
+		          ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
+		          var imageData = canvas.toDataURL("image/jpeg", 0.5);
        	          $('#truckPhoto').val(imageData);
               }
               else {
