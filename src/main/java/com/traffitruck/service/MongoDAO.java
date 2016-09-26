@@ -313,9 +313,16 @@ public class MongoDAO {
 
 		}
 		else {
-			Date now = new Date();
+		    	// drive date has only a date part, so I strip the time part out of the calendar and it take it one second back to be able to use the after() method
+			Calendar c = Calendar.getInstance();
+			c.set(Calendar.HOUR, 0);
+			c.set(Calendar.MINUTE, 0);
+			c.set(Calendar.SECOND, 0);
+			c.set(Calendar.MILLISECOND, 0);
+			c.add(Calendar.SECOND, -1);
+			Date cmp = c.getTime();
 			return coll.stream().filter(load -> {
-				return load.getDriveDate().after(now);
+				return load.getDriveDate().after(cmp);
 			}).collect(Collectors.toList());
 		}
 	}

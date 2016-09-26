@@ -173,23 +173,25 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 				for (var i in loads) {
 				    load = loads[i];
 
-				    table_html += "<tr>";
-				    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source.split(",",2).join(", ") + "</a></td>";
-				    table_html += "    <td style=\"text-align:right\">" + load.destination.split(",",2).join(", ") + "</td>";
-				    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
-				    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
-				    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
-				    table_html += "</tr>";
-
-					
-					markers.push([load.name, load.sourceLocation.coordinates[1], load.sourceLocation.coordinates[0]]);
-					infoWindowContent.push(
-						['<div class="info_content" dir="rtl"><h5>יעד: ' + load.destination.split(",",2).join(", ") + '</h5>'
-						+ '<h5>סוג מטען: ' + ((load.type != null) ? convertType(load.type) : "") + '</h5>'
-						+ '<h5>מחיר: ' + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + '</h5>'
-						+ '<h5>תאריך נסיעה: ' + ((load.driveDate != null) ? load.driveDateStr : "") + '</h5>'
-						+ '<h5><a href="/load_details_for_trucker/' + load.id + '">פרטים נוספים</a></h5>'
-						+ '</div>']);
+					if ( load.sourceLocation != null ) {
+					    table_html += "<tr>";
+					    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source.split(",",2).join(", ") + "</a></td>";
+					    table_html += "    <td style=\"text-align:right\">" + load.destination.split(",",2).join(", ") + "</td>";
+					    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
+					    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
+					    table_html += "    <td style=\"text-align:right\">" + ((load.driveDate != null) ? load.driveDateStr : "") + "</td>";
+					    table_html += "</tr>";
+	
+						
+						markers.push([load.name, load.sourceLocation.coordinates[1], load.sourceLocation.coordinates[0]]);
+						infoWindowContent.push(
+							['<div class="info_content" dir="rtl"><h5>יעד: ' + load.destination.split(",",2).join(", ") + '</h5>'
+							+ '<h5>סוג מטען: ' + ((load.type != null) ? convertType(load.type) : "") + '</h5>'
+							+ '<h5>מחיר: ' + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + '</h5>'
+							+ '<h5>תאריך נסיעה: ' + ((load.driveDate != null) ? load.driveDateStr : "") + '</h5>'
+							+ '<h5><a href="/load_details_for_trucker/' + load.id + '">פרטים נוספים</a></h5>'
+							+ '</div>']);
+					}
 			    }
 			    table_html += "</table>";
      		   $('#available_loads').html(table_html);
