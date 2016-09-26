@@ -145,6 +145,12 @@ function ValidateForm1(theForm)
       theForm.volume.focus();
       return false;
    }
+   if (theForm.source.value == "")
+   {
+      mAlert("חובה לספק מוצא");
+      theForm.source.focus();
+      return false;
+   }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ '\t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.source.value))
    {
@@ -152,9 +158,9 @@ function ValidateForm1(theForm)
       theForm.source.focus();
       return false;
    }
-   if (theForm.source.value == "")
+   if (theForm.sourceLat.value == "")
    {
-      mAlert("חובה לספק מוצא");
+      mAlert("חובה לבחור מוצא מוכר מהרשימה הנפתחת בשדה");
       theForm.source.focus();
       return false;
    }
@@ -183,16 +189,22 @@ function ValidateForm1(theForm)
       return false;
    }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ '\t\r\n\f0-9-,"]*$/;
+   if (theForm.destination.value == "")
+   {
+      mAlert("חובה לספק יעד");
+      theForm.destination.focus();
+      return false;
+   }
    if (!regexp.test(theForm.destination.value))
    {
       mAlert("היעד יכול להכיל אותיות ספרות ורווחים");
       theForm.destination.focus();
       return false;
    }
-   if (theForm.destination.value == "")
+   if (theForm.destinationLat.value == "")
    {
-      mAlert("חובה לספק יעד");
-      theForm.destination.focus();
+      mAlert("חובה לבחור יעד מוכר מהרשימה הנפתחת בשדה");
+      theForm.source.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
