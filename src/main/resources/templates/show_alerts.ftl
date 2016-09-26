@@ -40,7 +40,11 @@
 										<td>${alert.username!''}</td>
 										<td>${alert.source!''}</td>
 										<td>${alert.destination!''}</td>
-										<td>${alert.driveDate!''}</td>
+										<#if alert.driveDate??>
+											<td>${alert.driveDateStr!''}</td>
+										<#else>
+											<td></td>
+										</#if>
 									</tr>
 									</#list>
 								</table>
