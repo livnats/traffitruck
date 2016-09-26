@@ -173,6 +173,22 @@ public class HtmlController implements Filter {
 	return new ModelAndView("show_trucks", model);
     }
 
+    @RequestMapping({"/users"})
+    ModelAndView showUsers() {
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+    	model.put("users", dao.getUsers());
+    	return new ModelAndView("show_users", model);
+    }
+
+    @RequestMapping({"/alerts"})
+    ModelAndView showAlerts() {
+    	Map<String, Object> model = new HashMap<>();
+    	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+    	model.put("alerts", dao.getAllAlerts());
+    	return new ModelAndView("show_alerts", model);
+    }
+
     @RequestMapping({"/findTrucksForLoad"})
     ModelAndView findTrucksForLoad() {
 	Map<String, Object> model = new HashMap<>();

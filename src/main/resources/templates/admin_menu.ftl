@@ -35,6 +35,16 @@
 					</tr>
 					<tr> 
 						<td>
+							<a href="/users">כל המשתמשים</a>
+						</td>
+					</tr>
+					<tr> 
+						<td>
+							<a href="/alerts">כל ההתראות</a>
+						</td>
+					</tr>
+					<tr> 
+						<td>
 							<a href="/logout">יציאה</a>
 						</td>
 					</tr>
