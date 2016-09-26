@@ -168,14 +168,15 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 				}
 				
 			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
-			    table_html += '<thead><tr><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
+			    table_html += '<thead><tr><th></th><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
 
 				for (var i in loads) {
 				    load = loads[i];
 
 					if ( load.sourceLocation != null ) {
 					    table_html += "<tr>";
-					    table_html += "    <td style=\"text-align:right\"><a href='/load_details_for_trucker/" + load.id + "'>" + load.source.split(",",2).join(", ") + "</a></td>";
+					    table_html += "    <td style=\"text-align:right\" class=\"ui-nodisc-icon\"><a href='/load_details_for_trucker/" + load.id + "' data-role=\"button\" data-icon=\"info\" data-iconpos=\"notext\" data-corners=\"false\"></a></td>";
+					    table_html += "    <td style=\"text-align:right\">" + load.source.split(",",2).join(", ") + "</td>";
 					    table_html += "    <td style=\"text-align:right\">" + load.destination.split(",",2).join(", ") + "</td>";
 					    table_html += "    <td style=\"text-align:right\">" + ((load.type != null) ? convertType(load.type) : "") + "</td>";
 					    table_html += "    <td style=\"text-align:right\">" + ((load.suggestedQuote != null) ? load.suggestedQuote : "") + "</td>";
@@ -195,6 +196,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			    }
 			    table_html += "</table>";
      		   $('#available_loads').html(table_html);
+			   $("a[data-role='button']").buttonMarkup(); // make the button mobile buttons after making the HTML visible
      		   showOnMap();
      		   
   			}, "json");
@@ -431,6 +433,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 							אין משאיות מאושרות 
 						</#if>
 		</div>
+		
 		<div id="available_loads" style="direction:RTL">
 		</div>
 
