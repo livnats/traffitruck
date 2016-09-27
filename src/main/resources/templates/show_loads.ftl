@@ -197,7 +197,8 @@ $(document).ready(function() {
 											<th>יעד</th>
 											<th>סוג מטען</th>
 											<th>מחיר</th>
-											<th>תאריך</th>
+											<th>תאריך יצירה</th>
+											<th>תאריך זמינות להובלה</th>
 										</tr>
 										<#list loads as load>
 										<tr id="${load.id}" class="clickableRow">
@@ -206,7 +207,8 @@ $(document).ready(function() {
 											<td>${Format.address(load.destination)!''}</td>
 											<td class="typeConversion">${load.type!'לא נמסר'}</td>
 											<td>${load.suggestedQuote!'לא נמסר'}</td>
-											<td>${load.creationDate?string("HH:mm dd-MM-yyyy")!''}</td>
+											<td>${load.creationDate?string("dd-MM-yyyy")!''}</td>
+											<td>${load.driveDate?string("dd-MM-yyyy")!''}</td>
 										</tr>
 										</#list>
 									</table>

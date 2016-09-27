@@ -4,9 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.traffitruck.domain.Alert;
 import com.traffitruck.domain.Load;
@@ -30,7 +27,6 @@ import com.traffitruck.domain.Role;
 import com.traffitruck.domain.Truck;
 import com.traffitruck.service.MongoDAO;
 
-import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateModelException;
 
 @RestController
@@ -53,19 +49,6 @@ public class JsonController {
 		Load load = dao.getLoad(loadId);
 		LoadsUser user = dao.getUser(username);
 		return new LoadAndUser(load, user);
-	}
-
-	@RequestMapping(value="/load_for_truck/{licensePlateNumber}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Load> getLoadsForTruck(@PathVariable String licensePlateNumber) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
-		// verify the truck belongs to the logged-in user
-		Truck truck = dao.getTruckByUserAndLicensePlate(username, licensePlateNumber);
-		if (truck == null) { // the logged in user does not have a truck with this license plate number
-			return Collections.emptyList();
-		}
-
-		return dao.getLoadsForTruck(truck);
 	}
 
 	@RequestMapping(value="/load_for_truck_by_radius", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

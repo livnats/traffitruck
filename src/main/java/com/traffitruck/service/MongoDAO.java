@@ -1,7 +1,5 @@
 package com.traffitruck.service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -252,23 +250,6 @@ public class MongoDAO {
 		return mongoTemplate.findOne(truckBelongsToUserQuery, Truck.class);
 	}
 
-	public List<Load> getLoadsForTruck(Truck truck) {
-		Query loadsForTruckQuery = new Query();
-		// match weight
-		if (truck.getMaxWeight() != null) {
-			loadsForTruckQuery.addCriteria(Criteria.where("weight").exists(true).lte(truck.getMaxWeight()));
-			loadsForTruckQuery.addCriteria(Criteria.where("volume").exists(true).lte(truck.getMaxVolume()));
-			loadsForTruckQuery.addCriteria(Criteria.where("driveDate").exists(true).gte(new Date()));
-			loadsForTruckQuery.addCriteria(Criteria.where("loadingType").exists(true).in(convertToInClauseStringCollection(truck.getAcceptableLiftTypes())));
-			loadsForTruckQuery.addCriteria(Criteria.where("downloadingType").exists(true).in(convertToInClauseStringCollection(truck.getAcceptableLiftTypes())));
-			loadsForTruckQuery.addCriteria(Criteria.where("type").exists(true).in(convertToInClauseStringCollection(truck.getAcceptableLoadTypes())));
-		}
-		// sort results
-		loadsForTruckQuery.with(new Sort("source"));
-
-		return mongoTemplate.find(loadsForTruckQuery, Load.class);
-	}
-
 	public LoadsUser getUser(String username) {
 		Query query = new Query().addCriteria(Criteria.where("username").is(username));
 		query.fields().exclude("password");
@@ -297,9 +278,11 @@ public class MongoDAO {
 		if (destinationLat != null && destinationLng != null && destination_radius != null) {
 			query += ", destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
 		}
-		// sort results
 		query += "}";
 		BasicQuery queryobj = new BasicQuery(query);
+		// sort results
+		queryobj.with(new Sort(Direction.DESC, "driveDate"));
+
 		List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 
 		if (drivedate != null) {
@@ -313,26 +296,11 @@ public class MongoDAO {
 
 		}
 		else {
-		    	// drive date has only a date part, so I strip the time part out of the calendar and it take it one second back to be able to use the after() method
-			Calendar c = Calendar.getInstance();
-			c.set(Calendar.HOUR, 0);
-			c.set(Calendar.MINUTE, 0);
-			c.set(Calendar.SECOND, 0);
-			c.set(Calendar.MILLISECOND, 0);
-			c.add(Calendar.SECOND, -1);
-			Date cmp = c.getTime();
 			return coll.stream().filter(load -> {
-				return load.getDriveDate().after(cmp);
+				return load.getDriveDate().before(new Date());
 			}).collect(Collectors.toList());
 		}
 	}
-
-	private ArrayList<String> convertToInClauseStringCollection(List<?> list) {
-		ArrayList<String> strings = new ArrayList<>(list.size());
-		list.stream().forEach(item -> strings.add(item.toString()));
-		return strings;
-	}
-
 
 	private String convertToInClause(List<?> list) {
 		StringBuilder builder = new StringBuilder(128);

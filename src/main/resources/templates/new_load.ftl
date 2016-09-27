@@ -456,7 +456,7 @@ text-align: right;
 	<option value="TROLLY">עגלה</option>
 	</select>
 </div><div class="ui-field-contain">
-	<label for="drivedate">* תאריך הובלה</label>
+	<label for="drivedate">* זמינות להובלה מתאריך</label>
 	<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
 </div><div class="ui-field-contain">
 	<label for="suggestedQuote">* מחיר (שקלים)</label>

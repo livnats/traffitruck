@@ -168,7 +168,7 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 				}
 				
 			    table_html = '<table data-role="table" class="table-stripe ui-responsive" style="direction:RTL">';
-			    table_html += '<thead><tr><th></th><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">תאריך נסיעה</th></tr></thead>';
+			    table_html += '<thead><tr><th></th><th style="text-align:right">מוצא</th><th style="text-align:right">יעד</th><th style="text-align:right">סוג מטען</th><th style="text-align:right">מחיר</th><th style="text-align:right">זמינות להובלה מתאריך</th></tr></thead>';
 
 				for (var i in loads) {
 				    load = loads[i];
