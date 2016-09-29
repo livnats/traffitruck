@@ -90,7 +90,6 @@ $(document).ready(function() {
 <div data-role="header" id="Header1">
 <h1>פרטי מטען</h1>
 <a href="/myLoads" data-role="button" class="ui-btn-left">חזרה</a>
-<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
 
@@ -175,12 +174,9 @@ $(document).ready(function() {
 
 </tbody>
 </table>
-			    
-<form action='/deleteLoad' method='post'>
-	<input type="submit" value="הסר מטען"/>
-	<input type="hidden" id="loadId" name="loadId" value="${load.id}"/>
-	<input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'/>
-</form>
+
+<a href="/deleteLoad/${load.id}" data-role="button" data-inline="true">מחק מטען</a>
+<a href="/editLoad/${load.id}" data-role="button" data-inline="true">ערוך מטען</a>
 
 </div>
 </div>

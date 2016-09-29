@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bson.types.Binary;
+import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mail.SimpleMailMessage;
@@ -34,6 +35,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -231,6 +233,53 @@ public class HtmlController implements Filter {
 	}
 	dao.storeLoad(load);
 	asyncServices.triggerAlerts(load);
+	return new ModelAndView("redirect:/myLoads");
+    }
+
+    @RequestMapping(value = "/updateload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ModelAndView updateLoad(
+	    @ModelAttribute("load") Load load, BindingResult br1,
+	    @RequestParam("loadPhoto") byte[] loadPhoto, BindingResult br2,
+	    @RequestParam("drivedate") String drivedate, BindingResult br3,
+	    @RequestParam("sourceLat") Double sourceLat, BindingResult br4,
+	    @RequestParam("sourceLng") Double sourceLng, BindingResult br5,
+	    @RequestParam("destinationLat") Double destinationLat, BindingResult br6,
+	    @RequestParam("destinationLng") Double destinationLng, BindingResult br7,
+	    @RequestParam("loadId") String loadId, BindingResult br8
+	    ) throws IOException, HttpMediaTypeNotAcceptableException {
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+	sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+	try {
+	    load.setDriveDate(sdf.parse(drivedate));
+	} catch (ParseException e) {
+	    throw new RuntimeException(e);
+	}
+	load.setId(loadId);
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	load.setUsername(username);
+	if (loadPhoto != null && loadPhoto.length > 0) {
+	    load.setLoadPhoto(new Binary(loadPhoto));
+	}
+	if (sourceLat != null && sourceLng != null) {
+	    load.setSourceLocation(new Location(new double[] { sourceLng, sourceLat}));
+	}
+	if (destinationLat != null && destinationLng != null) {
+	    load.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
+	}
+
+	Load oldLoad = dao.getLoadForUserById(loadId, username);
+	if ( oldLoad == null ) {
+	    throw new ConversionNotSupportedException(null, null, null);
+	}
+	// check if this update should trigget alerts
+	boolean triggerAlerts = ! oldLoad.getSource().equals( load.getSource() ) || ! oldLoad.getDestination().equals( load.getDestination() ) || ! oldLoad.getDriveDateStr().equals( load.getDriveDateStr() );
+	// update the load
+	dao.updateLoad(load);
+	if ( triggerAlerts ) {
+	    asyncServices.triggerAlerts(load);
+	}
 	return new ModelAndView("redirect:/myLoads");
     }
 
@@ -482,24 +531,25 @@ public class HtmlController implements Filter {
 	return new ModelAndView("redirect:" + user.getRoles().get(0).getLandingUrl());
     }
 
-    @RequestMapping(value = "/deleteLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    ModelAndView deleteLoad(String loadId) {
+    @RequestMapping(value = "/deleteLoad/{loadId}", method = RequestMethod.GET)
+    ModelAndView deleteLoad(@PathVariable String loadId) {
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	String username = authentication.getName();
 	dao.deleteLoadById(loadId, username);
 	return new ModelAndView("redirect:/myLoads");
     }
 
-    //    @RequestMapping(value = "/updateLoad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    //    ModelAndView updateLoad(String loadId) {
-    //	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    //	String username = authentication.getName();
-    //	Load load = dao.getLoadForUserById(loadId, username);
-    //	Map<String, Object> model = new HashMap<>();
-    //	model.put("load", load);
-    //	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-    //	return new ModelAndView("update_load_details", model);
-    //    }
+    @RequestMapping(value = "/editLoad/{loadId}", method = RequestMethod.GET)
+    ModelAndView editLoad(@PathVariable String loadId) {
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	String username = authentication.getName();
+	Load load = dao.getLoadForUserById(loadId, username);
+	Map<String, Object> model = new HashMap<>();
+	updateModelWithRoles(model);
+	model.put("load", load);
+	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
+	return new ModelAndView("update_load_details", model);
+    }
 
     @RequestMapping(value = "/truckApproval", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView approveTruck(@ModelAttribute("truck") Truck truck) {
@@ -653,6 +703,7 @@ public class HtmlController implements Filter {
     ModelAndView getLoad(@PathVariable String loadId) throws TemplateModelException {
 	Load load = dao.getLoad(loadId);
 	Map<String, Object> model = new HashMap<>();
+	updateModelWithRoles(model);
 	model.put("Format", getFormatStatics());
 	model.put("load", load);
 	model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
@@ -676,6 +727,7 @@ public class HtmlController implements Filter {
 	Load load = dao.getLoad(loadId);
 	LoadsUser loadsUser = dao.getUser(load.getUsername());
 	Map<String, Object> model = new HashMap<>();
+	updateModelWithRoles(model);
 	model.put("Format", getFormatStatics());
 	model.put("load", load);
 	model.put("loadsUser", loadsUser);

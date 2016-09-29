@@ -98,6 +98,31 @@ public class MongoDAO {
 		mongoTemplate.insert(load);
 	}
 
+	public void updateLoad( Load load ) {
+		Query q = new Query();
+		q.addCriteria(Criteria.where("_id").is(load.getId()));
+		Update update = new Update();
+		update.set("source", load.getSource());
+		update.set("sourceLocation", load.getSourceLocation());
+		update.set("destinationLocation", load.getDestinationLocation());
+		update.set("destination", load.getDestination());
+		update.set("driveDate", load.getDriveDate());
+		update.set("suggestedQuote", load.getSuggestedQuote());
+		update.set("weight", load.getWeight());
+		update.set("volume", load.getVolume());
+		update.set("comments", load.getComments());
+		update.set("type", load.getType());
+		update.set("loadingType", load.getLoadingType());
+		update.set("downloadingType", load.getDownloadingType());
+		update.set("name", load.getName());
+		update.set("waitingTime", load.getWaitingTime());
+		if ( load.getHasPhoto() ) {
+		    update.set("loadPhoto", load.getLoadPhoto());
+		    update.set("hasPhoto", load.getHasPhoto());
+		}
+		mongoTemplate.updateFirst(q, update, Load.class);
+	}
+
 	public List<Load> getLoads() {
 		Query sortBySource = new Query().with(new Sort("source"));
 		return mongoTemplate.find(sortBySource,Load.class);

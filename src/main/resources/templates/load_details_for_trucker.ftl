@@ -90,7 +90,6 @@ $(document).ready(function() {
 <div data-role="header" id="Header1">
 <h1>פרטי מטען</h1>
 <a href="/findTrucksForLoad" data-role="button" class="ui-btn-left">חזרה</a>
-<a href="/logout" data-role="button" class="ui-btn-right">יציאה</a>
 </div>
 <div class="ui-content" role="main">
 
