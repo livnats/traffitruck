@@ -43,11 +43,15 @@ public class AsyncServices {
 		String alertUrl = alertUrlPrefix + "/load_details_for_trucker/" + load.getId();
 		
 		// format email
-		String message = "התקבל מטען חדש לשירות טראפי-טראק התואם את ההתראות שהגדרת\n"
+		String message = "התקבל מטען חדש התואם את ההתראות שהגדרת\n"
+				+ "המטען יוצא מ-" + load.getSource()
+				+ "ליעד-" + load.getDestination()
+				+ "במחיר " + load.getSuggestedQuote().intValue();
+
+		String emailMessage = "התקבל מטען חדש לשירות טראפי-טראק התואם את ההתראות שהגדרת\n"
 				+ "המטען יוצא מ-" + load.getSource() + "\n"
 				+ "ליעד-" + load.getDestination() + "\n"
-				+ "מחיר-" + load.getSuggestedQuote() + "\n";
-		String emailMessage = message
+				+ "מחיר-" + load.getSuggestedQuote().intValue() + "\n"
 				+ "\n"
 				+ "לקבלת פרטים נוספים לחץ על הקישור הבא " + alertUrl + "\n";
 		
