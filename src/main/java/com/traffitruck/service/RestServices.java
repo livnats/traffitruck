@@ -1,8 +1,11 @@
 package com.traffitruck.service;
 
+import java.nio.charset.Charset;
+
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,6 +16,10 @@ public class RestServices {
 
 	RestTemplate restTemplate = new RestTemplate();
 
+	public RestServices() {
+		restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+	}
+	
 	public String getGoogleJavascriptAPI() {
 		String apiKey = System.getenv("GOOGLE_API_KEY");
 		if ( apiKey == null ) {
