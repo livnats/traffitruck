@@ -346,8 +346,10 @@ public class MongoDAO {
 		}
 		query += "}";
 		BasicQuery queryobj = new BasicQuery(query);
+		// no need for the photo here
+		queryobj.fields().exclude("loadPhoto");
 		// sort results
-		queryobj.with(new Sort(Direction.DESC, "driveDate"));
+		queryobj.with(new Sort(Direction.DESC, "driveDate")); 
 
 		List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 
