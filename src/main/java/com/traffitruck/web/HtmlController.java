@@ -642,23 +642,22 @@ public class HtmlController implements Filter {
 
     @RequestMapping(value = "/newAlert", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     ModelAndView newAlert(@ModelAttribute("alert") Alert alert, BindingResult br1,
-	    @RequestParam("drivedate") String drivedate, BindingResult br3,
-	    @RequestParam("sourceLat") Double sourceLat, BindingResult br4,
-	    @RequestParam("sourceLng") Double sourceLng, BindingResult br5,
-	    @RequestParam("destinationLat") Double destinationLat, BindingResult br6,
-	    @RequestParam("destinationLng") Double destinationLng, BindingResult br7
-	    ) throws IOException {
-	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	String username = authentication.getName();
-	alert.setUsername(username);
-	if (sourceLat != null && sourceLng != null) {
-	    alert.setSourceLocation(new Location(new double[] { sourceLng, sourceLat}));
-	}
-	if (destinationLat != null && destinationLng != null) {
-	    alert.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
-	}
-	dao.storeAlert(alert);
-	return new ModelAndView("redirect:/myAlerts");
+    		@RequestParam("sourceLat") Double sourceLat, BindingResult br4,
+    		@RequestParam("sourceLng") Double sourceLng, BindingResult br5,
+    		@RequestParam("destinationLat") Double destinationLat, BindingResult br6,
+    		@RequestParam("destinationLng") Double destinationLng, BindingResult br7
+    		) throws IOException {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+    	alert.setUsername(username);
+    	if (sourceLat != null && sourceLng != null) {
+    		alert.setSourceLocation(new Location(new double[] { sourceLng, sourceLat}));
+    	}
+    	if (destinationLat != null && destinationLng != null) {
+    		alert.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
+    	}
+    	dao.storeAlert(alert);
+    	return new ModelAndView("redirect:/myAlerts");
     }
 
     @RequestMapping("/newTruck")
