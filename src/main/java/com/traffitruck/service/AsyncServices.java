@@ -46,7 +46,8 @@ public class AsyncServices {
 		String message = "התקבל מטען חדש לשירות טראפי-טראק התואם את ההתראות שהגדרת\n"
 				+ "המטען יוצא מ-" + load.getSource() + "\n"
 				+ "ליעד-" + load.getDestination() + "\n"
-				+ "בתאריך-" + load.getDriveDateStr() + "\n"
+				+ "מחיר-" + load.getSuggestedQuote() + "\n";
+		String emailMessage = message
 				+ "\n"
 				+ "לקבלת פרטים נוספים לחץ על הקישור הבא " + alertUrl + "\n";
 		
@@ -63,12 +64,12 @@ public class AsyncServices {
 					msg.setTo(user.getEmail());
 					msg.setSubject("התראת מטען חדש");
 					msg.setFrom("no-reply@traffitruck.com");
-					msg.setText(message);
+					msg.setText(emailMessage);
 					logger.info("Sending mail to " + user.getEmail());
 					mailSender.send(msg);
 				}
 				else {
-					registrationIds.stream().forEach(regid -> restServices.pushNewAlert(alertUrl, regid));
+					registrationIds.stream().forEach(regid -> restServices.pushNewAlert(alertUrl, regid, message));
 				}
 			}
 		});

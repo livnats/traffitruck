@@ -23,7 +23,7 @@ public class RestServices {
 		return result;
 	}
 
-	public void pushNewAlert(String alertUrl, String registrationId) {
+	public void pushNewAlert(String alertUrl, String registrationId, String message) {
 		String projectId = System.getenv("GOOGLE_PROJECT_ID");
 		if ( projectId == null ) {
 			throw new RuntimeException("Missing env variable value for GOOGLE_PROJECT_ID. Did you use sudo GOOGLE_PROJECT_ID=value?");
@@ -36,8 +36,8 @@ public class RestServices {
 		String body = "{ \"to\" : \"" + registrationId + "\", "
 				+ "\"priority\" : \"normal\", "
 				+ "\"data\" : { "
-				+ "\"title\" : \"TraffiTruck: New Load\", "
-				+ "\"message\" : \"Open in app\", "
+				+ "\"title\" : \"טראפי-טראק: מטען חדש\", "
+				+ "\"message\" : \"" + message + "\", "
 				+ "\"url\" : \"" + alertUrl + "\", "
 				+ "\"content_available\" : 1 } "
 				+ "}";

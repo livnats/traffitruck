@@ -238,58 +238,54 @@ public class HtmlController implements Filter {
 
     @RequestMapping(value = "/updateload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ModelAndView updateLoad(
-	    @ModelAttribute("load") Load load, BindingResult br1,
-	    @RequestParam("loadPhoto") byte[] loadPhoto, BindingResult br2,
-	    @RequestParam("drivedate") String drivedate, BindingResult br3,
-	    @RequestParam("sourceLat") Double sourceLat, BindingResult br4,
-	    @RequestParam("sourceLng") Double sourceLng, BindingResult br5,
-	    @RequestParam("destinationLat") Double destinationLat, BindingResult br6,
-	    @RequestParam("destinationLng") Double destinationLng, BindingResult br7,
-	    @RequestParam("loadId") String loadId, BindingResult br8
-	    ) throws IOException, HttpMediaTypeNotAcceptableException {
-	
-	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
-	sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-	try {
-	    load.setDriveDate(sdf.parse(drivedate));
-	} catch (ParseException e) {
-	    throw new RuntimeException(e);
-	}
-	load.setId(loadId);
-	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	String username = authentication.getName();
-	load.setUsername(username);
-	if (loadPhoto != null && loadPhoto.length > 0) {
-	    load.setLoadPhoto(new Binary(loadPhoto));
-	}
-	if (sourceLat != null && sourceLng != null) {
-	    load.setSourceLocation(new Location(new double[] { sourceLng, sourceLat}));
-	}
-	if (destinationLat != null && destinationLng != null) {
-	    load.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
-	}
+    		@ModelAttribute("load") Load load, BindingResult br1,
+    		@RequestParam("loadPhoto") byte[] loadPhoto, BindingResult br2,
+    		@RequestParam("drivedate") String drivedate, BindingResult br3,
+    		@RequestParam("sourceLat") Double sourceLat, BindingResult br4,
+    		@RequestParam("sourceLng") Double sourceLng, BindingResult br5,
+    		@RequestParam("destinationLat") Double destinationLat, BindingResult br6,
+    		@RequestParam("destinationLng") Double destinationLng, BindingResult br7,
+    		@RequestParam("loadId") String loadId, BindingResult br8
+    		) throws IOException, HttpMediaTypeNotAcceptableException {
 
-	Load oldLoad = dao.getLoadForUserById(loadId, username);
-	if ( oldLoad == null ) {
-	    throw new ConversionNotSupportedException(null, null, null);
-	}
-	// check if this update should trigget alerts
-	boolean triggerAlerts = ! oldLoad.getSource().equals( load.getSource() ) || ! oldLoad.getDestination().equals( load.getDestination() ) || ! oldLoad.getDriveDateStr().equals( load.getDriveDateStr() );
-	// update the load
-	dao.updateLoad(load);
-	if ( triggerAlerts ) {
-	    asyncServices.triggerAlerts(load);
-	}
-	return new ModelAndView("redirect:/myLoads");
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+    	sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+    	try {
+    		load.setDriveDate(sdf.parse(drivedate));
+    	} catch (ParseException e) {
+    		throw new RuntimeException(e);
+    	}
+    	load.setId(loadId);
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+    	load.setUsername(username);
+    	if (loadPhoto != null && loadPhoto.length > 0) {
+    		load.setLoadPhoto(new Binary(loadPhoto));
+    	}
+    	if (sourceLat != null && sourceLng != null) {
+    		load.setSourceLocation(new Location(new double[] { sourceLng, sourceLat}));
+    	}
+    	if (destinationLat != null && destinationLng != null) {
+    		load.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
+    	}
+
+    	Load oldLoad = dao.getLoadForUserById(loadId, username);
+    	if ( oldLoad == null ) {
+    		throw new ConversionNotSupportedException(null, null, null);
+    	}
+    	// update the load
+    	dao.updateLoad(load);
+    	asyncServices.triggerAlerts(load);
+    	return new ModelAndView("redirect:/myLoads");
     }
 
     @RequestMapping(value = "/truckerMenu")
     ModelAndView truckerMenu() {
-	Map<String, Object> model = new HashMap<>();
-	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	String username = authentication.getName();
-	model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
-	return new ModelAndView("trucker_menu", model);
+    	Map<String, Object> model = new HashMap<>();
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+    	model.put("trucks", dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED));
+    	return new ModelAndView("trucker_menu", model);
     }
 
     private void updateModelWithRoles (Map<String, Object> model){
