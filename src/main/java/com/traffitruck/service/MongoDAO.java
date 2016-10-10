@@ -347,12 +347,12 @@ public class MongoDAO {
 		// no need for the photo here
 		query += "} , {loadPhoto:0}";
 		BasicQuery queryobj = new BasicQuery(query);
-		queryobj.fields().exclude("loadPhoto");
 		// sort results
 		queryobj.with(new Sort(Direction.DESC, "driveDate")); 
 
 		List<Load> coll = mongoTemplate.find(queryobj, Load.class);
-
+		coll.stream().forEach(load -> load.setLoadPhoto(null));
+		
 		return coll.stream().filter(load -> {
 			return load.getDriveDate().before(new Date());
 		}).collect(Collectors.toList());
