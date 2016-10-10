@@ -105,8 +105,7 @@ public class JsonController {
 			@RequestParam("sourceLng") Double sourceLng,
 			@RequestParam("destination") String destination,
 			@RequestParam("destinationLat") Double destinationLat,
-			@RequestParam("destinationLng") Double destinationLng,
-			@RequestParam("drivedate") String drivedate
+			@RequestParam("destinationLng") Double destinationLng
 			) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
