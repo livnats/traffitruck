@@ -344,9 +344,9 @@ public class MongoDAO {
 		if (destinationLat != null && destinationLng != null && destination_radius != null) {
 			query += ", destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
 		}
-		query += "}";
-		BasicQuery queryobj = new BasicQuery(query);
 		// no need for the photo here
+		query += "} , {loadPhoto:0}";
+		BasicQuery queryobj = new BasicQuery(query);
 		queryobj.fields().exclude("loadPhoto");
 		// sort results
 		queryobj.with(new Sort(Direction.DESC, "driveDate")); 
