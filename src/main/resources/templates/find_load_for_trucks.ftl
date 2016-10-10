@@ -32,10 +32,6 @@ $(document).on("mobileinit", function()
 <script type="text/javascript">
 $(document).ready(function() {
 
-$( "#drivedate" ).datepicker();
-$( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
-$( "#drivedate" ).datepicker( "option", "minDate", 0);
-
 	$("#truckSelection").change(function() {
 	    if ( $("#truckSelection").val() != "" ) {
 	       $("#searchfilter").show();
@@ -74,7 +70,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 		destination = $("#destination").val();
 		destinationLat = $("#destinationLat").val();
 		destinationLng = $("#destinationLng").val();
-		drivedate = $("#drivedate").val();
 		$.post(
 			"/alertFromFilter",
 			{
@@ -84,7 +79,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 				destination: destination,
 				destinationLat: destinationLat,
 				destinationLng: destinationLng,
-				drivedate: drivedate,
 				${_csrf.parameterName}: "${_csrf.token}"
 			}, 
 			function() {
@@ -134,7 +128,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			sourceLng = $("#sourceLng").val();
 			destinationLat = $("#destinationLat").val();
 			destinationLng = $("#destinationLng").val();
-			drivedate = $("#drivedate").val();
 
 			localStorage['filter'] = "true";
 			localStorage['licensePlateNumber'] = licensePlateNumber;
@@ -144,7 +137,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			localStorage['sourceLng'] = sourceLng;
 			localStorage['destinationLat'] = destinationLat;
 			localStorage['destinationLng'] = destinationLng;
-			localStorage['drivedate'] = drivedate;
 
 			$.post( "/load_for_truck_by_radius",
 				{
@@ -153,7 +145,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 					sourceLng: sourceLng,
 					destinationLat: destinationLat,
 					destinationLng: destinationLng,
-					drivedate: drivedate,
 					${_csrf.parameterName}: "${_csrf.token}"
 				} 
 				, function( loads ) {
@@ -255,7 +246,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 		$("#destination").val('');
 		$("#destinationLat").val('');
 		$("#destinationLng").val('');
-		$("#drivedate").val('');
 	}
 	
     var autocomplete;
@@ -268,7 +258,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 			$("#destination").val(localStorage['destination']);
 			$("#destinationLat").val(localStorage['destinationLat']);
 			$("#destinationLng").val(localStorage['destinationLng']);
-			$("#drivedate").val(localStorage['drivedate']);
 		    $("#truckSelection option[value='" + localStorage['licensePlateNumber'] + "']").prop("selected", "selected").change();
 			$( "#radiusFilter" ).click();
 		}
@@ -418,10 +407,6 @@ $( "#drivedate" ).datepicker( "option", "minDate", 0);
 								<input type="text" id="destination" name="destination" value="" placeholder="הכנס כתובת" style="text-align:right; direction:rtl">
 								<input type="hidden" id="destinationLat" name="destinationLat" value="">
 								<input type="hidden" id="destinationLng" name="destinationLng" value="">
-							</div>
-							<div class="ui-field-contain">
-								<label for="drivedate">תאריך הובלה</label>
-								<input type="text" id="drivedate" name="drivedate" value="" onfocus="blur();" style="text-align:right">
 							</div>
 							<div>
 								<a href="#" onclick="clearForm()" data-role="none" style="font-weight:bold; font-size:0.8em; margin-left: 25px;">נקה פילטר</a>

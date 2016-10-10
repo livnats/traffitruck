@@ -1,8 +1,5 @@
 package com.traffitruck.domain;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 
 public class Alert {
@@ -15,13 +12,7 @@ public class Alert {
     private Location sourceLocation;
     private String destination;
     private Location destinationLocation;
-    private Date driveDate;
     
-    public String getDriveDateStr() {
-    	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
-    	return sdf.format(driveDate);
-    }
-
     public String getId() {
 		return id;
 	}
@@ -55,19 +46,38 @@ public class Alert {
 	public void setDestinationLocation(Location destinationLocation) {
 		this.destinationLocation = destinationLocation;
 	}
-	public Date getDriveDate() {
-		return driveDate;
-	}
-	public void setDriveDate(Date driveDate) {
-		this.driveDate = driveDate;
-	}
 	@Override
 	public String toString() {
 		return "Alert [id=" + id + ", username=" + username + ", source="
 				+ source + ", sourceLocation=" + sourceLocation
 				+ ", destination=" + destination + ", destinationLocation="
-				+ destinationLocation + ", driveDate=" + driveDate + "]";
+				+ destinationLocation + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Alert other = (Alert) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
+	
     
     
 }

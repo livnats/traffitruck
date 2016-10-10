@@ -33,18 +33,12 @@
 										<th>שם משתמש</th>
 										<th>מקור</th>
 										<th>יעד</th>
-										<th>תאריך</th>
 									</tr>
 									<#list alerts as alert>
 									<tr id="${alert.id!''}">
 										<td>${alert.username!''}</td>
 										<td>${alert.source!''}</td>
 										<td>${alert.destination!''}</td>
-										<#if alert.driveDate??>
-											<td>${alert.driveDateStr!''}</td>
-										<#else>
-											<td></td>
-										</#if>
 									</tr>
 									</#list>
 								</table>

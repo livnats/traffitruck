@@ -18,12 +18,6 @@ $(document).on("mobileinit", function()
    $.mobile.ajaxEnabled = false;
 });
 
-$(document).ready(function() {
-	$( "#drivedate" ).datepicker();
-	$( "#drivedate" ).datepicker( "option", "dateFormat", 'dd-mm-yy' );       
-	$( "#drivedate" ).datepicker( "option", "minDate", 0);
-});
-
 </script>
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script>
@@ -38,7 +32,7 @@ function mAlert(text1) {
 
 function ValidateForm1(theForm)
 {
-   if ((theForm.drivedate.value == "") && (theForm.source.value == "") && (theForm.destination.value == ""))
+   if ((theForm.source.value == "") && (theForm.destination.value == ""))
    {
       mAlert("חובה למלא שדה אחד לפחות כדי לצור התראה");
       return false;
@@ -57,7 +51,6 @@ function ValidateForm1(theForm)
 			$("#destination").val(sessionStorage['destination']);
 			$("#destinationLat").val(sessionStorage['destinationLat']);
 			$("#destinationLng").val(sessionStorage['destinationLng']);
-			$("#drivedate").val(sessionStorage['drivedate']);
 			$( "#radiusFilter" ).click();
 		}
 
@@ -190,10 +183,6 @@ function ValidateForm1(theForm)
 				<input type="text" id="destination" name="destination" value="" placeholder="הכנס כתובת" style="text-align:right; direction:rtl">
 				<input type="hidden" id="destinationLat" name="destinationLat" value="">
 				<input type="hidden" id="destinationLng" name="destinationLng" value="">
-			</div>
-			<div class="ui-field-contain">
-				<label for="drivedate">תאריך הובלה</label>
-				<input type="text" id="drivedate" name="drivedate" value="" onfocus="blur();" style="text-align:right">
 			</div>
 			<input type="submit" id="Button1" name="" value="צור התראה">
 			</form>

@@ -1,7 +1,9 @@
 package com.traffitruck.service;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
@@ -61,36 +63,75 @@ public class MongoDAO {
 		return mongoTemplate.findAll(Alert.class);
 	}
 
-	public List<Alert> getAlertsByFilter(Double sourceLat, Double sourceLng, Integer source_radius,
-			Double destinationLat, Double destinationLng, Integer destination_radius, Date drivedate) {
-		// The criteria API isn't good enough
-		String query = "{";
-		if (sourceLat != null && sourceLng != null && source_radius != null) {
-			if ( query.length() > 1 ) {
-				query += ", ";
+	public Collection<Alert> getAlertsByFilter(Double sourceLat, Double sourceLng, Integer source_radius,
+			Double destinationLat, Double destinationLng, Integer destination_radius) {
+		// get alerts with source and destination both exist and match
+		// add alerts where the source is a match and the destination is not set 
+		// add alerts where the destination is a match and the source is not set 
+		
+		List<Alert> coll = null;
+		
+		// get alerts with source and destination both exist and match
+		{
+			// The criteria API isn't good enough
+			String query = "{";
+			if (sourceLat != null && sourceLng != null && source_radius != null) {
+				if ( query.length() > 1 ) {
+					query += ", ";
+				}
+				query += "sourceLocation : { $geoWithin : { $centerSphere: [ [" + sourceLng + ", " + sourceLat + "], "+ source_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
 			}
-			query += "sourceLocation : { $geoWithin : { $centerSphere: [ [" + sourceLng + ", " + sourceLat + "], "+ source_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
-		}
-		if (destinationLat != null && destinationLng != null && destination_radius != null) {
-			if ( query.length() > 1 ) {
-				query += ", ";
+			if (destinationLat != null && destinationLng != null && destination_radius != null) {
+				if ( query.length() > 1 ) {
+					query += ", ";
+				}
+				query += "destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
 			}
-			query += "destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+			query += "}";
+			BasicQuery queryobj = new BasicQuery(query);
+			coll = mongoTemplate.find(queryobj, Alert.class);
 		}
-		// sort results
-		query += "}";
-		BasicQuery queryobj = new BasicQuery(query);
-		List<Alert> coll = mongoTemplate.find(queryobj, Alert.class);
+		
+		// add alerts where the source is a match and the destination is not set 
+		{
+			String noDestquery = "{";
+			if (sourceLat != null && sourceLng != null && source_radius != null) {
+				if ( noDestquery.length() > 1 ) {
+					noDestquery += ", ";
+				}
+				noDestquery += "sourceLocation : { $geoWithin : { $centerSphere: [ [" + sourceLng + ", " + sourceLat + "], "+ source_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+			}
+			if (destinationLat != null && destinationLng != null && destination_radius != null) {
+				if ( noDestquery.length() > 1 ) {
+					noDestquery += ", ";
+				}
+				noDestquery += "destinationLocation : { $exists: false }";
+			}
+			noDestquery += "}";
+			BasicQuery queryobj = new BasicQuery(noDestquery);
+			coll.addAll(mongoTemplate.find(queryobj, Alert.class));
+		}
 
-		return coll.stream().filter(alert -> alert.getDriveDate() == null || datesEqual( alert.getDriveDate(), drivedate ) ).collect(Collectors.toList());
-	}
-
-	private boolean datesEqual( Date d1, Date d2 ) {
-		Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		c1.setTime(d1);
-		c2.setTime(d2);
-		return c1.get(Calendar.DATE) == c1.get(Calendar.DATE) && c1.get(Calendar.MONTH) == c1.get(Calendar.MONTH) && c1.get(Calendar.YEAR) == c1.get(Calendar.YEAR);
+		// add alerts where the destination is a match and the source is not set 
+		{
+			String noSourcequery = "{";
+			if (sourceLat != null && sourceLng != null && source_radius != null) {
+				if ( noSourcequery.length() > 1 ) {
+					noSourcequery += ", ";
+				}
+				noSourcequery += "sourceLocation : { $exists: false }";
+			}
+			if (destinationLat != null && destinationLng != null && destination_radius != null) {
+				if ( noSourcequery.length() > 1 ) {
+					noSourcequery += ", ";
+				}
+				noSourcequery += "destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+			}
+			noSourcequery += "}";
+			BasicQuery queryobj = new BasicQuery(noSourcequery);
+			coll.addAll(mongoTemplate.find(queryobj, Alert.class));
+		}
+		return new HashSet<Alert>(coll);
 	}
 
 	//Load
@@ -288,7 +329,7 @@ public class MongoDAO {
 	}
 
 	public List<Load> getLoadsForTruckByFilter(Truck truck, Double sourceLat, Double sourceLng, Integer source_radius,
-			Double destinationLat, Double destinationLng, Integer destination_radius, Date drivedate) {
+			Double destinationLat, Double destinationLng, Integer destination_radius) {
 		// The criteria API isn't good enough
 		String query = "{";
 
@@ -310,21 +351,9 @@ public class MongoDAO {
 
 		List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 
-		if (drivedate != null) {
-			return coll.stream().filter(load -> {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(drivedate);
-				cal.add(Calendar.DATE, 1);
-				Date drivedateNextDay = cal.getTime();
-				return load.getDriveDate() != null && load.getDriveDate().compareTo(drivedateNextDay) < 0 && load.getDriveDate().compareTo(drivedate) >= 0;
-			}).collect(Collectors.toList());
-
-		}
-		else {
-			return coll.stream().filter(load -> {
-				return load.getDriveDate().before(new Date());
-			}).collect(Collectors.toList());
-		}
+		return coll.stream().filter(load -> {
+			return load.getDriveDate().before(new Date());
+		}).collect(Collectors.toList());
 	}
 
 	private String convertToInClause(List<?> list) {

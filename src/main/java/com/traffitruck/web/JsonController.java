@@ -59,8 +59,7 @@ public class JsonController {
 			@RequestParam("destinationLat") Double destinationLat,
 			@RequestParam("destinationLng") Double destinationLng,
 			@RequestParam(value="source_radius", required=false) Integer source_radius,
-			@RequestParam(value="destination_radius", required=false) Integer destination_radius,
-			@RequestParam("drivedate") String drivedate
+			@RequestParam(value="destination_radius", required=false) Integer destination_radius
 			) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -69,8 +68,6 @@ public class JsonController {
 		if (truck == null) { // the logged in user does not have a truck with this license plate number
 			return Collections.emptyList();
 		}
-		Date driveDateObj = convertDriveDate(drivedate);
-
 		// set default value for radius if not set
 		if ( sourceLat != null && sourceLng != null && source_radius == null ) {
 			source_radius = DEFAULT_RADIUS_FOR_SEARCHES;
@@ -79,7 +76,7 @@ public class JsonController {
 			destination_radius = DEFAULT_RADIUS_FOR_SEARCHES;
 		}
 
-		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius, driveDateObj);
+		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius);
 	}
 
 	@RequestMapping(value="/load_details_json/{loadId}", method=RequestMethod.GET)
@@ -123,7 +120,6 @@ public class JsonController {
 			alert.setDestination(destination);
 			alert.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
 		}
-		alert.setDriveDate(JsonController.convertDriveDate(drivedate));
 		dao.storeAlert(alert);
 		return "Success!";
 	}

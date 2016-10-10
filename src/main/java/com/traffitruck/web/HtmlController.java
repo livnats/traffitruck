@@ -144,10 +144,10 @@ public class HtmlController implements Filter {
 	return new ModelAndView("login");
     }
 
-    @RequestMapping(value = "/postlogin", method = RequestMethod.POST)
+    @RequestMapping(value = "/postlogin", method = RequestMethod.GET)
     ModelAndView postLogin( HttpServletResponse response, @RequestParam(value="regid", required=true) String regid ) {
-	setSessionCookie(response, regid, SESSION_COOKIE);
-	return new ModelAndView("redirect:/menu");
+    	setSessionCookie(response, regid, SESSION_COOKIE);
+    	return new ModelAndView("redirect:/menu");
     }
 
     private void setSessionCookie(HttpServletResponse response, String regid, int expiry ) {
@@ -657,7 +657,6 @@ public class HtmlController implements Filter {
 	if (destinationLat != null && destinationLng != null) {
 	    alert.setDestinationLocation(new Location(new double[] { destinationLng, destinationLat}));
 	}
-	alert.setDriveDate(JsonController.convertDriveDate(drivedate));
 	dao.storeAlert(alert);
 	return new ModelAndView("redirect:/myAlerts");
     }

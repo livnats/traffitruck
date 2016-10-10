@@ -103,7 +103,6 @@ $(document).on("mobileinit", function()
 									<tr>
 										<th style="text-align:right">מוצא</th>
 										<th style="text-align:right">יעד</th>
-										<th style="text-align:right">תאריך</th>
 										<th style="text-align:right">מחק</th>
 									</tr>
 								</thead>
@@ -117,11 +116,6 @@ $(document).on("mobileinit", function()
 										</#if>
 										<#if (alert.destination??)>
 											<td style="text-align:right">${alert.destination}</td>
-										<#else>
-											<td style="text-align:right"></td>
-										</#if>
-										<#if (alert.driveDate??)>
-											<td style="text-align:right" class="typeConversion">${alert.driveDateStr}</td>
 										<#else>
 											<td style="text-align:right"></td>
 										</#if>
