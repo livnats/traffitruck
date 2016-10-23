@@ -40,6 +40,13 @@ $(document).ready(function() {
 	    return ratio;
 	}
 
+	$('#type').change(function(){
+		selection = $('#type').val();
+		if ( selection == "LIFTS" || selection == "BAGS" ) {
+			$("#quantityDiv").show("slow");
+		}
+	});
+
 	$('#loadPhoto1').change(function(){
 	    var file = this.files[0];
 	    var name = file.name;
@@ -419,7 +426,12 @@ text-align: right;
 	<option value="HAZMAT">חומ"ס</option>
 	<option value="OTHER">אחר</option>
 	</select>
-</div><div class="ui-field-contain">
+</div>
+<div class="ui-field-contain" id="quantityDiv" style="display:none;">
+	<label for="quantity">כמות</label>
+	<input type="number" id="quantity" style="" name="quantity" value="" step="0.5">	
+</div>
+<div class="ui-field-contain">
 	<label for="weight">* משקל (ק"ג)</label>
 	<input type="number" id="weight" style="" name="weight" value="">
 </div><div class="ui-field-contain">

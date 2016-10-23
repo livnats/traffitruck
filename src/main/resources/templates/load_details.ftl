@@ -115,6 +115,12 @@ $(document).ready(function() {
     <th style="text-align:right">סוג המטען:</th>
     <td style="text-align:right" class="typeConversion">${load.type!''}</td>
 </tr>
+<#if load.quantity??>
+<tr>
+    <th style="text-align:right">כמות:</th>
+    <td style="text-align:right" class="typeConversion">${load.quantity!''}</td>
+</tr>
+</#if>
 <tr>
     <th style="text-align:right">משקל (ק"ג):</th>
     <td style="text-align:right">${load.weight!''}</td>

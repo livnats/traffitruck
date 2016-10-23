@@ -40,6 +40,13 @@ $(document).ready(function() {
 	    return ratio;
 	}
 
+	$('#type').change(function(){
+		selection = $('#type').val();
+		if ( selection == "LIFTS" || selection == "BAGS" ) {
+			$("#quantityDiv").show("slow");
+		}
+	});
+
 	$('#loadPhoto1').change(function(){
 	    var file = this.files[0];
 	    var name = file.name;
@@ -409,7 +416,12 @@ text-align: right;
 		$("#type").val("${load.type!''}");
 	</script>
 	
-</div><div class="ui-field-contain">
+</div>
+<div class="ui-field-contain" id="quantityDiv" <#if ! load.quantity??>style="display:none;"</#if>>
+	<label for="quantity">כמות</label>
+	<input type="number" id="quantity" style="" name="quantity" value="${load.quantity!''}" step="0.5">
+</div>
+<div class="ui-field-contain">
 	<label for="weight">* משקל (ק"ג)</label>
 	<input type="number" id="weight" style="" name="weight" value="${load.weight!''}">
 </div><div class="ui-field-contain">

@@ -29,7 +29,16 @@ public class Load {
     private Double waitingTime;
     private boolean hasPhoto;
     private Binary loadPhoto;
+    private Double quantity;
 
+    public Double getQuantity() {
+		return quantity;
+	}
+    
+    public void setQuantity(Double quantity) {
+		this.quantity = quantity;
+	}
+    
     public String getId() {
 	return id;
     }

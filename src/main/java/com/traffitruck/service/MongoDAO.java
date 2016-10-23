@@ -152,7 +152,8 @@ public class MongoDAO {
 		update.set("weight", load.getWeight());
 		update.set("volume", load.getVolume());
 		update.set("comments", load.getComments());
-		update.set("type", load.getType());
+		update.set("comments", load.getComments());
+		update.set("quantity", load.getQuantity());
 		update.set("loadingType", load.getLoadingType());
 		update.set("downloadingType", load.getDownloadingType());
 		update.set("name", load.getName());
@@ -187,7 +188,7 @@ public class MongoDAO {
 	public List<Load> getLoadsForUser(String username) {
 		Query findByUsername = new Query()
 				.addCriteria(Criteria.where("username").is(username));
-		findByUsername.with(new Sort("driveDate"));
+		findByUsername.with(new Sort(Direction.DESC, "creationDate")); 
 		return mongoTemplate.find(findByUsername,Load.class);
 	}
 
