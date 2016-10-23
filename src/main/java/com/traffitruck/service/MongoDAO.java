@@ -352,10 +352,8 @@ public class MongoDAO {
 
 		List<Load> coll = mongoTemplate.find(queryobj, Load.class);
 		coll.stream().forEach(load -> load.setLoadPhoto(null));
-		
-		return coll.stream().filter(load -> {
-			return load.getDriveDate().before(new Date());
-		}).collect(Collectors.toList());
+
+		return coll;
 	}
 
 	private String convertToInClause(List<?> list) {
