@@ -45,6 +45,10 @@ $(document).ready(function() {
 		if ( selection == "LIFTS" || selection == "BAGS" ) {
 			$("#quantityDiv").show("slow");
 		}
+		else {
+			$("#quantityDiv").hide("slow");
+			$("#quantity").val("");
+		}
 	});
 
 	$('#loadPhoto1').change(function(){
