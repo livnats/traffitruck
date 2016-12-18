@@ -445,6 +445,7 @@ text-align: right;
 	<option value="CRANE">מנוף</option>
 	<option value="RAMP">רמפה</option>
 	<option value="TROLLY">עגלה</option>
+	<option value="CONTAINER">מכולה</option>
 	</select>
 	<script>
 		$("#loadingType").val("${load.loadingType!''}");
@@ -464,6 +465,7 @@ text-align: right;
 	<option value="CRANE">מנוף</option>
 	<option value="RAMP">רמפה</option>
 	<option value="TROLLY">עגלה</option>
+	<option value="CONTAINER">מכולה</option>
 	</select>
 	<script>
 		$("#downloadingType").val("${load.downloadingType!''}");

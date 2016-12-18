@@ -49,6 +49,8 @@ $(document).ready(function() {
 				res += "רמפה, ";
 			if ( type == "${enums["com.traffitruck.domain.LiftType"].TROLLY}" )
 				res += "עגלה, ";
+			if ( type == "${enums["com.traffitruck.domain.LiftType"].CONTAINER}" )
+				res += "מכולה, ";
 		}
 		return res.slice(0, -2);
 	}

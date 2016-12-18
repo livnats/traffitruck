@@ -92,6 +92,7 @@ $(document).ready(function() {
 								<option value="CRANE">מנוף</option>
 								<option value="RAMP">רמפה</option>
 								<option value="TROLLY">עגלה</option>
+								<option value="CONTAINER">מכולה</option>
 			        		</select>
 			            </td> 
 				    </tr>

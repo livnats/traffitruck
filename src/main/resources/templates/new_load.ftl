@@ -455,6 +455,7 @@ text-align: right;
 	<option value="CRANE">מנוף</option>
 	<option value="RAMP">רמפה</option>
 	<option value="TROLLY">עגלה</option>
+	<option value="CONTAINER">מכולה</option>
 	</select>
 </div><div class="ui-field-contain">
 	<label for="destination">* יעד</label>
@@ -470,6 +471,7 @@ text-align: right;
 	<option value="CRANE">מנוף</option>
 	<option value="RAMP">רמפה</option>
 	<option value="TROLLY">עגלה</option>
+	<option value="CONTAINER">מכולה</option>
 	</select>
 </div><div class="ui-field-contain">
 	<label for="drivedate">* זמינות להובלה מתאריך</label>
