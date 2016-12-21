@@ -90,22 +90,16 @@ function ValidateForm1(theForm)
       theForm.email.focus();
       return false;
    }
+   if (theForm.phoneNumber.value == "")
+   {
+      mAlert("מספר הסלולרי הוא חובה");
+      theForm.email.focus();
+      return false;
+   }
    regexp = /^\d*$/;
    if (!regexp.test(theForm.phoneNumber.value))
    {
       mAlert("מספר הטלפון חייב להכיל רק ספרות");
-      theForm.phoneNumber.focus();
-      return false;
-   }
-   if (!regexp.test(theForm.cellNumber.value))
-   {
-      mAlert("מספר הטלפון חייב להכיל רק ספרות");
-      theForm.cellNumber.focus();
-      return false;
-   }
-   if (theForm.cellNumber.value == "" && theForm.phoneNumber.value == "")
-   {
-      mAlert("חובה לספק מספר טלפון");
       theForm.phoneNumber.focus();
       return false;
    }
@@ -216,12 +210,8 @@ text-align: right;
 	<input type="email" id="email" style="direction:LTR" name="email" autocapitalize="off" value="<#if email??>${email}</#if>">
 </div>
 <div class="ui-field-contain">
-	<label for="phoneNumber">* טלפון</label>
+	<label for="phoneNumber">* סלולרי</label>
 	<input type="tel" id="phoneNumber" style="direction:LTR" name="phoneNumber" autocapitalize="off" value="<#if phoneNumber??>${phoneNumber}</#if>">
-</div>
-<div class="ui-field-contain">
-	<label for="cellNumber">נייד</label>
-	<input type="tel" id="cellNumber" style="direction:LTR" name="cellNumber" autocapitalize="off" value="<#if cellNumber??>${cellNumber}</#if>">
 </div>
 <div class="ui-field-contain">
 	<label for="address">כתובת</label>
@@ -230,6 +220,9 @@ text-align: right;
 <div class="ui-field-contain">
 	<label for="contactPerson">איש קשר</label>
 	<input type="text" id="contactPerson" style="" name="contactPerson" autocapitalize="off" value="<#if contactPerson??>${contactPerson}</#if>">
+</div>
+<div>
+להשלמת הרישום ישלח קוד לאימות בSMS למספר הטלפון איתו נרשמת
 </div>
 <input type="submit" id="login" name="login" value="הרשם">
 </form>

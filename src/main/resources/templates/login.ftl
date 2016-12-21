@@ -69,7 +69,7 @@ function ValidateForm(theForm)
 			<input type="text" id="username" name="username" value="" style="text-align:right" autocapitalize="off" placeholder='שם משתמש'>
 			<input type="password" id="password" name="password" value="" style="text-align:right" placeholder='סיסמה'>
 			<input type="hidden" id="remember-me" name="remember-me" value="on">
-			<input type="submit" id="login" name="login" value="התחבר">
+			<input type="submit" id="login" name="login" value="כניסה למערכת">
 		</form>
 		<a href="/registerUser" data-role="button" data-inline="true" data-theme="b">רישום משתמש חדש</a>
 		<div><a href="/forgotPassword" data-role="none" style="font-weight:normal; font-size:0.8em;">שכחתי סיסמה</a></div>

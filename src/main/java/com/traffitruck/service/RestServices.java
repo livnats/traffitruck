@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class RestServices {
 
-    private static final Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(RestServices.class);
 
 	RestTemplate restTemplate = new RestTemplate();
 

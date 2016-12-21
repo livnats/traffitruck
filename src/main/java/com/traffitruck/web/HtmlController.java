@@ -22,6 +22,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.bson.types.Binary;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -58,6 +59,7 @@ import com.traffitruck.service.DuplicateEmailException;
 import com.traffitruck.service.DuplicateException;
 import com.traffitruck.service.MongoDAO;
 import com.traffitruck.service.RestServices;
+import com.traffitruck.service.SmsVerificationService;
 
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateHashModel;
@@ -82,6 +84,9 @@ public class HtmlController implements Filter {
 
     @Autowired
     private RestServices restServices;
+    
+    @Autowired
+    private SmsVerificationService smsVerificationService;
 
     private String cachedGoogleMapsResponse;
     private long googleMapscachingTimestamp;
@@ -461,7 +466,7 @@ public class HtmlController implements Filter {
     }
 
     @RequestMapping(value = "/registerUser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    ModelAndView registerUser(@ModelAttribute("user") LoadsUser user) {
+    ModelAndView registerUser(@ModelAttribute("user") LoadsUser user, HttpSession session) {
         user.setUsername(user.getUsername().toLowerCase());
 
         boolean isLoadsOwner = false;
@@ -475,23 +480,7 @@ public class HtmlController implements Filter {
             }
         }
 
-        try {
-            dao.storeUser(user);
-        } catch (DuplicateEmailException e) {
-            Map<String, Object> model = new HashMap<>();
-            model.put("erroremail", "dup");
-            model.put("username", user.getUsername());
-            model.put("address", user.getAddress());
-            model.put("cellNumber", user.getCellNumber());
-            model.put("email", user.getEmail());
-            model.put("phoneNumber", user.getPhoneNumber());
-            if (isTruckOwner)
-                model.put("trole", Boolean.TRUE);
-            if (isLoadsOwner)
-                model.put("lrole", Boolean.TRUE);
-            model.put("contactPerson", user.getContactPerson());
-            return new ModelAndView("register_user", model);
-        } catch (DuplicateException e) {
+        if (dao.getUser(user.getUsername()) != null) {
             Map<String, Object> model = new HashMap<>();
             model.put("error", "dup");
             model.put("username", user.getUsername());
@@ -506,12 +495,69 @@ public class HtmlController implements Filter {
             model.put("contactPerson", user.getContactPerson());
             return new ModelAndView("register_user", model);
         }
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().stream().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.toString())));
+        else if (dao.getUserByEmail(user.getEmail()) != null) {
+            Map<String, Object> model = new HashMap<>();
+            model.put("erroremail", "dup");
+            model.put("username", user.getUsername());
+            model.put("address", user.getAddress());
+            model.put("cellNumber", user.getCellNumber());
+            model.put("email", user.getEmail());
+            model.put("phoneNumber", user.getPhoneNumber());
+            if (isTruckOwner)
+                model.put("trole", Boolean.TRUE);
+            if (isLoadsOwner)
+                model.put("lrole", Boolean.TRUE);
+            model.put("contactPerson", user.getContactPerson());
+            return new ModelAndView("register_user", model);            
+        }
+        else {
+            session.setAttribute("user", user);
+            String verificationCode = generateVerificationCode();
+            session.setAttribute("verificationCode", verificationCode);
+            smsVerificationService.sendSmsVerification(user.getPhoneNumber(), verificationCode);
+            Map<String, Object> model = new HashMap<>();
+            model.put("phone", user.getPhoneNumber());
+            return new ModelAndView("verify_phone", model);
+        }        
+    }
 
-        SecurityContextHolder.getContext()
-                .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), "", authorities));
-        return new ModelAndView("redirect:" + user.getRoles().get(0).getLandingUrl());
+    @RequestMapping(value = "/verifyPhone", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    ModelAndView verifyPhone(@RequestParam("verificationCode") String verificationCode, HttpSession session) {
+        String expectedVerificationCode = (String)session.getAttribute("verificationCode");
+        LoadsUser user = (LoadsUser)session.getAttribute("user");
+        if (expectedVerificationCode.equals(verificationCode)) {
+            Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+            user.getRoles().stream().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.toString())));
+
+            SecurityContextHolder.getContext()
+                    .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUsername(), "", authorities));
+            return new ModelAndView("redirect:" + user.getRoles().get(0).getLandingUrl());            
+        }
+        else {
+            Map<String, Object> model = new HashMap<>();
+            model.put("phone", user.getPhoneNumber());
+            return new ModelAndView("verify_phone_failed", model);
+        }
+    }
+
+    @RequestMapping(value = "/resendVerificationCode", method = RequestMethod.GET)
+    ModelAndView verifyPhone(HttpSession session) {
+        LoadsUser user = (LoadsUser)session.getAttribute("user");
+        String verificationCode = generateVerificationCode();
+        session.setAttribute("verificationCode", verificationCode);
+        smsVerificationService.sendSmsVerification(user.getPhoneNumber(), verificationCode);
+        Map<String, Object> model = new HashMap<>();
+        model.put("phone", user.getPhoneNumber());
+        return new ModelAndView("verify_phone", model);
+    }
+
+    private String generateVerificationCode() {
+        StringBuilder builder = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0 ; i < 4 ; ++i) {
+            builder.append(random.nextInt(10));
+        }
+        return builder.toString();
     }
 
     @RequestMapping(value = "/deleteLoad/{loadId}", method = RequestMethod.GET)

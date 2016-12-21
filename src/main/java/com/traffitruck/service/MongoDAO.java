@@ -313,12 +313,17 @@ public class MongoDAO {
 		return mongoTemplate.findOne(truckBelongsToUserQuery, Truck.class);
 	}
 
-	public LoadsUser getUser(String username) {
-		Query query = new Query().addCriteria(Criteria.where("username").is(username));
-		query.fields().exclude("password");
-		return mongoTemplate.findOne(query, LoadsUser.class);
-	}
+    public LoadsUser getUser(String username) {
+        Query query = new Query().addCriteria(Criteria.where("username").is(username));
+        query.fields().exclude("password");
+        return mongoTemplate.findOne(query, LoadsUser.class);
+    }
 
+    public LoadsUser getUserByEmail(String email) {
+        Query query = new Query().addCriteria(Criteria.where("email").is(email));
+        query.fields().exclude("password");
+        return mongoTemplate.findOne(query, LoadsUser.class);
+    }
 
 	//TruckAvailability
 	public void storeTruckAvailability(TruckAvailability truckAvail){
