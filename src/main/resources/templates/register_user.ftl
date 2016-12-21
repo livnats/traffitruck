@@ -96,10 +96,10 @@ function ValidateForm1(theForm)
       theForm.email.focus();
       return false;
    }
-   regexp = /^\d*$/;
+   regexp = /^05\d{8}$/;
    if (!regexp.test(theForm.phoneNumber.value))
    {
-      mAlert("מספר הטלפון חייב להכיל רק ספרות");
+      mAlert("מספר הטלפון חייב להיות מספר סלולרי תקין");
       theForm.phoneNumber.focus();
       return false;
    }
@@ -172,6 +172,11 @@ text-align: right;
 	<#if error??>
 		<div id="wb_Text1">
 			<span style="color:#FF0000;font-family:Arial;font-size:13px;">שם משתמש תפוס</span>
+		</div>
+	</#if>
+	<#if errorphone??>
+		<div id="wb_Text1">
+			<span style="color:#FF0000;font-family:Arial;font-size:13px;">מספר הטלפון לא תקין</span>
 		</div>
 	</#if>
 	<#if erroremail??>

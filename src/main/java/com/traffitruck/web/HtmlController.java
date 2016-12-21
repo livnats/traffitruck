@@ -510,6 +510,21 @@ public class HtmlController implements Filter {
             model.put("contactPerson", user.getContactPerson());
             return new ModelAndView("register_user", model);            
         }
+        else if (!isValidMobilePhone(user.getPhoneNumber())) {
+            Map<String, Object> model = new HashMap<>();
+            model.put("errorphone", "fail");
+            model.put("username", user.getUsername());
+            model.put("address", user.getAddress());
+            model.put("cellNumber", user.getCellNumber());
+            model.put("email", user.getEmail());
+            model.put("phoneNumber", user.getPhoneNumber());
+            if (isTruckOwner)
+                model.put("trole", Boolean.TRUE);
+            if (isLoadsOwner)
+                model.put("lrole", Boolean.TRUE);
+            model.put("contactPerson", user.getContactPerson());
+            return new ModelAndView("register_user", model);            
+        }
         else {
             session.setAttribute("user", user);
             String verificationCode = generateVerificationCode();
@@ -519,6 +534,10 @@ public class HtmlController implements Filter {
             model.put("phone", user.getPhoneNumber());
             return new ModelAndView("verify_phone", model);
         }        
+    }
+
+    private boolean isValidMobilePhone(String phoneNumber) {
+        return phoneNumber.matches("^05\\p{Digit}{8}$");
     }
 
     @RequestMapping(value = "/verifyPhone", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
