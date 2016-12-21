@@ -54,7 +54,7 @@ text-align: right;
 
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <div class="ui-field-contain">
-	<label for="verificationCode">* שם משתמש</label>
+	<label for="verificationCode">* קוד אימות</label>
 	<input type="text" id="verificationCode" style="direction:LTR" name="verificationCode" autocapitalize="off" value="">
 </div>
 <input type="submit" id="verify" name="verify" value="השלם רישום">
