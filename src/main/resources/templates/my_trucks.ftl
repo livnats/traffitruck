@@ -100,7 +100,7 @@ $(document).ready(function() {
 	    <#else>
 	    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications"></a></li>
 	  		<li><a href="/myTrucks" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="truck"></a></li>
-	    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
+	    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
 	    </#if>
 	    <#if (isLoadsOwner)>
 	    	<li><a href="/myLoads" class="ui-nodisc-icon" data-icon="loads"></a></li>
@@ -133,6 +133,8 @@ $(document).ready(function() {
 						
 							<#else>
 								אין משאיות רשומות
+								<br><br>
+								כדי לרשום משאית חדשה לשירות אנא לחצו על הכפתור (+) בתחתית העמוד
 							</#if>
 
 							<div id="createNew" class="podbar">

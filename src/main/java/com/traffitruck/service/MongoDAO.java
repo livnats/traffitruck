@@ -1,12 +1,8 @@
 package com.traffitruck.service;
 
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.stream.Collectors;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -357,6 +353,30 @@ public class MongoDAO {
 		return coll;
 	}
 
+    public List<Load> getLoadsWithoutTruckByFilter(Double sourceLat, Double sourceLng, Integer source_radius,
+            Double destinationLat, Double destinationLng, Integer destination_radius) {
+        // The criteria API isn't good enough
+        String query = "{";
+
+        query += "weight: { $exists: true } ";
+        if (sourceLat != null && sourceLng != null && source_radius != null) {
+            query += ", sourceLocation : { $geoWithin : { $centerSphere: [ [" + sourceLng + ", " + sourceLat + "], "+ source_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+        }
+        if (destinationLat != null && destinationLng != null && destination_radius != null) {
+            query += ", destinationLocation : { $geoWithin : { $centerSphere: [ [" + destinationLng + ", " + destinationLat + "], "+ destination_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
+        }
+        // no need for the photo here
+        query += "} , {loadPhoto:0}";
+        BasicQuery queryobj = new BasicQuery(query);
+        // sort results
+        queryobj.with(new Sort(Direction.DESC, "driveDate")); 
+
+        List<Load> coll = mongoTemplate.find(queryobj, Load.class);
+        coll.stream().forEach(load -> load.setLoadPhoto(null));
+
+        return coll;
+    }
+    
 	private String convertToInClause(List<?> list) {
 		StringBuilder builder = new StringBuilder(128);
 		list.stream().forEach(item -> builder.append("\"").append(item.toString()).append("\","));

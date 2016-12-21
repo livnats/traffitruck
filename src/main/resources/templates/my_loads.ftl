@@ -108,7 +108,7 @@ $(document).ready(function() {
 		    <#else>
 		    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" ></a></li>
 		  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
-		    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
+		    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
 		    </#if>
 		    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
 		<#else>

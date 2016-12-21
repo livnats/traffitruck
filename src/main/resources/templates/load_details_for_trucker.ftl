@@ -106,16 +106,24 @@ $(document).ready(function() {
 <#if loadsUser.contactPerson??>
 	<tr>
 	    <th style="text-align:right">איש קשר:</th>
+	<#if hasTrucks>
 	    <td style="text-align:right">${loadsUser.contactPerson!''}</td>
+	<#else>
+		<td style="text-align:right; font-weight:bold">נא לרשום משאית לשירות כדי לקבל פרטי איש קשר</td>
+	</#if>	
 	</tr>
 </#if>
 <tr>
     <th style="text-align:right">מספר ליצירת קשר:</th>
-	<#if loadsUser.phoneNumber??>
-	    <td style="text-align:right"><a href="tel:${loadsUser.phoneNumber}">${loadsUser.phoneNumber}</a></td>
+	<#if hasTrucks>
+		<#if loadsUser.phoneNumber??>
+		    <td style="text-align:right"><a href="tel:${loadsUser.phoneNumber}">${loadsUser.phoneNumber}</a></td>
+		<#else>
+		    <td></td>
+		</#if>
 	<#else>
-	    <td></td>
-	</#if>
+		<td style="text-align:right; font-weight:bold">נא לרשום משאית לשירות כדי לקבל פרטי התקשרות</td>
+	</#if>	
 </tr>
 <tr>
     <th style="text-align:right">שם המטען:</th>
@@ -144,8 +152,10 @@ $(document).ready(function() {
     <td style="text-align:right">
 		<#if load.sourceLocation??>
 			${Format.address(load.source)!''}
-			<a href="waze://?ll=${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank"><img src="/images/waze_app_icon_small.png" width="30px"></a>
-			<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank"><img src="/images/bottomIcon_google_map.png"></a>
+			<#if hasTrucks>
+				<a href="waze://?ll=${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank"><img src="/images/waze_app_icon_small.png" width="30px"></a>
+				<a href="http://maps.google.com/maps?q=loc:${load.sourceLocation.coordinates[1]},${load.sourceLocation.coordinates[0]}" target="_blank"><img src="/images/bottomIcon_google_map.png"></a>
+			</#if>
 		<#else>
 		    ${load.source!''}
 		</#if>
@@ -160,8 +170,10 @@ $(document).ready(function() {
     <td style="text-align:right">
 		<#if load.destinationLocation??>
 			${Format.address(load.destination)!''}
-			<a href="waze://?ll=${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank"><img src="/images/waze_app_icon_small.png" width="30px"></a>
-			<a href="http://maps.google.com/maps?q=loc:${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank"><img src="/images/bottomIcon_google_map.png"></a>
+			<#if hasTrucks>
+				<a href="waze://?ll=${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank"><img src="/images/waze_app_icon_small.png" width="30px"></a>
+				<a href="http://maps.google.com/maps?q=loc:${load.destinationLocation.coordinates[1]},${load.destinationLocation.coordinates[0]}" target="_blank"><img src="/images/bottomIcon_google_map.png"></a>
+			</#if>
 		<#else>
 		    ${load.destination!''}
 		</#if>

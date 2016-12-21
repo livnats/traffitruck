@@ -64,19 +64,31 @@ public class JsonController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		// verify the truck belongs to the logged-in user
-		Truck truck = dao.getTruckByUserAndLicensePlate(username, licensePlateNumber);
-		if (truck == null) { // the logged in user does not have a truck with this license plate number
-			return Collections.emptyList();
+		if (licensePlateNumber == null || licensePlateNumber.isEmpty() || licensePlateNumber.equals("NA")) {
+            // set default value for radius if not set
+            if ( sourceLat != null && sourceLng != null && source_radius == null ) {
+                source_radius = DEFAULT_RADIUS_FOR_SEARCHES;
+            }
+            if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
+                destination_radius = DEFAULT_RADIUS_FOR_SEARCHES;
+            }
+		    return dao.getLoadsWithoutTruckByFilter(sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius);
 		}
-		// set default value for radius if not set
-		if ( sourceLat != null && sourceLng != null && source_radius == null ) {
-			source_radius = DEFAULT_RADIUS_FOR_SEARCHES;
+		else {
+    		Truck truck = dao.getTruckByUserAndLicensePlate(username, licensePlateNumber);
+    		if (truck == null) { // the logged in user does not have a truck with this license plate number
+    			return Collections.emptyList();
+    		}
+    		// set default value for radius if not set
+    		if ( sourceLat != null && sourceLng != null && source_radius == null ) {
+    			source_radius = DEFAULT_RADIUS_FOR_SEARCHES;
+    		}
+    		if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
+    			destination_radius = DEFAULT_RADIUS_FOR_SEARCHES;
+    		}
+    
+    		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius);
 		}
-		if ( destinationLat != null && destinationLng != null && destination_radius == null ) {
-			destination_radius = DEFAULT_RADIUS_FOR_SEARCHES;
-		}
-
-		return dao.getLoadsForTruckByFilter(truck, sourceLat, sourceLng, source_radius, destinationLat, destinationLng, destination_radius);
 	}
 
 	@RequestMapping(value="/load_details_json/{loadId}", method=RequestMethod.GET)

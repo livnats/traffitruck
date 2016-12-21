@@ -371,7 +371,11 @@ $(document).ready(function() {
 	<div data-role="navbar">
 	  <ul>
 	    <li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+<#if (trucks?? && trucks?size > 0)>
    		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications"></a></li>
+<#else>
+    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications"></a></li>		
+</#if>
   		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck"></a></li>
     	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon ui-btn-active ui-state-persist" data-icon="search"></a></li>
 	  	<#if (isLoadsOwner)>
@@ -391,12 +395,13 @@ $(document).ready(function() {
 					  <option value="${truck.licensePlateNumber}">${truck.licensePlateNumber}</option>
 				  </#list>
 				</select>
-			<#else>
+			<#elseif trucks?size == 1>
 				<input type="hidden" name="truckSelection" id="truckSelection" value="${trucks[0].licensePlateNumber}">
+			<#else>
+				<input type="hidden" name="truckSelection" id="truckSelection" value="NA">
 			</#if>
 		</div>
 		<div id="searchfilter" data-role="collapsible" data-collapsed="true">
-						<#if trucks?has_content>
 							<h3>סנן תוצאות</h3>
 							<div class="ui-field-contain">
 								<label for="source">מטענים שיוצאים מאיזור</label>
@@ -412,13 +417,12 @@ $(document).ready(function() {
 							</div>
 							<div>
 								<a href="#" onclick="clearForm()" data-role="none" style="font-weight:bold; font-size:0.8em; margin-left: 25px;">נקה פילטר</a>
+								<#if (trucks?? && trucks?size > 0)>
 								<span> |</span>
 								<a href="#" onclick="return createAlert()" data-role="none" style="font-weight:bold; font-size:0.8em; margin-right: 25px;">צור התראה</a>
+								</#if>
 							</div>
 							<button type="button" data-role="button" id="radiusFilter" name="radiusFilter">הצג תוצאות</button>
-						<#else>
-							אין משאיות מאושרות 
-						</#if>
 		</div>
 		
 		<div id="available_loads" style="direction:RTL">
