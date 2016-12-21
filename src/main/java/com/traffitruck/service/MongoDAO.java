@@ -423,5 +423,13 @@ public class MongoDAO {
 		mongoTemplate.remove(query,Alert.class);
 	}
 
+    public void enableViewingLoads(String username) {
+        Query query = new Query()
+                .addCriteria(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.set("allowLoadDetails", Boolean.TRUE);
+        mongoTemplate.upsert(query, update, LoadsUser.class);        
+    }
+
 
 }

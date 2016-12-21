@@ -30,6 +30,21 @@ $(document).ready(function() {
 	
 });
 </script>
+
+<script>
+
+	function allow_load_details(username){
+		$.post(
+			"/allow_load_details",
+			{
+				username: username,
+				${_csrf.parameterName}: "${_csrf.token}"
+			} 
+		);
+		$("#"+username).html("");
+	}
+	
+</script>
 </head>
 <body>
 <div id="main">
@@ -52,7 +67,6 @@ $(document).ready(function() {
 				<tr> 
 					<td>
 						<#if users?has_content>
-					
 								<table border="1">
 									<tr>
 										<th>שם משתמש</th>
@@ -60,10 +74,14 @@ $(document).ready(function() {
 										<th>סוג</th>
 									</tr>
 									<#list users as user>
+									<#assign i=user?index>
 									<tr id="${user.id!''}">
 										<td>${user.username!''}</td>
 										<td>${user.email!''}</td>
 										<td class="roleConversion">${user.roles?join(" ")!''}</td>
+										<#if !(user.allowLoadDetails?? && user.allowLoadDetails)>
+											<td id="${user.username}"><a href='#' onclick="return allow_load_details('${user.username}')">אשר לראות מטענים בלי משאיות רשומות</a></td>
+										</#if>
 									</tr>
 									</#list>
 								</table>

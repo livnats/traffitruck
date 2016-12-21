@@ -21,8 +21,14 @@ public class LoadsUser{
 	private String password;
 	private List<Role> roles;
 	private Set<String> registrationIds;
-	
+	private Boolean allowLoadDetails;
 
+	public void setAllowLoadDetails(Boolean allowLoadDetails) {
+        this.allowLoadDetails = allowLoadDetails;
+    }
+	public Boolean getAllowLoadDetails() {
+        return allowLoadDetails;
+    }
 	public String getAddress() {
 		return address;
 	}

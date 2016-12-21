@@ -185,7 +185,13 @@ public class HtmlController implements Filter {
     ModelAndView showUsers() {
         Map<String, Object> model = new HashMap<>();
         model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
-        model.put("users", dao.getUsers());
+        List<LoadsUser> users = dao.getUsers();
+        model.put("users", users);
+        users.stream().forEach(user -> {
+            if (!user.getRoles().contains(Role.TRUCK_OWNER) || !dao.getTrucksForUserAndRegistration(user.getUsername(), TruckRegistrationStatus.APPROVED).isEmpty()) {
+                user.setAllowLoadDetails(Boolean.TRUE);
+            }
+        });
         return new ModelAndView("show_users", model);
     }
 
@@ -545,6 +551,7 @@ public class HtmlController implements Filter {
         String expectedVerificationCode = (String)session.getAttribute("verificationCode");
         LoadsUser user = (LoadsUser)session.getAttribute("user");
         if (expectedVerificationCode.equals(verificationCode)) {
+            dao.storeUser(user);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             user.getRoles().stream().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.toString())));
 
@@ -777,7 +784,10 @@ public class HtmlController implements Filter {
         model.put("enums", BeansWrapper.getDefaultInstance().getEnumModels());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        model.put("hasTrucks", !dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED).isEmpty());
+        LoadsUser loggedInUser = dao.getUser(username);
+        model.put("allowedLoadDetails", 
+                !dao.getTrucksForUserAndRegistration(username, TruckRegistrationStatus.APPROVED).isEmpty() || 
+                (loggedInUser.getAllowLoadDetails() != null && loggedInUser.getAllowLoadDetails().booleanValue() == true));
         return new ModelAndView("load_details_for_trucker", model);
     }
 }
