@@ -336,7 +336,9 @@ public class MongoDAO {
 		String query = "{";
 
 		query += "weight: { $exists: true, $lte: " + truck.getMaxWeight() + " } ";
-		query += ", volume: { $exists: true, $lte: " + truck.getMaxVolume() + " } ";
+		if (truck.getMaxVolume() != null) {
+		    query += ", volume: { $exists: true, $lte: " + truck.getMaxVolume() + " } ";
+		}
 		query += ", type: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLoadTypes()) + "] } ";
 		query += ", loadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
 		query += ", downloadingType: { $exists: true, $in: [" + convertToInClause(truck.getAcceptableLiftTypes()) + "] } ";
@@ -363,7 +365,7 @@ public class MongoDAO {
         // The criteria API isn't good enough
         String query = "{";
 
-        query += "weight: { $exists: true } ";
+        query += "weight: { $exists: true } "; // dummy for handling commas
         if (sourceLat != null && sourceLng != null && source_radius != null) {
             query += ", sourceLocation : { $geoWithin : { $centerSphere: [ [" + sourceLng + ", " + sourceLat + "], "+ source_radius / EARTH_RADIUS_IN_RADIANS + "] } }";
         }
