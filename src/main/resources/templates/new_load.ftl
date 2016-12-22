@@ -20,6 +20,9 @@ $(document).on("mobileinit", function()
 });
 
 $(document).ready(function() {
+	$("[data-role=panel]").panel().enhanceWithin();
+    $('#sure').enhanceWithin().popup();
+
 	function calculateRatio(size) {
 		ratio = 1;
 	    if ( size > 1000000 ) {
@@ -58,7 +61,7 @@ $(document).ready(function() {
 	    var type = file.type;
 
         if ( file != "" && ! type.startsWith("image/") ) {
-           mAlert("חובה לבחור תמונה");
+           mAlert("חובה לבחור תמונה", "loadCommentsAndImageDetails");
            this.val("");
            this.focus();
            return false;
@@ -94,12 +97,13 @@ $(document).ready(function() {
 <script src="js/jquery.mobile-1.4.5.min.js"></script>
 <script>
 
-function mAlert(text1) {
+function mAlert(text1, page) {
   $("#sure .sure-1").text(text1);
   $("#sure .sure-do").on("click.sure", function() {
     $(this).off("click.sure");
   });
-  $.mobile.changePage("#sure");
+  document.querySelector('#error-link').setAttribute('href', '#' + page);
+  $( "#sure" ).popup( "open" );
 }
 
 function ValidateForm1(theForm)
@@ -108,158 +112,146 @@ function ValidateForm1(theForm)
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
    if (!regexp.test(theForm.name.value))
    {
-      mAlert("שם המטען יכול להכיל אותיות ספרות ורווחים");
+      mAlert("שם המטען יכול להכיל אותיות ספרות ורווחים", "loadDetails");
       theForm.name.focus();
       return false;
    }
    if (theForm.name.value == "")
    {
-      mAlert("שם המטען יכול להכיל אותיות ספרות ורווחים");
+      mAlert("חובה לספק שם למטען", "loadDetails");
       theForm.name.focus();
       return false;
    }
    if (theForm.type.selectedIndex < 0)
    {
-      mAlert("שדה חובה");
+      mAlert("חובה לספק את סוג המטען", "loadDetails");
       theForm.type.focus();
       return false;
    }
    if (theForm.type.selectedIndex == 0)
    {
-      mAlert("חובה לספק את סוג המטען");
+      mAlert("חובה לספק את סוג המטען", "loadDetails");
       theForm.type.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
    if (!regexp.test(theForm.weight.value))
    {
-      mAlert("המשקל חייב להכיל רק ספרות");
+      mAlert("המשקל חייב להכיל רק ספרות", "loadDetails");
       theForm.weight.focus();
       return false;
    }
    if (theForm.weight.value != "" && !(theForm.weight.value > 0))
    {
-      mAlert("המשקל חייב להכיל רק ספרות");
+      mAlert("המשקל חייב להכיל רק ספרות", "loadDetails");
       theForm.weight.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
    if (!regexp.test(theForm.volume.value))
    {
-      mAlert("הנפח חייב להכיל רק ספרות");
+      mAlert("הנפח חייב להכיל רק ספרות", "loadDetails");
       theForm.volume.focus();
       return false;
    }
    if (theForm.volume.value != "" && !(theForm.volume.value > 0))
    {
-      mAlert("הנפח חייב להכיל רק ספרות");
+      mAlert("הנפח חייב להכיל רק ספרות", "loadDetails");
       theForm.volume.focus();
       return false;
    }
    if (theForm.source.value == "")
    {
-      mAlert("חובה לספק מוצא");
+      mAlert("חובה לספק מוצא", "srcDestDetails");
       theForm.source.focus();
       return false;
    }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ '\t\r\n\f0-9-,"]*$/;
    if (!regexp.test(theForm.source.value))
    {
-      mAlert("המוצא יכול להכיל אותיות ספרות ורווחים");
+      mAlert("המוצא יכול להכיל אותיות ספרות ורווחים", "srcDestDetails");
       theForm.source.focus();
       return false;
    }
    if (theForm.sourceLat.value == "")
    {
-      mAlert("חובה לבחור מוצא מוכר מהרשימה הנפתחת בשדה");
+      mAlert("חובה לבחור מוצא מוכר מהרשימה הנפתחת בשדה", "srcDestDetails");
       theForm.source.focus();
       return false;
    }
-   if (theForm.loadingType.selectedIndex < 0)
+   if (theForm.loadingType.selectedIndex <= 0)
    {
-      mAlert("חובה לספק את סוג הטעינה");
+      mAlert("חובה לספק את סוג הטעינה", "loadUnloadDetails");
       theForm.loadingType.focus();
       return false;
    }
-   if (theForm.loadingType.selectedIndex == 0)
+   if (theForm.downloadingType.selectedIndex <= 0)
    {
-      mAlert("חובה לספק את סוג הטעינה");
-      theForm.loadingType.focus();
-      return false;
-   }
-   if (theForm.downloadingType.selectedIndex < 0)
-   {
-      mAlert("חובה לספק את סוג הפריקה");
-      theForm.downloadingType.focus();
-      return false;
-   }
-   if (theForm.downloadingType.selectedIndex == 0)
-   {
-      mAlert("חובה לספק את סוג הפריקה");
+      mAlert("חובה לספק את סוג הפריקה", "loadUnloadDetails");
       theForm.downloadingType.focus();
       return false;
    }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ '\t\r\n\f0-9-,"]*$/;
    if (theForm.destination.value == "")
    {
-      mAlert("חובה לספק יעד");
+      mAlert("חובה לספק יעד", "srcDestDetails");
       theForm.destination.focus();
       return false;
    }
    if (!regexp.test(theForm.destination.value))
    {
-      mAlert("היעד יכול להכיל אותיות ספרות ורווחים");
+      mAlert("היעד יכול להכיל אותיות ספרות ורווחים", "srcDestDetails");
       theForm.destination.focus();
       return false;
    }
    if (theForm.destinationLat.value == "")
    {
-      mAlert("חובה לבחור יעד מוכר מהרשימה הנפתחת בשדה");
+      mAlert("חובה לבחור יעד מוכר מהרשימה הנפתחת בשדה", "srcDestDetails");
       theForm.source.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
-   if (!regexp.test(theForm.suggestedQuote.value))
+   if (theForm.suggestedQuote.value == "")
    {
-      mAlert("המחיר חייב להכיל רק ספרות");
+      mAlert("חובה לספק מחיר", "loadDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
-   if (theForm.suggestedQuote.value == "")
+   if (!regexp.test(theForm.suggestedQuote.value))
    {
-      mAlert("המחיר חייב להכיל רק ספרות");
+      mAlert("המחיר חייב להכיל רק ספרות", "loadDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
    if (theForm.suggestedQuote.value != "" && !(theForm.suggestedQuote.value > 0))
    {
-      mAlert("המחיר חייב להכיל רק ספרות");
+      mAlert("המחיר חייב להכיל רק ספרות", "loadDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
    if (theForm.drivedate.value == "")
    {
-      mAlert("חובה לספק תאריך");
+      mAlert("חובה לספק תאריך בו המטען זמין להובלה", "loadDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
    regexp = /^[-+]?\d*\.?\d*$/;
    if (!regexp.test(theForm.waitingTime.value))
    {
-      mAlert("זמן המתנה חייב להכיל רק ספרות");
+      mAlert("זמן המתנה חייב להכיל רק ספרות", "loadUnloadDetails");
       theForm.waitingTime.focus();
       return false;
    }
    if (theForm.waitingTime.value != "" && !(theForm.waitingTime.value >= 0))
    {
-      mAlert("זמן המתנה חייב להכיל רק ספרות");
+      mAlert("זמן המתנה חייב להכיל רק ספרות", "loadUnloadDetails");
       theForm.waitingTime.focus();
       return false;
    }
    regexp = /^[א-תA-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ \t\r\n\f0-9-]*$/;
    if (!regexp.test(theForm.comments.value))
    {
-      mAlert("ההערות יכולות להכיל אותיות ספרות ורווחים");
+      mAlert("ההערות יכולות להכיל אותיות ספרות ורווחים", "loadCommentsAndImageDetails");
       theForm.comments.focus();
       return false;
    }
@@ -379,134 +371,247 @@ text-align: right;
 
 </head>
 <body onload="initialize()" dir="rtl">
-<div data-role="page" data-theme="a" data-title="הוספת מטען" id="add_load">
-
-<div data-role="header" id="Header1">
-	<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
-	<img src="/images/truck-blue.jpg" width="15%"/>
-
-		<div data-role="navbar">
-	  <ul>
-	  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
-	  	<#if (isTruckOwner)>
-	  	  	<#if (trucks?? && trucks?size > 0)>
-		   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
-		  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
-		    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
-		    <#else>
-		    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" ></a></li>
-		  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
-		    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
-		    </#if>
-		    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
-		<#else>
-		  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
-		</#if>
-	  </ul>
-	</div> <!--/navbar-->
-	
-</div> <!--/header-->
-
-<div class="ui-content" role="main">
-	
-	<span style="color:#3388cc;" > <b> הוספת מטען </b></span>
 
 <div id="wb_Form1" style="">
 <form name="newloadForm" method="post" action="newload" enctype="multipart/form-data" data-ajax="false" data-transition="pop" id="newloadForm" style="display:inline;" onsubmit="return ValidateForm1(this)">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-<div class="ui-field-contain">
-	<label for="name">* שם המטען</label>
-	<input type="text" id="name" style="" name="name" value="">
-</div><div class="ui-field-contain">
-	<label for="type">* סוג המטען</label>
-	<select name="type" size="1" id="type">
-	<option>-- בחר --</option>
-	<option value="CONTAINER_20">מכולה 20'</option>
-	<option value="CONTAINER_40">מכולה 40'</option>
-	<option value="LIFTS">משטחים</option>
-	<option value="BAGS">שקים (באלות)</option>
-	<option value="ANIMALS">בעלי חיים</option>
-	<option value="SCATTERED">תפזורת</option>
-	<option value="HAZMAT">חומ"ס</option>
-	<option value="OTHER">אחר</option>
-	</select>
+
+<div data-role="page" data-theme="a" data-title="פרטי מטען" id="loadDetails">
+	<div data-role="header" id="Header1">
+		<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+		<img src="/images/truck-blue.jpg" width="15%"/>
+	
+			<div data-role="navbar">
+		  <ul>
+		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  	<#if (isTruckOwner)>
+		  	  	<#if (trucks?? && trucks?size > 0)>
+			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
+			    <#else>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
+			    </#if>
+			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			<#else>
+			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			</#if>
+		  </ul>
+		</div> <!--/navbar-->
+		
+	</div> <!--/header-->
+	
+	<div class="ui-content" role="main">
+		
+		<span style="color:#3388cc;" > <b> פרטי מטען </b></span>
+
+		<div class="ui-field-contain">
+			<label for="name">* שם המטען</label>
+			<input type="text" id="name" style="" name="name" value="">
+		</div><div class="ui-field-contain">
+			<label for="type">* סוג המטען</label>
+			<select name="type" size="1" id="type">
+			<option>-- בחר --</option>
+			<option value="CONTAINER_20">מכולה 20'</option>
+			<option value="CONTAINER_40">מכולה 40'</option>
+			<option value="LIFTS">משטחים</option>
+			<option value="BAGS">שקים (באלות)</option>
+			<option value="ANIMALS">בעלי חיים</option>
+			<option value="SCATTERED">תפזורת</option>
+			<option value="HAZMAT">חומ"ס</option>
+			<option value="OTHER">אחר</option>
+			</select>
+		</div>
+		<div class="ui-field-contain" id="quantityDiv" style="display:none;">
+			<label for="quantity">כמות</label>
+			<input type="number" id="quantity" style="" name="quantity" value="" step="0.5">	
+		</div>
+		<div class="ui-field-contain">
+			<label for="weight">* משקל (ק"ג)</label>
+			<input type="number" id="weight" style="" name="weight" value="">
+		</div><div class="ui-field-contain">
+			<label for="volume">* נפח (קוב)</label>
+			<input type="number" id="volume" style="" name="volume" value="">
+		</div>
+		<div class="ui-field-contain">
+			<label for="drivedate">* זמינות להובלה מתאריך</label>
+			<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
+		</div>
+		<div class="ui-field-contain">
+			<label for="suggestedQuote">* מחיר (שקלים)</label>
+			<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
+		</div>
+		<a href="#srcDestDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
+	</div>
 </div>
-<div class="ui-field-contain" id="quantityDiv" style="display:none;">
-	<label for="quantity">כמות</label>
-	<input type="number" id="quantity" style="" name="quantity" value="" step="0.5">	
+<div data-role="page" data-theme="a" data-title="פרטי מטען" id="srcDestDetails">
+	<div data-role="header" id="Header1">
+		<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+		<img src="/images/truck-blue.jpg" width="15%"/>
+	
+			<div data-role="navbar">
+		  <ul>
+		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  	<#if (isTruckOwner)>
+		  	  	<#if (trucks?? && trucks?size > 0)>
+			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
+			    <#else>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
+			    </#if>
+			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			<#else>
+			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			</#if>
+		  </ul>
+		</div> <!--/navbar-->
+		
+	</div> <!--/header-->
+	
+	<div class="ui-content" role="main">
+		
+		<span style="color:#3388cc;" > <b> מוצא ויעד </b></span>
+	
+		<div class="ui-field-contain">
+			<label for="source">* מוצא</label>
+			<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
+			<input type="hidden" id="sourceLat" name="sourceLat" value="">
+			<input type="hidden" id="sourceLng" name="sourceLng" value="">
+		</div>
+		<div class="ui-field-contain">
+			<label for="destination">* יעד</label>
+			<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
+			<input type="hidden" id="destinationLat" name="destinationLat" value="">
+			<input type="hidden" id="destinationLng" name="destinationLng" value="">
+		</div>
+		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
+		<a href="#loadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+	</div>
 </div>
-<div class="ui-field-contain">
-	<label for="weight">* משקל (ק"ג)</label>
-	<input type="number" id="weight" style="" name="weight" value="">
-</div><div class="ui-field-contain">
-	<label for="volume">* נפח (קוב)</label>
-	<input type="number" id="volume" style="" name="volume" value="">
-</div><div class="ui-field-contain">
-	<label for="source">* מוצא</label>
-	<input type="text" id="source" style="" name="source" value="" placeholder="הכנס כתובת">
-	<input type="hidden" id="sourceLat" name="sourceLat" value="">
-	<input type="hidden" id="sourceLng" name="sourceLng" value="">
-</div><div class="ui-field-contain">
-	<label for="loadingType">* סוג טעינה</label>
-	<select name="loadingType" size="1" id="loadingType">
-	<option>-- בחר --</option>
-	<option value="MANUAL">ידני</option>
-	<option value="FORKLIFT">מלגזה</option>
-	<option value="CRANE">מנוף</option>
-	<option value="RAMP">רמפה</option>
-	<option value="TROLLY">עגלה</option>
-	<option value="CONTAINER">מכולה</option>
-	</select>
-</div><div class="ui-field-contain">
-	<label for="destination">* יעד</label>
-	<input type="text" id="destination" style="" name="destination" value="" placeholder="הכנס כתובת">
-	<input type="hidden" id="destinationLat" name="destinationLat" value="">
-	<input type="hidden" id="destinationLng" name="destinationLng" value="">
-</div><div class="ui-field-contain">
-	<label for="downloadingType">* סוג פריקה</label>
-	<select name="downloadingType" size="1" id="downloadingType">
-	<option>-- בחר --</option>
-	<option value="MANUAL">ידני</option>
-	<option value="FORKLIFT">מלגזה</option>
-	<option value="CRANE">מנוף</option>
-	<option value="RAMP">רמפה</option>
-	<option value="TROLLY">עגלה</option>
-	<option value="CONTAINER">מכולה</option>
-	</select>
-</div><div class="ui-field-contain">
-	<label for="drivedate">* זמינות להובלה מתאריך</label>
-	<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
-</div><div class="ui-field-contain">
-	<label for="suggestedQuote">* מחיר (שקלים)</label>
-	<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
-</div><div class="ui-field-contain">
-	<label for="waitingTime">זמן המתנה (שעות)</label>
-	<input type="number" id="waitingTime" style="" name="waitingTime" value="">
-</div><div class="ui-field-contain">
-	<label for="comments">הערות</label>
-	<input type="text" id="comments" style="" name="comments" value="">
-</div><div class="ui-field-contain">
-	<label for="loadPhoto1">צילום המטען</label>
-	<input type="file" id="loadPhoto1" style="" name="loadPhoto1">
-	<input type="hidden" id="loadPhoto" name="loadPhoto">
+<div data-role="page" data-theme="a" data-title="פרטי מטען" id="loadUnloadDetails">
+	<div data-role="header" id="Header1">
+		<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+		<img src="/images/truck-blue.jpg" width="15%"/>
+	
+			<div data-role="navbar">
+		  <ul>
+		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  	<#if (isTruckOwner)>
+		  	  	<#if (trucks?? && trucks?size > 0)>
+			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
+			    <#else>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
+			    </#if>
+			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			<#else>
+			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			</#if>
+		  </ul>
+		</div> <!--/navbar-->
+		
+	</div> <!--/header-->
+	
+	<div class="ui-content" role="main">
+		
+		<span style="color:#3388cc;" > <b> טעינה ופריקה </b></span>
+
+		<div class="ui-field-contain">
+			<label for="loadingType">* סוג טעינה</label>
+			<select name="loadingType" size="1" id="loadingType">
+			<option>-- בחר --</option>
+			<option value="MANUAL">ידני</option>
+			<option value="FORKLIFT">מלגזה</option>
+			<option value="CRANE">מנוף</option>
+			<option value="RAMP">רמפה</option>
+			<option value="TROLLY">עגלה</option>
+			<option value="CONTAINER">מכולה</option>
+			</select>
+		</div>
+		<div class="ui-field-contain">
+			<label for="downloadingType">* סוג פריקה</label>
+			<select name="downloadingType" size="1" id="downloadingType">
+			<option>-- בחר --</option>
+			<option value="MANUAL">ידני</option>
+			<option value="FORKLIFT">מלגזה</option>
+			<option value="CRANE">מנוף</option>
+			<option value="RAMP">רמפה</option>
+			<option value="TROLLY">עגלה</option>
+			<option value="CONTAINER">מכולה</option>
+			</select>
+		</div>
+		<div class="ui-field-contain">
+			<label for="waitingTime">זמן המתנה (שעות)</label>
+			<input type="number" id="waitingTime" style="" name="waitingTime" value="">
+		</div>
+		<a href="#loadCommentsAndImageDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
+		<a href="#srcDestDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+	</div>
 </div>
-<input type="submit" id="Button1" name="" value="הוסף מטען">
+<div data-role="page" data-theme="a" data-title="פרטי מטען" id="loadCommentsAndImageDetails">
+	<div data-role="header" id="Header1">
+		<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+		<img src="/images/truck-blue.jpg" width="15%"/>
+	
+			<div data-role="navbar">
+		  <ul>
+		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  	<#if (isTruckOwner)>
+		  	  	<#if (trucks?? && trucks?size > 0)>
+			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
+			    <#else>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
+			    </#if>
+			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			<#else>
+			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			</#if>
+		  </ul>
+		</div> <!--/navbar-->
+		
+	</div> <!--/header-->
+	
+	<div class="ui-content" role="main">
+		
+		<span style="color:#3388cc;" > <b> תמונה והערות </b></span>
+
+		<div class="ui-field-contain">
+			<label for="comments">הערות</label>
+			<input type="text" id="comments" style="" name="comments" value="">
+		</div><div class="ui-field-contain">
+			<label for="loadPhoto1">צילום המטען</label>
+			<input type="file" id="loadPhoto1" style="" name="loadPhoto1">
+			<input type="hidden" id="loadPhoto" name="loadPhoto">
+		</div>
+		<input type="submit" id="Button1" name="" value="הוסף מטען">
+		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+	</div>
+</div>
 </form>
 </div>
-</div>
 	
-	<div data-role="panel" id="mypanel" data-display="overlay" data-position="left">
-		<ul data-role="listview" style='text-align:right;'>
-			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
-		</ul>
-	</div><!-- /panel -->	
-	
-</div> <!--page -->
+<div data-role="panel" id="mypanel" data-theme="a" data-display="overlay" data-position="left">
+	<ul data-role="listview" style='text-align:right;'>
+		<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+	</ul>
+</div><!-- /panel -->	
 
-<div data-role="dialog" id="sure">
+<div data-role="popup" id="sure" data-overlay-theme="a" data-theme="a" class="ui-content">
   <div data-role="content">
     <h3 class="sure-1">???</h3>
-    <a href="#" class="sure-do" data-role="button" data-theme="b" data-rel="back">סגור</a>
+    <a href="#" id="error-link" class="sure-do" data-role="button" data-theme="b">סגור</a>
   </div>
 </div>
 
