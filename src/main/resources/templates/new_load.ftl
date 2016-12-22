@@ -213,25 +213,25 @@ function ValidateForm1(theForm)
    regexp = /^[-+]?\d*\.?\d*$/;
    if (theForm.suggestedQuote.value == "")
    {
-      mAlert("חובה לספק מחיר", "loadDetails");
+      mAlert("חובה לספק מחיר", "moreDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
    if (!regexp.test(theForm.suggestedQuote.value))
    {
-      mAlert("המחיר חייב להכיל רק ספרות", "loadDetails");
+      mAlert("המחיר חייב להכיל רק ספרות", "moreDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
    if (theForm.suggestedQuote.value != "" && !(theForm.suggestedQuote.value > 0))
    {
-      mAlert("המחיר חייב להכיל רק ספרות", "loadDetails");
+      mAlert("המחיר חייב להכיל רק ספרות", "moreDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
    if (theForm.drivedate.value == "")
    {
-      mAlert("חובה לספק תאריך בו המטען זמין להובלה", "loadDetails");
+      mAlert("חובה לספק תאריך בו המטען זמין להובלה", "moreDetails");
       theForm.suggestedQuote.focus();
       return false;
    }
@@ -435,6 +435,40 @@ text-align: right;
 			<label for="volume">* נפח (קוב)</label>
 			<input type="number" id="volume" style="" name="volume" value="">
 		</div>
+		<a href="#moreDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
+	</div>
+</div>
+<div data-role="page" data-theme="a" data-title="פרטי מטען" id="moreDetails">
+	<div data-role="header" id="Header1">
+		<img src="/images/logo.jpg" width="20%" style="margin-bottom:15; margin-left:10"/>
+		<img src="/images/truck-blue.jpg" width="15%"/>
+	
+			<div data-role="navbar">
+		  <ul>
+		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  	<#if (isTruckOwner)>
+		  	  	<#if (trucks?? && trucks?size > 0)>
+			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="/findTrucksForLoad" class="ui-nodisc-icon" data-icon="search"></a></li>
+			    <#else>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="notifications" ></a></li>
+			  		<li><a href="/myTrucks" class="ui-nodisc-icon" data-icon="truck" ></a></li>
+			    	<li><a href="#" class="ui-disabled ui-nodisc-icon" data-icon="search"></a></li>
+			    </#if>
+			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			<#else>
+			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			</#if>
+		  </ul>
+		</div> <!--/navbar-->
+		
+	</div> <!--/header-->
+	
+	<div class="ui-content" role="main">
+		
+		<span style="color:#3388cc;" > <b> פרטים נוספים </b></span>
+
 		<div class="ui-field-contain">
 			<label for="drivedate">* זמינות להובלה מתאריך</label>
 			<input type="text" id="drivedate" style="" name="drivedate" value="" onfocus="blur();">
@@ -444,6 +478,7 @@ text-align: right;
 			<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
 		</div>
 		<a href="#srcDestDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
+		<a href="#loadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
 	</div>
 </div>
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="srcDestDetails">
@@ -490,7 +525,7 @@ text-align: right;
 			<input type="hidden" id="destinationLng" name="destinationLng" value="">
 		</div>
 		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
-		<a href="#loadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+		<a href="#moreDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
 	</div>
 </div>
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="loadUnloadDetails">
