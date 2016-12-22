@@ -396,7 +396,8 @@ text-align: right;
 			    </#if>
 			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
 			<#else>
-			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			  			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+
 			</#if>
 		  </ul>
 		</div> <!--/navbar-->
@@ -458,7 +459,7 @@ text-align: right;
 			    </#if>
 			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
 			<#else>
-			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
 			</#if>
 		  </ul>
 		</div> <!--/navbar-->
@@ -501,7 +502,8 @@ text-align: right;
 			    </#if>
 			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
 			<#else>
-			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			  			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+
 			</#if>
 		  </ul>
 		</div> <!--/navbar-->
@@ -548,7 +550,8 @@ text-align: right;
 			    </#if>
 			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
 			<#else>
-			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			  			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+
 			</#if>
 		  </ul>
 		</div> <!--/navbar-->
@@ -611,7 +614,8 @@ text-align: right;
 			    </#if>
 			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
 			<#else>
-			  <li><a href="#" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+			  			    <li><a href="/myLoads" class="ui-btn-active ui-state-persist ui-nodisc-icon" data-icon="loads"></a></li>
+
 			</#if>
 		  </ul>
 		</div> <!--/navbar-->
