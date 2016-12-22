@@ -436,7 +436,7 @@ text-align: right;
 			<label for="volume">* נפח (קוב)</label>
 			<input type="number" id="volume" style="" name="volume" value="">
 		</div>
-		<a href="#moreDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
+		<a href="#moreDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">המשך</a>
 	</div>
 	<div data-role="panel" id="loadDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
 		<ul data-role="listview" style='text-align:right;'>
@@ -483,8 +483,8 @@ text-align: right;
 			<label for="suggestedQuote">* מחיר (שקלים)</label>
 			<input type="number" id="suggestedQuote" style="" name="suggestedQuote" value="">
 		</div>
-		<a href="#srcDestDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
-		<a href="#loadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+		<a href="#srcDestDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">המשך</a>
+		<a href="#loadDetails" data-role="button" data-icon="arrow-r" data-inline="true" data-iconpos="right" style="float: right;">חזור</a>
 	</div>
 	<div data-role="panel" id="moreDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
 		<ul data-role="listview" style='text-align:right;'>
@@ -536,8 +536,8 @@ text-align: right;
 			<input type="hidden" id="destinationLat" name="destinationLat" value="">
 			<input type="hidden" id="destinationLng" name="destinationLng" value="">
 		</div>
-		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
-		<a href="#moreDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">המשך</a>
+		<a href="#moreDetails" data-role="button" data-icon="arrow-r" data-inline="true" data-iconpos="right" style="float: right;">חזור</a>
 	</div>
 	<div data-role="panel" id="srcDestDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
 		<ul data-role="listview" style='text-align:right;'>
@@ -605,8 +605,8 @@ text-align: right;
 			<label for="waitingTime">זמן המתנה (שעות)</label>
 			<input type="number" id="waitingTime" style="" name="waitingTime" value="">
 		</div>
-		<a href="#loadCommentsAndImageDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
-		<a href="#srcDestDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+		<a href="#loadCommentsAndImageDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">המשך</a>
+		<a href="#srcDestDetails" data-role="button" data-icon="arrow-r" data-inline="true" data-iconpos="right" style="float: right;">חזור</a>
 	</div>
 	<div data-role="panel" id="loadUnloadDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
 		<ul data-role="listview" style='text-align:right;'>
@@ -655,7 +655,7 @@ text-align: right;
 			<input type="hidden" id="loadPhoto" name="loadPhoto">
 		</div>
 		<input type="submit" id="Button1" name="" value="הוסף מטען">
-		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
+		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-r" data-inline="true" data-iconpos="right" style="float: right;">חזור</a>
 	</div>
 	<div data-role="panel" id="loadCommentsAndImageDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
 		<ul data-role="listview" style='text-align:right;'>
