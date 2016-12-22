@@ -383,7 +383,7 @@ text-align: right;
 	
 			<div data-role="navbar">
 		  <ul>
-		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  		<li><a href="#loadDetailsPanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
 		  	<#if (isTruckOwner)>
 		  	  	<#if (trucks?? && trucks?size > 0)>
 			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
@@ -438,6 +438,11 @@ text-align: right;
 		</div>
 		<a href="#moreDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
 	</div>
+	<div data-role="panel" id="loadDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
+	</div><!-- /panel -->
 </div>
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="moreDetails">
 	<div data-role="header" id="Header1">
@@ -446,7 +451,7 @@ text-align: right;
 	
 			<div data-role="navbar">
 		  <ul>
-		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  		<li><a href="#moreDetailsPanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
 		  	<#if (isTruckOwner)>
 		  	  	<#if (trucks?? && trucks?size > 0)>
 			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
@@ -481,6 +486,11 @@ text-align: right;
 		<a href="#srcDestDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
 		<a href="#loadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
 	</div>
+	<div data-role="panel" id="moreDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
+	</div><!-- /panel -->
 </div>
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="srcDestDetails">
 	<div data-role="header" id="Header1">
@@ -489,7 +499,7 @@ text-align: right;
 	
 			<div data-role="navbar">
 		  <ul>
-		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  		<li><a href="#srcDestDetailsPanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
 		  	<#if (isTruckOwner)>
 		  	  	<#if (trucks?? && trucks?size > 0)>
 			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
@@ -529,6 +539,11 @@ text-align: right;
 		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
 		<a href="#moreDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
 	</div>
+	<div data-role="panel" id="srcDestDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
+	</div><!-- /panel -->
 </div>
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="loadUnloadDetails">
 	<div data-role="header" id="Header1">
@@ -537,7 +552,7 @@ text-align: right;
 	
 			<div data-role="navbar">
 		  <ul>
-		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  		<li><a href="#loadUnloadDetailsPanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
 		  	<#if (isTruckOwner)>
 		  	  	<#if (trucks?? && trucks?size > 0)>
 			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
@@ -593,6 +608,11 @@ text-align: right;
 		<a href="#loadCommentsAndImageDetails" data-role="button" data-icon="arrow-r" data-inline="true" style="float: right;">המשך</a>
 		<a href="#srcDestDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
 	</div>
+	<div data-role="panel" id="loadUnloadDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
+	</div><!-- /panel -->
 </div>
 <div data-role="page" data-theme="a" data-title="פרטי מטען" id="loadCommentsAndImageDetails">
 	<div data-role="header" id="Header1">
@@ -601,7 +621,7 @@ text-align: right;
 	
 			<div data-role="navbar">
 		  <ul>
-		  		<li><a href="#mypanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
+		  		<li><a href="#loadCommentsAndImageDetailsPanel" class="ui-nodisc-icon" data-icon="bars"></a></li>
 		  	<#if (isTruckOwner)>
 		  	  	<#if (trucks?? && trucks?size > 0)>
 			   		<li><a href="/myAlerts" class="ui-nodisc-icon" data-icon="notifications" ></a></li>
@@ -637,15 +657,15 @@ text-align: right;
 		<input type="submit" id="Button1" name="" value="הוסף מטען">
 		<a href="#loadUnloadDetails" data-role="button" data-icon="arrow-l" data-inline="true" style="float: left;">חזור</a>
 	</div>
+	<div data-role="panel" id="loadCommentsAndImageDetailsPanel" data-theme="a" data-display="overlay" data-position="left">
+		<ul data-role="listview" style='text-align:right;'>
+			<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
+		</ul>
+	</div><!-- /panel -->	
+	
 </div>
 </form>
-</div>
-	
-<div data-role="panel" id="mypanel" data-theme="a" data-display="overlay" data-position="left">
-	<ul data-role="listview" style='text-align:right;'>
-		<li data-icon="power"><a href="/logout" style="text-align:right; font-size:0.8em;"> התנתק</a></li>
-	</ul>
-</div><!-- /panel -->	
+</div>	
 
 <div data-role="popup" id="sure" data-overlay-theme="a" data-theme="a" class="ui-content">
   <div data-role="content">
