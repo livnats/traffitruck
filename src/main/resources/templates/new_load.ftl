@@ -406,7 +406,7 @@ text-align: right;
 	
 	<div class="ui-content" role="main">
 		
-		<span style="color:#3388cc;" > <b> פרטי מטען </b></span>
+		<span style="color:#3388cc;" > <b> פרטי מטען [שלב 1 מ 5] </b></span>
 
 		<div class="ui-field-contain">
 			<label for="name">* שם המטען</label>
@@ -473,7 +473,7 @@ text-align: right;
 	
 	<div class="ui-content" role="main">
 		
-		<span style="color:#3388cc;" > <b> פרטים נוספים </b></span>
+		<span style="color:#3388cc;" > <b> פרטים נוספים [שלב 2 מ 5]</b></span>
 
 		<div class="ui-field-contain">
 			<label for="drivedate">* זמינות להובלה מתאריך</label>
@@ -522,7 +522,7 @@ text-align: right;
 	
 	<div class="ui-content" role="main">
 		
-		<span style="color:#3388cc;" > <b> מוצא ויעד </b></span>
+		<span style="color:#3388cc;" > <b> מוצא ויעד [שלב 3 מ 5]</b></span>
 	
 		<div class="ui-field-contain">
 			<label for="source">* מוצא</label>
@@ -575,7 +575,7 @@ text-align: right;
 	
 	<div class="ui-content" role="main">
 		
-		<span style="color:#3388cc;" > <b> טעינה ופריקה </b></span>
+		<span style="color:#3388cc;" > <b> טעינה ופריקה [שלב 4 מ 5] </b></span>
 
 		<div class="ui-field-contain">
 			<label for="loadingType">* סוג טעינה</label>
@@ -644,7 +644,7 @@ text-align: right;
 	
 	<div class="ui-content" role="main">
 		
-		<span style="color:#3388cc;" > <b> תמונה והערות </b></span>
+		<span style="color:#3388cc;" > <b> תמונה והערות [שלב 5 מ 5] </b></span>
 
 		<div class="ui-field-contain">
 			<label for="comments">הערות</label>
